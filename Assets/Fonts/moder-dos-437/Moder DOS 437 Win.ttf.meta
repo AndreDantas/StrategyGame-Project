@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: b9caaced4e4b7644eb6bd13b165b2245
+timeCreated: 1512853371
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Moder DOS 437 Win
+  fontNames:
+  - Moder DOS 437 Win
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

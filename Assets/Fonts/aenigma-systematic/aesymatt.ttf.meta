@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 74e3e54f2ac03bb4ca60770353df5663
+timeCreated: 1512853371
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: '? Systematic TT BRK'
+  fontNames:
+  - '? Systematic TT BRK'
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
