@@ -10,6 +10,9 @@ public struct TileInfo
     public int orderLayer;
 
 }
+/// <summary>
+/// Place this script on a GameObject with a Grid component. When working with multiple tilemaps use the same layer and the order in layer to sort.
+/// </summary>
 [RequireComponent(typeof(Grid))]
 public class TileGrid : MonoBehaviour
 {
@@ -108,6 +111,7 @@ public class TileGrid : MonoBehaviour
         }
 
     }
+
 
     public void AddTile(TileBase tile, int x, int y)
     {

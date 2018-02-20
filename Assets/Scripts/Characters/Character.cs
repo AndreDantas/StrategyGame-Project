@@ -12,6 +12,38 @@ public class Character : Unit
     bool movingX;
     //
 
+    [SerializeField]
+    int _currentHp;
+    public int currentHp
+    {
+        get { return _currentHp; }
+        set
+        {
+            if (value > maxHp)
+                _currentHp = maxHp;
+            else
+                _currentHp = maxHp;
+        }
+    }
+
+    [SerializeField]
+    int _maxHp;
+    public int maxHp
+    {
+        get { return _maxHp; }
+        set
+        {
+            if (value <= 0)
+                _maxHp = 1;
+            else
+                _maxHp = value;
+        }
+    }
+    private void OnValidate()
+    {
+        //TEST
+        transform.position = new Vector2(x + 0.5f, y + 0.5f);
+    }
     private void Start()
     {
 
@@ -183,7 +215,7 @@ public class Character : Unit
         //Starting node
         Node start = map.nodes[x, y];
         start.g = 0;
-        start.h = Map.Distance(start, destination, NodeDistance.Euclidean);
+        start.h = Map.Distance(start, destination, NodeDistance.Manhattan);
 
         List<Node> open = new List<Node>(); //Open set
         List<Node> closed = new List<Node>(); // Closed set
@@ -242,7 +274,7 @@ public class Character : Unit
                 if (newPath)
                 {
                     n.parent = current;
-                    n.h = Map.Distance(n, destination, NodeDistance.Euclidean);
+                    n.h = Map.Distance(n, destination, NodeDistance.Manhattan);
                 }
 
 

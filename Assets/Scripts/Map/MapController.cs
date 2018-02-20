@@ -10,13 +10,18 @@ public class MapController : MonoBehaviour
     public Map currentMap;
 
     public TileGrid grid;
+
     //TEST 
     public TextMeshProUGUI selectedNodeText;
     //
+
+    /// <summary>
+    /// Reference list of all types of nodes. 
+    /// </summary>
     public List<Node> availableNodes;
+    public List<DestroyableNode> destroyableNodes;
 
 
-    // Use this for initialization
     void Awake()
     {
         if (instance == null)
@@ -48,12 +53,15 @@ public class MapController : MonoBehaviour
     //Provisory internal map creation function. Populates the internal map by looking at the sprites name and assigning the correct node.
     public void InitiateLevel()
     {
-        if (grid == null || currentMap == null)
+        if (grid == null || currentMap == null) // Tile grid and map can't be null.
+            return;
+        if (grid.sizeX != currentMap.columns || grid.sizeY != currentMap.rows) // The dimensions of the tile grid and the map have to be equal.
             return;
 
-        grid.CreateTileMap();
+
         if (currentMap.GenerateBaseMap())
         {
+            grid.CreateTileMap();
             for (int i = 0; i < currentMap.nodes.GetLength(0); i++)
             {
                 for (int j = 0; j < currentMap.nodes.GetLength(1); j++)
@@ -61,13 +69,25 @@ public class MapController : MonoBehaviour
                     if (!grid.ValidCoordinate(i, j))
                         continue;
                     Node n = null;
+                    bool found = false;
                     for (int k = 0; k < availableNodes.Count; k++)
                     {
                         if (grid.tiles[i, j].tile.name.ToLower().Contains(availableNodes[k].name.ToLower())) // Check if sprite's name exist in reference
                         {
                             n = new Node(availableNodes[k]);
-
+                            found = true;
                             break;
+                        }
+                    }
+                    if (!found)
+                    {
+                        for (int k = 0; k < destroyableNodes.Count; k++)
+                        {
+                            if (grid.tiles[i, j].tile.name.ToLower().Contains(destroyableNodes[k].name.ToLower())) // Check if sprite's name exist in reference
+                            {
+                                n = new DestroyableNode(destroyableNodes[k]);
+                                break;
+                            }
                         }
                     }
                     if (n == null)// Sprite doesn't exist in reference. Creates default node.
@@ -80,4 +100,6 @@ public class MapController : MonoBehaviour
             }
         }
     }
+
+
 }

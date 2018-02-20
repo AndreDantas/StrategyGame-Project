@@ -301,12 +301,10 @@
     <Compile Include="Assets\Scripts\Characters\Unit.cs" />
     <Compile Include="Assets\Scripts\Map\Map.cs" />
     <Compile Include="Assets\Scripts\Map\MapController.cs" />
-    <Compile Include="Assets\Scripts\Map\Nodes\Ground.cs" />
+    <Compile Include="Assets\Scripts\Map\Nodes\DestroyableNode.cs" />
     <Compile Include="Assets\Scripts\Map\Nodes\Node.cs" />
-    <Compile Include="Assets\Scripts\Map\Nodes\Void.cs" />
     <Compile Include="Assets\Scripts\Map\TileGrid.cs" />
     <Compile Include="Assets\Scripts\Technical\CameraControl.cs" />
-    <Compile Include="Assets\Scripts\Technical\ChangeToValue.cs" />
     <Compile Include="Assets\Scripts\Technical\ConditionalHideAttribute.cs" />
     <Compile Include="Assets\Scripts\Technical\MathOperations.cs" />
     <Compile Include="Assets\Scripts\Technical\ReadOnlyAttribute.cs" />

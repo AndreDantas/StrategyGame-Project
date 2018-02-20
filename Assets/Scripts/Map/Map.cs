@@ -348,7 +348,7 @@ public class Map : MonoBehaviour
         return GetWorldPositionFromNode(node.x, node.y);
     }
     /// <summary>
-    /// Distance between two nodes (Manhattan distance - https://xlinux.nist.gov/dads/HTML/manhattanDistance.html).
+    /// Distance between two nodes.
     /// </summary>
     /// <param name="a"></param>
     /// <param name="b"></param>
@@ -356,7 +356,10 @@ public class Map : MonoBehaviour
     public static float Distance(Node a, Node b, NodeDistance distance = NodeDistance.Manhattan)
     {
         if (distance == NodeDistance.Manhattan)
-            return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y);
+        {
+            float d = 0.5f;
+            return (Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y)) * d;
+        }
         else
             return Mathf.Sqrt(Mathf.Pow(a.x - b.x, 2) + Mathf.Pow(a.y - b.y, 2));
     }

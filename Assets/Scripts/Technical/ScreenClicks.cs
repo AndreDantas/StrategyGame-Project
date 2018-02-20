@@ -22,7 +22,7 @@ public class ScreenClicks : MonoBehaviour
         }
         else
             Destroy(gameObject);
-        DontDestroyOnLoad(gameObject);
+
     }
 
 
