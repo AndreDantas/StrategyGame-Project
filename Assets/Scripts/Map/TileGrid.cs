@@ -11,7 +11,9 @@ public struct TileInfo
 
 }
 /// <summary>
-/// Place this script on a GameObject with a Grid component. When working with multiple tilemaps use the same layer and the order in layer to sort.
+/// This scripts creates a 2D array of the top tiles across all Tilemaps in the child's component.
+/// <para>Place this script on a GameObject with a Grid component.</para>
+/// <remarks>When working with multiple tilemaps use the same layer and the order in layer to sort.</remarks>
 /// </summary>
 [RequireComponent(typeof(Grid))]
 public class TileGrid : MonoBehaviour
@@ -71,17 +73,23 @@ public class TileGrid : MonoBehaviour
         }
     }
 
-
-    public void RemoveTile(int x, int y)
+    /// <summary>
+    /// Removes a tile from coordinate and finds the new top tile.
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns>Returns the removed tile.</returns>
+    public TileBase RemoveTile(int x, int y)
     {
         if (tiles != null ? tiles.GetLength(0) <= 0 || tiles.GetLength(1) <= 0 : true)
-            return;
+            return null;
 
         if (!ValidCoordinate(x, y))
-            return;
+            return null;
         if (tiles[x, y].tile == null)
-            return;
+            return null;
 
+        TileBase removed = tiles[x, y].tile;
         tiles[x, y].tile = null;
         tiles[x, y].layer.SetTile(new Vector3Int(x, y, 0), null);
         tiles[x, y].layer = null;
@@ -109,10 +117,15 @@ public class TileGrid : MonoBehaviour
                 }
             }
         }
-
+        return removed;
     }
 
-
+    /// <summary>
+    /// Adds a tile to a coordinate.
+    /// </summary>
+    /// <param name="tile"></param>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
     public void AddTile(TileBase tile, int x, int y)
     {
         if (tiles != null ? tiles.GetLength(0) > 0 && tiles.GetLength(1) > 0 : true)
@@ -128,9 +141,9 @@ public class TileGrid : MonoBehaviour
     {
         if (tiles == null)
             return false;
-        if (x < 0 || x >= sizeX)
+        if (x < 0 || x >= tiles.GetLength(0))
             return false;
-        if (y < 0 || y >= sizeY)
+        if (y < 0 || y >= tiles.GetLength(1))
             return false;
 
         return true;

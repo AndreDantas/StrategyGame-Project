@@ -89,9 +89,9 @@ public class Node
     /// The node's g cost and h cost.
     /// </summary>
     /// <returns></returns>
-    public float F()
+    public float f
     {
-        return h + g;
+        get { return h + g; }
     }
     public void UpdateStatus(string name, float cost, bool walkable, int team = 0)
     {

@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+/// <summary>
+/// This script uses the Tilegrid 2D map of tiles to update the 2D node map with the correct nodes based on reference.
+/// <para>This script requires a reference to a Map script and a Tilegrid script. They both need to have the same dimensions.</para>
+/// </summary>
 public class MapController : MonoBehaviour
 {
 
@@ -14,11 +18,18 @@ public class MapController : MonoBehaviour
     //TEST 
     public TextMeshProUGUI selectedNodeText;
     //
-
     /// <summary>
-    /// Reference list of all types of nodes. 
+    /// The reference .txt of nodes.
     /// </summary>
-    public List<Node> availableNodes;
+    public TextAsset referenceText;
+    public bool useReferenceText = false;
+    /// <summary>
+    /// Reference list of all normal nodes. 
+    /// </summary>
+    public List<Node> normalNodes;
+    /// <summary>
+    /// Reference list of all destroyable nodes
+    /// </summary>
     public List<DestroyableNode> destroyableNodes;
 
 
@@ -28,7 +39,7 @@ public class MapController : MonoBehaviour
             instance = this;
         else
             Destroy(gameObject);
-        InitiateLevel();
+        InitiateMap();
 
     }
 
@@ -40,7 +51,11 @@ public class MapController : MonoBehaviour
             Node n = currentMap.GetSelectedNode();
             if (n != null)
             {
-                selectedNodeText.text = n.name;
+                if (n.unitOnNode == null)
+                    selectedNodeText.text = n.name;
+                else
+                    selectedNodeText.text = "Unit";
+
             }
             else
             {
@@ -51,7 +66,7 @@ public class MapController : MonoBehaviour
     }
 
     //Provisory internal map creation function. Populates the internal map by looking at the sprites name and assigning the correct node.
-    public void InitiateLevel()
+    public void InitiateMap()
     {
         if (grid == null || currentMap == null) // Tile grid and map can't be null.
             return;
@@ -59,7 +74,7 @@ public class MapController : MonoBehaviour
             return;
 
 
-        if (currentMap.GenerateBaseMap())
+        if (currentMap.GenerateBaseMap()) //If the creation of the base map succeeds.
         {
             grid.CreateTileMap();
             for (int i = 0; i < currentMap.nodes.GetLength(0); i++)
@@ -69,17 +84,15 @@ public class MapController : MonoBehaviour
                     if (!grid.ValidCoordinate(i, j))
                         continue;
                     Node n = null;
-                    bool found = false;
-                    for (int k = 0; k < availableNodes.Count; k++)
+                    for (int k = 0; k < normalNodes.Count; k++)
                     {
-                        if (grid.tiles[i, j].tile.name.ToLower().Contains(availableNodes[k].name.ToLower())) // Check if sprite's name exist in reference
+                        if (grid.tiles[i, j].tile.name.ToLower().Contains(normalNodes[k].name.ToLower())) // Check if sprite's name exist in reference
                         {
-                            n = new Node(availableNodes[k]);
-                            found = true;
+                            n = new Node(normalNodes[k]);
                             break;
                         }
                     }
-                    if (!found)
+                    if (n == null)
                     {
                         for (int k = 0; k < destroyableNodes.Count; k++)
                         {
@@ -90,7 +103,7 @@ public class MapController : MonoBehaviour
                             }
                         }
                     }
-                    if (n == null)// Sprite doesn't exist in reference. Creates default node.
+                    if (n == null) // Sprite doesn't exist in reference. Creates default node.
                         n = new Node(i, j, "Unknown", 99, false);
                     n.x = i;
                     n.y = j;

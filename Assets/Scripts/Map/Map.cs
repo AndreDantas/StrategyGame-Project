@@ -293,9 +293,9 @@ public class Map : MonoBehaviour
     {
         if (nodes == null)
             return false;
-        if (x < 0 || x >= columns)
+        if (x < 0 || x >= nodes.GetLength(0))
             return false;
-        if (y < 0 || y >= rows)
+        if (y < 0 || y >= nodes.GetLength(1))
             return false;
 
         return true;

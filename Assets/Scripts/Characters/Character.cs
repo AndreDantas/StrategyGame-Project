@@ -139,11 +139,11 @@ public class Character : Unit
     /// <returns></returns>
     protected IEnumerator LerpMove(Node destination, float duration = 0.2f)
     {
-        if (moving || destination == null)
+        if (moving || destination == null || map == null)
             yield break;
         if (destination.x == x && destination.y == y)
             yield break;
-        if (!ValidNode(destination) || map == null)
+        if (!ValidNode(destination) || !map.ValidCoordinate(destination))
             yield break;
         float t = 0;
         Vector2 start = new Vector2(x + map.nodeOffsetX, y + map.nodeOffsetY);
@@ -212,12 +212,12 @@ public class Character : Unit
             n.parent = null;
         }
 
-        //Starting node
+        // Starting node
         Node start = map.nodes[x, y];
         start.g = 0;
         start.h = Map.Distance(start, destination, NodeDistance.Manhattan);
 
-        List<Node> open = new List<Node>(); //Open set
+        List<Node> open = new List<Node>(); // Open set
         List<Node> closed = new List<Node>(); // Closed set
 
         open.Add(start);
@@ -228,7 +228,7 @@ public class Character : Unit
             int lowestf = 0;
             for (int i = 0; i < open.Count; i++)
             {
-                if (open[i].F() < open[lowestf].F())
+                if (open[i].f < open[lowestf].f)
                     lowestf = i;
             }
             current = open[lowestf];
@@ -314,7 +314,7 @@ public class Character : Unit
     /// <returns></returns>
     public virtual bool ValidNode(Node n)
     {
-        //Each different character should have a unique way to validate nodes
+        // Each different character should have a unique way to validate nodes
         return n.walkable && n.unitOnNode == null;
     }
 
@@ -325,7 +325,7 @@ public class Character : Unit
     /// <returns></returns>
     public virtual Node validDestination(Node n)
     {
-        //Can be used to find a new destination and return the new node.
+        // Can be used to find a new destination and return the new node.
         if (ValidNode(n) && map.ValidCoordinate(n))
         {
             return n;
@@ -340,7 +340,7 @@ public class Character : Unit
     /// <returns></returns>
     public virtual float NodeCostEvaluation(Node n)
     {
-        //Could be used to change the node initial walk cost.
+        // Can be used to change the node initial walk cost.
         return n.cost;
     }
 }

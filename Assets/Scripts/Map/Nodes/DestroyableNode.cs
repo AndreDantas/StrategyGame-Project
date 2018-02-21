@@ -33,6 +33,12 @@ public class DestroyableNode : Node
                 _maxHp = value;
         }
     }
+    public DestroyableNode(int x, int y)
+    {
+        this.x = x;
+        this.y = y;
+
+    }
     public DestroyableNode(DestroyableNode other)
     {
         this.name = other.name;
@@ -44,7 +50,7 @@ public class DestroyableNode : Node
         this.team = other.team;
         this.unitOnNode = other.unitOnNode;
         this.maxHp = other.maxHp;
-        this.currentHp = other.currentHp;
+        this.currentHp = this.maxHp;
         this.destroyed = other.destroyed;
     }
 

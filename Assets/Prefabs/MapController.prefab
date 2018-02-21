@@ -54,7 +54,7 @@ MonoBehaviour:
   currentMap: {fileID: 0}
   grid: {fileID: 0}
   selectedNodeText: {fileID: 0}
-  availableNodes:
+  normalNodes:
   - name: Meadow
     x: 0
     y: 0
@@ -64,14 +64,23 @@ MonoBehaviour:
     unitOnNode: {fileID: 0}
     walkable: 1
     team: 0
-  - name: Road
+  - name: Shore
     x: 0
     y: 0
-    _cost: 0.5
+    _cost: 1
     g: 0
     h: 0
     unitOnNode: {fileID: 0}
-    walkable: 1
+    walkable: 0
+    team: 0
+  - name: Sea
+    x: 0
+    y: 0
+    _cost: 1
+    g: 0
+    h: 0
+    unitOnNode: {fileID: 0}
+    walkable: 0
     team: 0
   - name: Tree
     x: 0
@@ -91,100 +100,37 @@ MonoBehaviour:
     unitOnNode: {fileID: 0}
     walkable: 1
     team: 0
-  - name: Sea
-    x: 0
-    y: 0
-    _cost: 99
-    g: 0
-    h: 0
-    unitOnNode: {fileID: 0}
-    walkable: 0
-    team: 0
   - name: Mountain
     x: 0
     y: 0
-    _cost: 99
+    _cost: 3
     g: 0
     h: 0
     unitOnNode: {fileID: 0}
     walkable: 0
     team: 0
-  - name: Building
+  - name: Road
     x: 0
     y: 0
-    _cost: 1
+    _cost: 0.5
     g: 0
     h: 0
     unitOnNode: {fileID: 0}
     walkable: 1
-    team: 0
-  - name: Wall
-    x: 0
-    y: 0
-    _cost: 1
-    g: 0
-    h: 0
-    unitOnNode: {fileID: 0}
-    walkable: 0
     team: 0
   - name: Rock
     x: 0
     y: 0
-    _cost: 1
+    _cost: 99
     g: 0
     h: 0
     unitOnNode: {fileID: 0}
     walkable: 0
-    team: 0
-  - name: Shore
-    x: 0
-    y: 0
-    _cost: 1
-    g: 0
-    h: 0
-    unitOnNode: {fileID: 0}
-    walkable: 0
-    team: 0
-  - name: Ruins
-    x: 0
-    y: 0
-    _cost: 1
-    g: 0
-    h: 0
-    unitOnNode: {fileID: 0}
-    walkable: 1
-    team: 0
-  - name: Castle
-    x: 0
-    y: 0
-    _cost: 1
-    g: 0
-    h: 0
-    unitOnNode: {fileID: 0}
-    walkable: 0
-    team: 0
-  - name: Tower
-    x: 0
-    y: 0
-    _cost: 1
-    g: 0
-    h: 0
-    unitOnNode: {fileID: 0}
-    walkable: 0
-    team: 0
-  - name: Gate
-    x: 0
-    y: 0
-    _cost: 1
-    g: 0
-    h: 0
-    unitOnNode: {fileID: 0}
-    walkable: 1
     team: 0
   - name: Lake
     x: 0
     y: 0
-    _cost: 1
+    _cost: 99
     g: 0
     h: 0
     unitOnNode: {fileID: 0}
@@ -199,3 +145,64 @@ MonoBehaviour:
     unitOnNode: {fileID: 0}
     walkable: 1
     team: 0
+  - name: Building
+    x: 0
+    y: 0
+    _cost: 1
+    g: 0
+    h: 0
+    unitOnNode: {fileID: 0}
+    walkable: 1
+    team: 0
+  - name: Castle
+    x: 0
+    y: 0
+    _cost: 99
+    g: 0
+    h: 0
+    unitOnNode: {fileID: 0}
+    walkable: 0
+    team: 0
+  - name: Ruins
+    x: 0
+    y: 0
+    _cost: 1
+    g: 0
+    h: 0
+    unitOnNode: {fileID: 0}
+    walkable: 1
+    team: 0
+  destroyableNodes:
+  - name: Wall
+    x: 0
+    y: 0
+    _cost: 99
+    g: 0
+    h: 0
+    unitOnNode: {fileID: 0}
+    walkable: 0
+    team: 0
+    _currentHp: 0
+    _maxHp: 100
+  - name: Tower
+    x: 0
+    y: 0
+    _cost: 99
+    g: 0
+    h: 0
+    unitOnNode: {fileID: 0}
+    walkable: 0
+    team: 0
+    _currentHp: 0
+    _maxHp: 50
+  - name: Gate
+    x: 0
+    y: 0
+    _cost: 1
+    g: 0
+    h: 0
+    unitOnNode: {fileID: 0}
+    walkable: 1
+    team: 0
+    _currentHp: 0
+    _maxHp: 75
