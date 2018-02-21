@@ -54,6 +54,8 @@ MonoBehaviour:
   currentMap: {fileID: 0}
   grid: {fileID: 0}
   selectedNodeText: {fileID: 0}
+  referenceText: {fileID: 4900000, guid: 7a7f49fcdfbc25b409cee1eda86c7fa1, type: 3}
+  useReferenceText: 1
   normalNodes:
   - name: Meadow
     x: 0
@@ -121,7 +123,7 @@ MonoBehaviour:
   - name: Rock
     x: 0
     y: 0
-    _cost: 99
+    _cost: 1
     g: 0
     h: 0
     unitOnNode: {fileID: 0}
@@ -130,7 +132,7 @@ MonoBehaviour:
   - name: Lake
     x: 0
     y: 0
-    _cost: 99
+    _cost: 1
     g: 0
     h: 0
     unitOnNode: {fileID: 0}
@@ -157,7 +159,7 @@ MonoBehaviour:
   - name: Castle
     x: 0
     y: 0
-    _cost: 99
+    _cost: 1
     g: 0
     h: 0
     unitOnNode: {fileID: 0}
@@ -170,13 +172,13 @@ MonoBehaviour:
     g: 0
     h: 0
     unitOnNode: {fileID: 0}
-    walkable: 1
+    walkable: 0
     team: 0
   destroyableNodes:
   - name: Wall
     x: 0
     y: 0
-    _cost: 99
+    _cost: 1
     g: 0
     h: 0
     unitOnNode: {fileID: 0}
@@ -187,7 +189,7 @@ MonoBehaviour:
   - name: Tower
     x: 0
     y: 0
-    _cost: 99
+    _cost: 1
     g: 0
     h: 0
     unitOnNode: {fileID: 0}

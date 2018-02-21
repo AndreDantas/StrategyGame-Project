@@ -14394,6 +14394,16 @@ Prefab:
       propertyPath: selectedNodeText
       value: 
       objectReference: {fileID: 1405025362}
+    - target: {fileID: 114588315421099586, guid: fa6833513fb936a498b945d3b125841a,
+        type: 2}
+      propertyPath: useReferenceText
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114588315421099586, guid: fa6833513fb936a498b945d3b125841a,
+        type: 2}
+      propertyPath: normalNodes.Array.data[0]._cost
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa6833513fb936a498b945d3b125841a, type: 2}
   m_IsPrefabParent: 0

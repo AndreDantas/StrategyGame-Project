@@ -5,28 +5,29 @@ using UnityEngine;
 public static class MathOperations
 {
 
-    public static float ClampMax(float value, float topValue)
+    public static float ClampMax(float value, float maxValue)
     {
-        if (value > topValue)
-            value = topValue;
+
+        if (value > maxValue)
+            value = maxValue;
         return value;
     }
-    public static float ClampMin(float value, float bottomValue)
+    public static float ClampMin(float value, float minValue)
     {
-        if (value < bottomValue)
-            value = bottomValue;
+        if (value < minValue)
+            value = minValue;
         return value;
     }
-    public static int ClampMax(int value, int topValue)
+    public static int ClampMax(int value, int maxValue)
     {
-        if (value > topValue)
-            value = topValue;
+        if (value > maxValue)
+            value = maxValue;
         return value;
     }
-    public static int ClampMin(int value, int bottomValue)
+    public static int ClampMin(int value, int minValue)
     {
-        if (value < bottomValue)
-            value = bottomValue;
+        if (value < minValue)
+            value = minValue;
         return value;
     }
 

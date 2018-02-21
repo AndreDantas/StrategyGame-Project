@@ -33,6 +33,13 @@ public class DestroyableNode : Node
                 _maxHp = value;
         }
     }
+    public DestroyableNode()
+    {
+        this.cost = 1;
+        this.walkable = false;
+
+
+    }
     public DestroyableNode(int x, int y)
     {
         this.x = x;

@@ -3,6 +3,7 @@
 public class Node
 {
     public static float MaxCost = 99f;
+    public static float MinCost = 0.1f;
     /// <summary>
     /// The node's name.
     /// </summary>
@@ -26,13 +27,20 @@ public class Node
         get { return _cost; }
         set
         {
-            if (value > MaxCost)
-                _cost = MaxCost;
-            else
-                _cost = value;
+
+            _cost = value;
+            _cost = Mathf.Clamp(_cost, MinCost, MaxCost);
         }
     }
     public float g, h;
+    /// <summary>
+    /// The node's g cost and h cost.
+    /// </summary>
+    /// <returns></returns>
+    public float f
+    {
+        get { return h + g; }
+    }
     /// <summary>
     /// Unit standing on node.
     /// </summary>
@@ -85,14 +93,7 @@ public class Node
 
     }
 
-    /// <summary>
-    /// The node's g cost and h cost.
-    /// </summary>
-    /// <returns></returns>
-    public float f
-    {
-        get { return h + g; }
-    }
+
     public void UpdateStatus(string name, float cost, bool walkable, int team = 0)
     {
         this.name = name;
