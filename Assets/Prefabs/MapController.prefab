@@ -54,8 +54,8 @@ MonoBehaviour:
   currentMap: {fileID: 0}
   grid: {fileID: 0}
   selectedNodeText: {fileID: 0}
-  referenceText: {fileID: 4900000, guid: 7a7f49fcdfbc25b409cee1eda86c7fa1, type: 3}
   useReferenceText: 1
+  referenceText: {fileID: 4900000, guid: 7a7f49fcdfbc25b409cee1eda86c7fa1, type: 3}
   normalNodes:
   - name: Meadow
     x: 0

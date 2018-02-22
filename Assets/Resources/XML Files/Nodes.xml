@@ -66,6 +66,16 @@
       <cost>1</cost>
       <walkable>false</walkable>
     </node>
+    <node>
+      <name>Bridge</name>
+      <cost>1</cost>
+      <walkable>true</walkable>
+    </node>
+    <node>
+      <name>River</name>
+      <cost>1</cost>
+      <walkable>false</walkable>
+    </node>
 	</normalNodes>
   <destroyableNodes>
     <node>

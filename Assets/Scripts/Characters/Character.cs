@@ -5,12 +5,11 @@ using UnityEngine;
 public class Character : Unit
 {
 
+    /// <summary>
+    /// If the character is moving.
+    /// </summary>
     protected bool moving;
 
-    //test
-    bool movingY;
-    bool movingX;
-    //
 
     [SerializeField]
     int _currentHp;
@@ -48,71 +47,19 @@ public class Character : Unit
     {
 
         InitializeOnMap();
+        //foreach (Node n in FindRange(x, y, 1))
+        //{
+        //    print("Node " + n.name + ": " + n.x + ", " + n.y);
+        //}
+        //foreach (Node n in ExpandArea(FindRange(x, y, 1), 1))
+        //{
+        //    print("Node " + n.name + ": " + n.x + ", " + n.y);
+        //}
+
     }
     private void Update()
     {
-        // TEST
-        if (Input.GetAxisRaw("Vertical") != 0)
-        {
-            if (!movingY)
-            {
-                MoveVertical((int)Input.GetAxisRaw("Vertical"));
-                movingY = true;
-            }
-        }
-        else
-        {
-            movingY = false;
-        }
-        if (Input.GetAxisRaw("Horizontal") != 0)
-        {
-            if (!movingX)
-            {
-                MoveHorizontal((int)Input.GetAxisRaw("Horizontal"));
-                movingX = true;
-            }
-        }
-        else
-        {
-            movingX = false;
-        }
-        /////
-    }
 
-    //TEST
-    public void MoveHorizontal(int direction = 1)
-    {
-        if (!map || moving)
-            return;
-        int newX = x + MathOperations.Sign(direction);
-        if (map.ValidCoordinate(newX, y))
-        {
-            if (map.nodes[newX, y].walkable && map.nodes[newX, y].unitOnNode == null)
-            {
-                this.transform.position = new Vector2(newX + map.nodeOffsetX, y + map.nodeOffsetY);
-                map.nodes[x, y].unitOnNode = null;
-                x = newX;
-                map.nodes[newX, y].unitOnNode = this;
-            }
-        }
-    }
-
-    //TEST
-    public void MoveVertical(int direction = 1)
-    {
-        if (!map || moving)
-            return;
-        int newY = y + MathOperations.Sign(direction);
-        if (map.ValidCoordinate(x, newY))
-        {
-            if (map.nodes[x, newY].walkable && map.nodes[x, newY].unitOnNode == null)
-            {
-                this.transform.position = new Vector2(x + map.nodeOffsetX, newY + map.nodeOffsetY);
-                map.nodes[x, y].unitOnNode = null;
-                y = newY;
-                map.nodes[x, newY].unitOnNode = this;
-            }
-        }
     }
 
     /// <summary>
@@ -129,6 +76,7 @@ public class Character : Unit
         {
             map.nodes[x, y].unitOnNode = this;
         }
+
     }
 
     /// <summary>
@@ -137,7 +85,7 @@ public class Character : Unit
     /// <param name="destination">The destination node.</param>
     /// <param name="duration">How long the movement takes in seconds.</param>
     /// <returns></returns>
-    protected IEnumerator LerpMove(Node destination, float duration = 0.2f)
+    protected IEnumerator LerpMove(Node destination, float duration = 0.15f)
     {
         if (moving || destination == null || map == null)
             yield break;
@@ -290,8 +238,89 @@ public class Character : Unit
         }
     }
 
+    /// <summary>
+    /// Returns a list of reachable nodes based on range. Use it to find all nodes a character can reach.
+    /// </summary>
+    /// <param name="range">The max range.</param>
+    /// <returns></returns>
+    public List<Node> FindRange(int x, int y, int range)
+    {
+        // Based on Dijkstra's Algorithm: https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
 
-    public static List<Node> ReconstructPath(Node n)
+        if (!map) // The map can't be null.
+            return null;
+        if (!map.ValidCoordinate(x, y))
+            return null;
+
+        range = MathOperations.ClampMin(range, 0);
+        List<Node> openSet = new List<Node>();
+        List<Node> closedSet = new List<Node>();
+
+        foreach (Node n in map.GetNodes())
+        {
+            n.g = 0f;
+        }
+
+        Node current;
+        openSet.Add(map.nodes[x, y]);
+
+        while (openSet.Count > 0)
+        {
+            current = openSet[0];
+            closedSet.Add(current);
+            openSet.RemoveAt(0);
+
+            if (current.g <= range)
+            {
+                foreach (Node neighbor in map.GetNeighbors(current))
+                {
+                    if (!ValidNode(neighbor))
+                        continue;
+                    float newG = current.g + NodeCostEvaluation(neighbor);
+                    if (neighbor.g == 0 || newG < neighbor.g)
+                    {
+                        neighbor.g = newG;
+                        if (!openSet.Contains(neighbor))
+                            openSet.Add(neighbor);
+                    }
+                }
+            }
+        }
+        List<Node> result = new List<Node>();
+        foreach (Node n in closedSet)
+        {
+            if (n.g <= range)
+                result.Add(n);
+        }
+        return result;
+    }
+
+    /// <summary>
+    /// Used to extend an area by a range. Can be used to find the attack range of a character based on his move area.
+    /// </summary>
+    /// <param name="baseArea">The area to be expanded.</param>
+    /// <param name="range">The range of the expansion.</param>
+    /// <returns>This function doesn't return all nodes, only the new ones.</returns>
+    public List<Node> ExpandArea(List<Node> baseArea, int range)
+    {
+        if (!map) // The map can't be null.
+            return null;
+        int[,] rangeMap = map.Manhattan(baseArea);
+        List<Node> newNodes = new List<Node>();
+        for (int i = 0; i < rangeMap.GetLength(0); i++)
+        {
+            for (int j = 0; j < rangeMap.GetLength(1); j++)
+            {
+                if (rangeMap[i, j] <= range && rangeMap[i, j] > 0)
+                    newNodes.Add(map.nodes[i, j]);
+
+            }
+        }
+        return newNodes;
+    }
+
+
+    protected static List<Node> ReconstructPath(Node n)
     {
         if (n == null)
             return null;
@@ -307,6 +336,7 @@ public class Character : Unit
         path.Reverse();
         return path;
     }
+
     /// <summary>
     /// Returns true if node can be used as path.
     /// </summary>

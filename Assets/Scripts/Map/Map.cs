@@ -21,17 +21,45 @@ public enum NodeDistance
 }
 public class Map : MonoBehaviour
 {
+    /// <summary>
+    /// Type of navigation.
+    /// </summary>
     public MapNavigation mapNavigation = MapNavigation.Cross;
+    /// <summary>
+    /// Number of rows. Can't be less than 1.
+    /// </summary>
     public int rows = 10;
+    /// <summary>
+    /// Number of columns. Can't be less than 1.
+    /// </summary>
     public int columns = 10;
+    /// <summary>
+    ///The X offset of each node.
+    /// </summary>
     public float nodeOffsetX = 0.5f;
+    /// <summary>
+    ///The Y offset of each node.
+    /// </summary>
     public float nodeOffsetY = 0.5f;
+    /// <summary>
+    /// The 2D array of nodes.
+    /// </summary>
     public Node[,] nodes;
+    /// <summary>
+    /// The current selected node sprite.
+    /// </summary>
     public GameObject nodeSelectSprite;
+    /// <summary>
+    /// The current selected node.
+    /// </summary>
     protected Node selectedNode;
+    /// <summary>
+    /// The current selected Character.
+    /// </summary>
     protected Character selectedCharacter;
     private void Awake()
     {
+        //Subscribing to ScreenClicks OnClick event.
         if (ScreenClicks.instance)
         {
             ScreenClicks.instance.OnClick += OnClick;
@@ -47,13 +75,15 @@ public class Map : MonoBehaviour
     }
     private void Update()
     {
+
+        //Updating the selected node sprite.
         PlaceSelectedNodeSprite();
     }
 
     /// <summary>
     /// Creates the base map with default nodes.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Returns true if build succeeds.</returns>
     public bool GenerateBaseMap()
     {
         if (columns <= 0 || rows <= 0)
@@ -180,7 +210,6 @@ public class Map : MonoBehaviour
     /// <summary>
     /// Returns a list with all the nodes.
     /// </summary>
-    /// <returns></returns>
     public List<Node> GetNodes()
     {
         if (nodes == null)
@@ -200,7 +229,6 @@ public class Map : MonoBehaviour
     /// <summary>
     /// Returns the selected node.
     /// </summary>
-    /// <returns></returns>
     public Node GetSelectedNode()
     {
         return selectedNode;
@@ -209,8 +237,6 @@ public class Map : MonoBehaviour
     /// <summary>
     /// Returns node's neighbors.
     /// </summary>
-    /// <param name="node"></param>
-    /// <returns></returns>
     public List<Node> GetNeighbors(Node node)
     {
         if (ValidCoordinate(node.x, node.y))
@@ -266,8 +292,6 @@ public class Map : MonoBehaviour
     /// <summary>
     /// Returns node's neighbors.
     /// </summary>
-    /// <param name="node"></param>
-    /// <returns></returns>
     public List<Node> GetNeighbors(int x, int y)
     {
         return GetNeighbors(nodes[x, y]);
@@ -275,7 +299,6 @@ public class Map : MonoBehaviour
     /// <summary>
     /// Checks if the coordinate is valid in this map.
     /// </summary>
-    /// <returns></returns>
     public bool ValidCoordinate(Vector2 worldPos)
     {
 
@@ -288,7 +311,6 @@ public class Map : MonoBehaviour
     /// <summary>
     /// Checks if the coordinate is valid in this map.
     /// </summary>
-    /// <returns></returns>
     public bool ValidCoordinate(int x, int y)
     {
         if (nodes == null)
@@ -303,7 +325,7 @@ public class Map : MonoBehaviour
     /// <summary>
     /// Checks if the coordinate is valid in this map.
     /// </summary>
-    /// <returns></returns>
+
     public bool ValidCoordinate(Node node)
     {
         return ValidCoordinate(node.x, node.y);
@@ -313,7 +335,7 @@ public class Map : MonoBehaviour
     /// Returns the node located on that position.
     /// </summary>
     /// <param name="worldPos"></param>
-    /// <returns></returns>
+
     public Node GetNodeFromWorldPosition(Vector2 worldPos)
     {
         if (ValidCoordinate(worldPos))
@@ -327,9 +349,6 @@ public class Map : MonoBehaviour
     /// <summary>
     /// Returns the world position of the node.
     /// </summary>
-    /// <param name="x"></param>
-    /// <param name="y"></param>
-    /// <returns></returns>
     public Vector3 GetWorldPositionFromNode(int x, int y)
     {
         if (ValidCoordinate(x, y))
@@ -342,7 +361,7 @@ public class Map : MonoBehaviour
     /// <summary>
     /// Returns the world position of the node.
     /// </summary>
-    /// <returns></returns>
+
     public Vector3 GetWorldPositionFromNode(Node node)
     {
         return GetWorldPositionFromNode(node.x, node.y);
@@ -350,9 +369,6 @@ public class Map : MonoBehaviour
     /// <summary>
     /// Distance between two nodes.
     /// </summary>
-    /// <param name="a"></param>
-    /// <param name="b"></param>
-    /// <returns></returns>
     public static float Distance(Node a, Node b, NodeDistance distance = NodeDistance.Manhattan)
     {
         if (distance == NodeDistance.Manhattan)
@@ -363,6 +379,62 @@ public class Map : MonoBehaviour
         else
             return Mathf.Sqrt(Mathf.Pow(a.x - b.x, 2) + Mathf.Pow(a.y - b.y, 2));
     }
+
+    /// <summary>
+    /// O(n^2) solution to find the Manhattan distance to "on" nodes in a two dimension array
+    /// </summary>
+    /// <param name="area">The "on" nodes.</param>
+    /// <returns></returns>
+    public int[,] Manhattan(List<Node> area)
+    {
+        //Algorithm used: http://blog.ostermiller.org/dilate-and-erode
+
+        if (nodes == null) // The map can't be null.
+            return null;
+        int[,] rangeMap = new int[nodes.GetLength(0), nodes.GetLength(1)];
+
+        foreach (Node n in area)
+        {
+            if (ValidCoordinate(n))
+            {
+                rangeMap[n.x, n.y] = 1; // Marking the nodes on the map.
+            }
+        }
+
+        // Traverse from top left to bottom right
+        for (int i = 0; i < rangeMap.GetLength(0); i++)
+        {
+            for (int j = 0; j < rangeMap.GetLength(1); j++)
+            {
+                if (rangeMap[i, j] == 1)
+                {
+                    rangeMap[i, j] = 0;
+                }
+                else
+                {
+                    rangeMap[i, j] = rangeMap.GetLength(0) + rangeMap.GetLength(1);
+                    if (i > 0)
+                        rangeMap[i, j] = Mathf.Min(rangeMap[i, j], rangeMap[i - 1, j] + 1);
+                    if (j > 0)
+                        rangeMap[i, j] = Mathf.Min(rangeMap[i, j], rangeMap[i, j - 1] + 1);
+                }
+            }
+        }
+
+        // Traverse from bottom right to top left
+        for (int i = rangeMap.GetLength(0) - 1; i >= 0; i--)
+        {
+            for (int j = rangeMap.GetLength(1) - 1; j >= 0; j--)
+            {
+                if (i + 1 < rangeMap.GetLength(0))
+                    rangeMap[i, j] = Mathf.Min(rangeMap[i, j], rangeMap[i + 1, j] + 1);
+                if (j + 1 < rangeMap.GetLength(1))
+                    rangeMap[i, j] = Mathf.Min(rangeMap[i, j], rangeMap[i, j + 1] + 1);
+            }
+        }
+        return rangeMap;
+    }
+
 #if UNITY_EDITOR
     public void PrintGrid()
     {

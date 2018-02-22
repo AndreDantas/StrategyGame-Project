@@ -7,25 +7,33 @@ using System.IO;
 
 /// <summary>
 /// This script uses the Tilegrid 2D map of tiles to update the 2D node map with the correct nodes based on reference.
-/// <para>This script requires a reference to a Map script and a Tilegrid script. They both need to have the same dimensions.</para>
+/// <para>It requires a reference to a Map script and a Tilegrid script. They both need to have the same dimensions.</para>
 /// <para>Also the name of the tiles used have to be the same name of the reference. Ex: Sea.tile needs a node with the same name.</para>
 /// </summary>
 public class MapController : MonoBehaviour
 {
 
     public static MapController instance;
+    /// <summary>
+    /// The current map. 
+    /// </summary>
     public Map currentMap;
 
+    /// <summary>
+    /// The tile grid.
+    /// </summary>
     public TileGrid grid;
 
     //TEST 
     public TextMeshProUGUI selectedNodeText;
     //
 
-
+    /// <summary>
+    /// If it should use the reference XML file.
+    /// </summary>
     public bool useReferenceText = false;
     /// <summary>
-    /// The reference text file of nodes.
+    /// The reference text file of nodes. (XML Format)
     /// </summary>
     [ConditionalHide("useReferenceText", false)]
     public TextAsset referenceText;
@@ -46,11 +54,12 @@ public class MapController : MonoBehaviour
             instance = this;
         else
             Destroy(gameObject);
+
         if (referenceText != null && useReferenceText)
         {
             LoadNodeReference();
         }
-        InitiateMap();
+        InitializeMap();
 
     }
 
@@ -75,6 +84,9 @@ public class MapController : MonoBehaviour
         }
         //
     }
+    /// <summary>
+    /// Loads the XML file with all nodes references.
+    /// </summary>
     protected void LoadNodeReference()
     {
         List<Node> normalNodes = new List<Node>();
@@ -138,12 +150,18 @@ public class MapController : MonoBehaviour
             this.normalNodes = normalNodes;
 
     }
-    protected static List<Dictionary<string, string>> GetXmlData(TextAsset xmlData, string path)
+    /// <summary>
+    /// Returns a list of dictionaries containing "ParameterName, value" pairs (string, string) from a XML file.  
+    /// </summary>
+    /// <param name="xmlData">The TextAsset containing the XML.</param>
+    /// <param name="path">The path to a specific XML node.</param>
+    public static List<Dictionary<string, string>> GetXmlData(TextAsset xmlData, string path)
     {
         if (xmlData == null)
         {
             return null;
         }
+
         XmlDocument xmlDoc = new XmlDocument();
         xmlDoc.Load(new StringReader(xmlData.text));
         XmlNodeList nodeList = xmlDoc.SelectNodes(path);
@@ -170,8 +188,10 @@ public class MapController : MonoBehaviour
 
     }
 
-    //Provisory internal map creation function. Populates the internal map by looking at the sprites name and assigning the correct node.
-    public void InitiateMap()
+    /// <summary>
+    /// Populates the internal map by looking at the sprites name and assigning the correct node.
+    /// </summary>
+    public void InitializeMap()
     {
         if (grid == null || currentMap == null) // Tile grid and map can't be null.
             return;
@@ -179,7 +199,7 @@ public class MapController : MonoBehaviour
             return;
 
 
-        if (currentMap.GenerateBaseMap()) //If the creation of the base map succeeds.
+        if (currentMap.GenerateBaseMap()) //If the creation of the base map and the tile grid succeeds.
         {
             grid.CreateTileMap();
             for (int i = 0; i < currentMap.nodes.GetLength(0); i++)
@@ -209,7 +229,7 @@ public class MapController : MonoBehaviour
                         }
                     }
                     if (n == null) // Sprite doesn't exist in reference. Creates default node.
-                        n = new Node(i, j, "Unknown", 99, false);
+                        n = new Node(i, j, "Unknown", 1, false);
                     n.x = i;
                     n.y = j;
 

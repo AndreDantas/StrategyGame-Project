@@ -18,14 +18,13 @@ public struct TileInfo
 [RequireComponent(typeof(Grid))]
 public class TileGrid : MonoBehaviour
 {
+
     public int sizeX = 20;
     public int sizeY = 20;
+    /// <summary>
+    /// The 2D array of tiles.
+    /// </summary>
     public TileInfo[,] tiles;
-    // Use this for initialization
-    void Awake()
-    {
-
-    }
 
     private void OnValidate()
     {
@@ -33,8 +32,14 @@ public class TileGrid : MonoBehaviour
         sizeY = MathOperations.ClampMin(sizeY, 1);
     }
 
-    public void CreateTileMap()
+    /// <summary>
+    /// Creates the tile map. 
+    /// </summary>
+    /// <returns></returns>
+    public bool CreateTileMap()
     {
+        if (sizeX <= 0 || sizeY <= 0)
+            return false;
         tiles = new TileInfo[sizeX, sizeY];
         foreach (Tilemap t in GetComponentsInChildren<Tilemap>())
         {
@@ -71,13 +76,12 @@ public class TileGrid : MonoBehaviour
             }
 
         }
+        return true;
     }
 
     /// <summary>
     /// Removes a tile from coordinate and finds the new top tile.
     /// </summary>
-    /// <param name="x"></param>
-    /// <param name="y"></param>
     /// <returns>Returns the removed tile.</returns>
     public TileBase RemoveTile(int x, int y)
     {
@@ -123,9 +127,7 @@ public class TileGrid : MonoBehaviour
     /// <summary>
     /// Adds a tile to a coordinate.
     /// </summary>
-    /// <param name="tile"></param>
-    /// <param name="x"></param>
-    /// <param name="y"></param>
+    /// <param name="tile">The tile to be added.</param>
     public void AddTile(TileBase tile, int x, int y)
     {
         if (tiles != null ? tiles.GetLength(0) > 0 && tiles.GetLength(1) > 0 : true)
