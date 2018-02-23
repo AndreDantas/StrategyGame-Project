@@ -75,16 +75,11 @@ public class Character : Unit
     {
         //TEST
         transform.position = new Vector2(x + 0.5f, y + 0.5f);
+
     }
     private void Start()
     {
-
         InitializeOnMap();
-
-        // AREA RENDER TEST
-        ShowAttackRange();
-        ShowWalkRange();
-        ///////////////
     }
     private void Update()
     {
@@ -105,6 +100,9 @@ public class Character : Unit
         {
             map.nodes[x, y].unitOnNode = this;
         }
+
+        currentHp = maxHp;
+        currentStamina = maxStamina;
 
     }
 
@@ -162,7 +160,7 @@ public class Character : Unit
             yield break;
 
         // TEST
-        if (GetPathCost(path) > maxStamina)
+        if (GetPathCost(path) > currentStamina)
             yield break;
         ClearAttackRange();
         ClearWalkRange();
@@ -173,10 +171,6 @@ public class Character : Unit
             yield return LerpMove(n);
         }
 
-        // AREA RENDER TEST
-        ShowAttackRange();
-        ShowWalkRange();
-        ///////////////
     }
 
     /// <summary>
@@ -197,7 +191,7 @@ public class Character : Unit
 
         bool found = false;
 
-        // Each node's g cost starts with the default value of infinity.
+        // Each node's g cost starts with the default max value.
         foreach (Node n in map.GetNodes())
         {
             n.g = Node.MaxCost;
@@ -337,6 +331,7 @@ public class Character : Unit
         {
             if (n.g <= range)
                 result.Add(n);
+            n.g = 0;
         }
         return result;
     }
@@ -402,6 +397,8 @@ public class Character : Unit
         return cost;
     }
 
+
+
     /// <summary>
     /// Displays the walk range of the character using the AreaRangeRenderer script.
     /// </summary>
@@ -410,7 +407,7 @@ public class Character : Unit
         if (walkRangeRenderer == null)
             return;
         List<Vector3> posList = new List<Vector3>();
-        foreach (Node n in FindRange(x, y, maxStamina))
+        foreach (Node n in FindRange(x, y, currentStamina))
         {
             if (n.x == x && n.y == y)
                 continue;
@@ -436,7 +433,7 @@ public class Character : Unit
         if (attackRangeRenderer == null)
             return;
         List<Vector3> posList = new List<Vector3>();
-        foreach (Node n in ExpandArea(FindRange(x, y, maxStamina), attackRange))
+        foreach (Node n in ExpandArea(FindRange(x, y, currentStamina), attackRange))
         {
             if (n.x == x && n.y == y)
                 continue;
@@ -489,5 +486,14 @@ public class Character : Unit
     {
         // Can be used to change the node initial walk cost.
         return n.cost;
+    }
+
+    /// <summary>
+    /// If the character is moving.
+    /// </summary>
+    /// <returns></returns>
+    public bool IsMoving()
+    {
+        return moving;
     }
 }

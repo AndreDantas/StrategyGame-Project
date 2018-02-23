@@ -45,10 +45,7 @@ public class Map : MonoBehaviour
     /// The 2D array of nodes.
     /// </summary>
     public Node[,] nodes;
-    /// <summary>
-    /// The sprite of the current selected node.
-    /// </summary>
-    public GameObject nodeSelectSprite;
+
     /// <summary>
     /// The current selected node.
     /// </summary>
@@ -59,14 +56,11 @@ public class Map : MonoBehaviour
     protected Character selectedCharacter;
     private void Awake()
     {
-        //Subscribing to ScreenClicks OnClick event.
-        if (ScreenClicks.instance)
-        {
-            ScreenClicks.instance.OnClick += OnClick;
-        }
+
 
 
     }
+
     private void OnValidate()
     {
         rows = MathOperations.ClampMin(rows, 1);
@@ -76,8 +70,7 @@ public class Map : MonoBehaviour
     private void Update()
     {
 
-        //Updating the selected node sprite.
-        PlaceSelectedNodeSprite();
+
     }
 
     /// <summary>
@@ -101,28 +94,7 @@ public class Map : MonoBehaviour
         return true;
     }
 
-    /// <summary>
-    /// Used to place the graphic on the selected Node.
-    /// </summary>
-    public void PlaceSelectedNodeSprite()
-    {
-        if (selectedNode != null ? ValidCoordinate(selectedNode) : false)
-        {
-            if (nodeSelectSprite != null)
-            {
 
-                nodeSelectSprite.transform.position = new Vector2(selectedNode.x + nodeOffsetX, selectedNode.y + nodeOffsetY);
-                nodeSelectSprite.SetActive(true);
-            }
-        }
-        else
-        {
-            if (nodeSelectSprite != null)
-            {
-                nodeSelectSprite.SetActive(false);
-            }
-        }
-    }
 
     /// <summary>
     /// When a click is made.
@@ -150,13 +122,20 @@ public class Map : MonoBehaviour
                         if (selectedCharacter != null)
                         {
                             selectedCharacter.WalkPath(selectedCharacter.PathFind(originNode));
+                            selectedCharacter.ClearAttackRange();
+                            selectedCharacter.ClearWalkRange();
                             selectedCharacter = null;
+
                         }
                     }
                     else
                     {
                         if (originNode.unitOnNode is Character)
+                        {
                             selectedCharacter = (Character)originNode.unitOnNode;
+                            selectedCharacter.ShowWalkRange();
+                            selectedCharacter.ShowAttackRange();
+                        }
                         else
                             selectedCharacter = null;
                     }
@@ -328,6 +307,9 @@ public class Map : MonoBehaviour
 
     public bool ValidCoordinate(Node node)
     {
+        if (node == null)
+            return false;
+
         return ValidCoordinate(node.x, node.y);
     }
 
@@ -357,6 +339,17 @@ public class Map : MonoBehaviour
         }
         return Vector3.zero;
     }
+    public List<Vector3> GetWorldPositionsFromNodes(List<Node> nodeList)
+    {
+        if (nodeList == null ? true : nodeList.Count == 0)
+            return null;
+        List<Vector3> posList = new List<Vector3>();
+        foreach (Node n in nodeList)
+        {
+            posList.Add(GetWorldPositionFromNode(n.x, n.y));
+        }
+        return posList;
+    }
 
     /// <summary>
     /// Returns the world position of the node.
@@ -373,8 +366,7 @@ public class Map : MonoBehaviour
     {
         if (distance == NodeDistance.Manhattan)
         {
-            float d = 0.5f;
-            return (Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y)) * d;
+            return (Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y)) * Node.MinCost;
         }
         else
             return Mathf.Sqrt(Mathf.Pow(a.x - b.x, 2) + Mathf.Pow(a.y - b.y, 2));

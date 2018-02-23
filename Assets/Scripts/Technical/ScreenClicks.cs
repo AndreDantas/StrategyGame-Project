@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public class ScreenClicks : MonoBehaviour
 {
     public static ScreenClicks instance;
-    public delegate void OnClickEventHandler();
+    public delegate void OnClickEventHandler(Vector2 originPos, Vector2 releasePos);
     public event OnClickEventHandler OnClick;
     public float clickMaxTime = 0.2f;
     float clickTime;
@@ -54,7 +54,7 @@ public class ScreenClicks : MonoBehaviour
             mouseClickReleasePos = Input.mousePosition;
 
             if (clicking && OnClick != null)
-                OnClick();
+                OnClick(mouseClickOriginPos, mouseClickReleasePos);
 
             clicking = false;
         }

@@ -298,7 +298,15 @@
     <Compile Include="Assets\PixelPerfectCamera\Scripts\PixelSnap.cs" />
     <Compile Include="Assets\PixelPerfectCamera\Scripts\Scroller.cs" />
     <Compile Include="Assets\Scripts\Characters\Character.cs" />
+    <Compile Include="Assets\Scripts\Characters\Enemy\EnemyCharacter.cs" />
+    <Compile Include="Assets\Scripts\Characters\Player\PlayerCharacter.cs" />
     <Compile Include="Assets\Scripts\Characters\Unit.cs" />
+    <Compile Include="Assets\Scripts\GameStates\Battle\BattleController.cs" />
+    <Compile Include="Assets\Scripts\GameStates\Battle\BattleState.cs" />
+    <Compile Include="Assets\Scripts\GameStates\Battle\InitBattleState.cs" />
+    <Compile Include="Assets\Scripts\GameStates\Battle\MoveTargetState.cs" />
+    <Compile Include="Assets\Scripts\GameStates\StateMachine\State.cs" />
+    <Compile Include="Assets\Scripts\GameStates\StateMachine\StateMachine.cs" />
     <Compile Include="Assets\Scripts\Map\AreaRangeRenderer.cs" />
     <Compile Include="Assets\Scripts\Map\Map.cs" />
     <Compile Include="Assets\Scripts\Map\MapController.cs" />
@@ -310,6 +318,7 @@
     <Compile Include="Assets\Scripts\Technical\MathOperations.cs" />
     <Compile Include="Assets\Scripts\Technical\ReadOnlyAttribute.cs" />
     <Compile Include="Assets\Scripts\Technical\ScreenClicks.cs" />
+    <Compile Include="Assets\Scripts\Technical\ShowFps.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />

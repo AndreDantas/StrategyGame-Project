@@ -18,8 +18,8 @@ public class AreaRangeRenderer : MonoBehaviour
     /// <summary>
     /// This function renders squares in the positions.
     /// </summary>
-    /// <param name="squarePos">List of positions</param>
-    /// <param name="scale">Each square scale.</param>
+    /// <param name="squarePos">List of positions.</param>
+    /// <param name="scale">Scale of each square.</param>
     public void RenderSquaresArea(List<Vector3> squarePos, float scale = 1f)
     {
         if (squarePos == null || squarePos.Count == 0 || !meshFilter)
@@ -28,8 +28,8 @@ public class AreaRangeRenderer : MonoBehaviour
         Mesh mesh;
         meshFilter.mesh = mesh = new Mesh();
 
-        int verticesNumber = squarePos.Count * 4;
-        int trianglesNumber = squarePos.Count * 6;
+        int verticesNumber = squarePos.Count * 4; // 4 vertices per square
+        int trianglesNumber = squarePos.Count * 6; // 2 Triangles per square
         scale = MathOperations.ClampMin(scale, 0);
 
         Vector3[] vertices = new Vector3[verticesNumber];
@@ -74,9 +74,27 @@ public class AreaRangeRenderer : MonoBehaviour
         mesh.RecalculateBounds();
     }
 
+    /// <summary>
+    /// Clears the rendering.
+    /// </summary>
     public void Clear()
     {
         if (meshFilter)
             meshFilter.mesh = null;
+    }
+
+    /// <summary>
+    /// Updates the rendering if the mesh is not null.
+    /// </summary>
+    /// <param name="squarePos">List of positions.</param>
+    /// <param name="scale">Scale of each square.</param>
+    public void UpdateRender(List<Vector3> squarePos, float scale = 1f)
+    {
+        if (!meshFilter)
+            return;
+        if (meshFilter.mesh == null)
+            return;
+
+        RenderSquaresArea(squarePos, scale);
     }
 }

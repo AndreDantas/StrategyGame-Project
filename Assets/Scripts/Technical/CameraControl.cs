@@ -17,8 +17,9 @@ public class CameraControl : MonoBehaviour
 
     void Start()
     {
-        ClampBounds();
         CalculateCameraBounds();
+        ClampBounds();
+
 
     }
 

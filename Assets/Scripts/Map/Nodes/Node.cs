@@ -3,7 +3,7 @@
 public class Node
 {
     public static float MaxCost = 99f;
-    public static float MinCost = 0.1f;
+    public static float MinCost = 0.5f;
     /// <summary>
     /// The node's name.
     /// </summary>
@@ -32,7 +32,8 @@ public class Node
             _cost = Mathf.Clamp(_cost, MinCost, MaxCost);
         }
     }
-    public float g, h;
+    public float g { get; set; }
+    public float h { get; set; }
     /// <summary>
     /// The node's g cost and h cost.
     /// </summary>
