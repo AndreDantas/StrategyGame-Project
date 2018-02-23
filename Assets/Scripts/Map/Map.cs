@@ -46,7 +46,7 @@ public class Map : MonoBehaviour
     /// </summary>
     public Node[,] nodes;
     /// <summary>
-    /// The current selected node sprite.
+    /// The sprite of the current selected node.
     /// </summary>
     public GameObject nodeSelectSprite;
     /// <summary>

@@ -38,6 +38,39 @@ public class Character : Unit
                 _maxHp = value;
         }
     }
+
+    [SerializeField]
+    int _currentStamina;
+    public int currentStamina
+    {
+        get { return _currentStamina; }
+        set
+        {
+            if (value > maxStamina)
+                _currentStamina = maxStamina;
+            else
+                _currentStamina = maxStamina;
+        }
+    }
+
+    [SerializeField]
+    int _maxStamina;
+    public int maxStamina
+    {
+        get { return _maxStamina; }
+        set
+        {
+            if (value <= 0)
+                _maxStamina = 1;
+            else
+                _maxStamina = value;
+        }
+    }
+    public int attackRange = 1;
+
+    public AreaRangeRenderer walkRangeRenderer;
+    public AreaRangeRenderer attackRangeRenderer;
+
     private void OnValidate()
     {
         //TEST
@@ -47,15 +80,11 @@ public class Character : Unit
     {
 
         InitializeOnMap();
-        //foreach (Node n in FindRange(x, y, 1))
-        //{
-        //    print("Node " + n.name + ": " + n.x + ", " + n.y);
-        //}
-        //foreach (Node n in ExpandArea(FindRange(x, y, 1), 1))
-        //{
-        //    print("Node " + n.name + ": " + n.x + ", " + n.y);
-        //}
 
+        // AREA RENDER TEST
+        ShowAttackRange();
+        ShowWalkRange();
+        ///////////////
     }
     private void Update()
     {
@@ -125,14 +154,29 @@ public class Character : Unit
 
     protected IEnumerator WalkingPath(List<Node> path)
     {
+
+
         if (map == null || path == null)
             yield break;
         if (moving)
             yield break;
+
+        // TEST
+        if (GetPathCost(path) > maxStamina)
+            yield break;
+        ClearAttackRange();
+        ClearWalkRange();
+        ////
+
         foreach (Node n in path)
         {
             yield return LerpMove(n);
         }
+
+        // AREA RENDER TEST
+        ShowAttackRange();
+        ShowWalkRange();
+        ///////////////
     }
 
     /// <summary>
@@ -276,6 +320,8 @@ public class Character : Unit
                 {
                     if (!ValidNode(neighbor))
                         continue;
+                    if (closedSet.Contains(neighbor))
+                        continue;
                     float newG = current.g + NodeCostEvaluation(neighbor);
                     if (neighbor.g == 0 || newG < neighbor.g)
                     {
@@ -336,6 +382,77 @@ public class Character : Unit
         path.Reverse();
         return path;
     }
+
+    /// <summary>
+    /// Returns the total cost of the path.
+    /// </summary>
+    /// <param name="path"></param>
+    /// <returns></returns>
+    protected float GetPathCost(List<Node> path)
+    {
+        if (path == null)
+            return -1;
+        float cost = 0;
+        foreach (Node n in path)
+        {
+            if (n.x == x && n.y == y)
+                continue;
+            cost += n.cost;
+        }
+        return cost;
+    }
+
+    /// <summary>
+    /// Displays the walk range of the character using the AreaRangeRenderer script.
+    /// </summary>
+    public void ShowWalkRange()
+    {
+        if (walkRangeRenderer == null)
+            return;
+        List<Vector3> posList = new List<Vector3>();
+        foreach (Node n in FindRange(x, y, maxStamina))
+        {
+            if (n.x == x && n.y == y)
+                continue;
+            posList.Add(new Vector3(n.x + map.nodeOffsetX, n.y + map.nodeOffsetY, 0));
+        }
+        walkRangeRenderer.RenderSquaresArea(posList, 0.8f);
+    }
+
+    /// <summary>
+    /// Removes the walk range render.
+    /// </summary>
+    public void ClearWalkRange()
+    {
+        if (walkRangeRenderer)
+            walkRangeRenderer.Clear();
+    }
+
+    /// <summary>
+    /// Displays the attack range of the character using the AreaRangeRenderer script.
+    /// </summary>
+    public void ShowAttackRange()
+    {
+        if (attackRangeRenderer == null)
+            return;
+        List<Vector3> posList = new List<Vector3>();
+        foreach (Node n in ExpandArea(FindRange(x, y, maxStamina), attackRange))
+        {
+            if (n.x == x && n.y == y)
+                continue;
+            posList.Add(new Vector3(n.x + map.nodeOffsetX, n.y + map.nodeOffsetY, 0));
+        }
+        attackRangeRenderer.RenderSquaresArea(posList, 0.8f);
+    }
+    /// <summary>
+    /// Removes the attack range render.
+    /// </summary>
+    public void ClearAttackRange()
+    {
+        if (attackRangeRenderer)
+            attackRangeRenderer.Clear();
+    }
+
 
     /// <summary>
     /// Returns true if node can be used as path.

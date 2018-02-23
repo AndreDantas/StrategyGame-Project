@@ -299,6 +299,7 @@
   <ItemGroup>
     <Compile Include="Assets\Editor\AssetUsageDetector.cs" />
     <Compile Include="Assets\Editor\ConditionalHidePropertyDrawer.cs" />
+    <Compile Include="Assets\Editor\MeshRendererSortingLayerEditor.cs" />
     <Compile Include="Assets\Editor\ReadOnlyDrawer.cs" />
     <Compile Include="Assets\Tiled2Unity\Scripts\Editor\CustomTiledImporterAttribute.cs" />
     <Compile Include="Assets\Tiled2Unity\Scripts\Editor\ICustomTiledImporter.cs" />
