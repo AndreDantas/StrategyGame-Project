@@ -54,23 +54,12 @@ public class Map : MonoBehaviour
     /// The current selected Character.
     /// </summary>
     protected Character selectedCharacter;
-    private void Awake()
-    {
-
-
-
-    }
 
     private void OnValidate()
     {
         rows = MathOperations.ClampMin(rows, 1);
         columns = MathOperations.ClampMin(columns, 1);
         transform.position = Vector3.zero;
-    }
-    private void Update()
-    {
-
-
     }
 
     /// <summary>
@@ -94,61 +83,6 @@ public class Map : MonoBehaviour
         return true;
     }
 
-
-
-    /// <summary>
-    /// When a click is made.
-    /// </summary>
-    public void OnClick()
-    {
-        Vector2 originPos = Camera.main.ScreenToWorldPoint(ScreenClicks.instance.GetClickOriginPos());
-        Vector2 releasePos = Camera.main.ScreenToWorldPoint(ScreenClicks.instance.GetClickReleasePos());
-
-        if (ValidCoordinate(originPos) && ValidCoordinate(releasePos))
-        {
-            Node originNode = GetNodeFromWorldPosition(originPos);
-            Node releaseNode = GetNodeFromWorldPosition(releasePos);
-
-            if (!EventSystem.current.IsPointerOverGameObject(-1) && !ScreenClicks.IsPointerOverUIObject()) //The click wasn't on UI element.
-            {
-
-                if (originNode == releaseNode) // The click was on the same Node.
-                {
-                    selectedNode = originNode;
-                    ///CHARACTER INTERACTIONS - IN TEST PROCESS///
-                    if (originNode.unitOnNode == null)
-                    {
-
-                        if (selectedCharacter != null)
-                        {
-                            selectedCharacter.WalkPath(selectedCharacter.PathFind(originNode));
-                            selectedCharacter.ClearAttackRange();
-                            selectedCharacter.ClearWalkRange();
-                            selectedCharacter = null;
-
-                        }
-                    }
-                    else
-                    {
-                        if (originNode.unitOnNode is Character)
-                        {
-                            selectedCharacter = (Character)originNode.unitOnNode;
-                            selectedCharacter.ShowWalkRange();
-                            selectedCharacter.ShowAttackRange();
-                        }
-                        else
-                            selectedCharacter = null;
-                    }
-                    //////////////////////////////////////////////
-                }
-                else
-                {
-                    //selectedNode = null;
-                }
-            }
-
-        }
-    }
 
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()

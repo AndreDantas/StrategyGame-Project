@@ -15,6 +15,6 @@ public class InitBattleState : BattleState
         //Actions before battle.
 
         yield return null;
-        owner.ChangeState<MoveTargetState>();
+        owner.ChangeState<SelectTargetState>();
     }
 }

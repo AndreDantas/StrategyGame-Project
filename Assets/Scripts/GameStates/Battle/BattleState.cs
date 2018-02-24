@@ -8,7 +8,8 @@ public class BattleState : State
     protected BattleController owner;
     public Transform nodeSelectSprite { get { return owner.nodeSelectSprite; } }
     public Map map { get { return owner.map; } }
-    public Node pos { get { return owner.pos; } set { owner.pos = value; } }
+    public Node currentNode { get { return owner.currentNode; } set { owner.currentNode = value; } }
+    public Character currentCharacter { get { return owner.currentCharacter; } set { owner.currentCharacter = value; } }
 
     protected virtual void Awake()
     {
@@ -28,7 +29,7 @@ public class BattleState : State
         //Unsubscribing to ScreenClicks OnClick event.
         if (ScreenClicks.instance)
         {
-            ScreenClicks.instance.OnClick += OnClick;
+            ScreenClicks.instance.OnClick -= OnClick;
         }
     }
     protected virtual void OnClick(Vector2 originPos, Vector2 releasePos)
@@ -41,15 +42,25 @@ public class BattleState : State
     /// </summary>
     protected virtual void SelectNode(Node node)
     {
-        if (node == pos || map != null ? !map.ValidCoordinate(node) : true)
+        if (node == currentNode || map != null ? !map.ValidCoordinate(node) : true)
             return;
 
-        pos = map.nodes[node.x, node.y];
+        currentNode = map.nodes[node.x, node.y];
         if (nodeSelectSprite)
         {
-            nodeSelectSprite.position = map.GetWorldPositionFromNode(pos);
+            nodeSelectSprite.position = map.GetWorldPositionFromNode(currentNode);
             if (!nodeSelectSprite.gameObject.activeSelf)
                 nodeSelectSprite.gameObject.SetActive(true);
+        }
+    }
+
+    protected virtual void DeactivateSelectNode()
+    {
+        if (nodeSelectSprite)
+        {
+
+            if (nodeSelectSprite.gameObject.activeSelf)
+                nodeSelectSprite.gameObject.SetActive(false);
         }
     }
 }

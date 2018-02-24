@@ -10,7 +10,7 @@ public class BattleController : StateMachine
     /// </summary>
     public Transform nodeSelectSprite;
     public Map map;
-    public Node pos;
+    public Node currentNode;
     public Character currentCharacter;
 
     private void Start()

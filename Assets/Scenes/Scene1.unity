@@ -185,7 +185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b7c33c2cff26b046bd7d02c0314ed20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  x: 12
+  x: 11
   y: 9
   map: {fileID: 1193259326}
   _currentHp: 0
@@ -202,7 +202,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 157410528}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.5, y: 9.5, z: 0}
+  m_LocalPosition: {x: 11.5, y: 9.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 797821705}
@@ -13689,7 +13689,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeSelectSprite: {fileID: 1815450568}
   map: {fileID: 1193259326}
-  pos:
+  currentNode:
     name: 
     x: 0
     y: 0

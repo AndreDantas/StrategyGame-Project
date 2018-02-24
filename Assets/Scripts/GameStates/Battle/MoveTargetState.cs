@@ -5,15 +5,32 @@ using UnityEngine.EventSystems;
 
 public class MoveTargetState : BattleState
 {
-    //TEST
-    Character selectedCharacter;
+    List<Node> movementNodes;
+
+    public override void Enter()
+    {
+        base.Enter();
+        movementNodes = currentCharacter.FindRange(currentCharacter.x, currentCharacter.y, currentCharacter.currentStamina);
+        currentCharacter.ShowAttackRange();
+        currentCharacter.ShowWalkRange();
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+        currentCharacter.ClearAttackRange();
+        currentCharacter.ClearWalkRange();
+        movementNodes = null;
+    }
 
     protected override void OnClick(Vector2 originPos, Vector2 releasePos)
     {
         if (map == null)
             return;
+
         originPos = Camera.main.ScreenToWorldPoint(originPos);
         releasePos = Camera.main.ScreenToWorldPoint(releasePos);
+
         if (map.ValidCoordinate(originPos) && map.ValidCoordinate(releasePos))
         {
             Node originNode = map.GetNodeFromWorldPosition(originPos);
@@ -25,51 +42,16 @@ public class MoveTargetState : BattleState
                 if (originNode == releaseNode) // The click was on the same Node.
                 {
                     SelectNode(originNode);
-                    ///CHARACTER INTERACTIONS - IN TEST PROCESS///
-                    if (originNode.unitOnNode == null)
+                    if (movementNodes.Contains(originNode)) // The node was in the movement range
                     {
-
-                        if (selectedCharacter != null)
-                        {
-                            selectedCharacter.WalkPath(selectedCharacter.PathFind(originNode));
-                            selectedCharacter.ClearAttackRange();
-                            selectedCharacter.ClearWalkRange();
-                            selectedCharacter = null;
-
-                        }
+                        owner.ChangeState<MoveSequenceState>();
                     }
-                    else
+                    else // The node wasn't in the movement range. Return to select state.
                     {
-                        if (originNode.unitOnNode is Character)
-                        {
-                            Character chr = (Character)originNode.unitOnNode;
-
-                            if (selectedCharacter != null)
-                            {
-                                selectedCharacter.ClearAttackRange();
-                                selectedCharacter.ClearWalkRange();
-                            }
-
-                            if (!chr.IsMoving())
-                            {
-                                selectedCharacter = chr;
-                                selectedCharacter.ShowWalkRange();
-                                selectedCharacter.ShowAttackRange();
-                            }
-                            else
-                                selectedCharacter = null;
-                        }
-                        else
-                            selectedCharacter = null;
+                        owner.ChangeState<SelectTargetState>();
                     }
-                    //////////////////////////////////////////////
-                }
-                else
-                {
-                    //selectedNode = null;
                 }
             }
-
         }
     }
 }

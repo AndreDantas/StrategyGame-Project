@@ -114,7 +114,7 @@ public class Character : Unit
     /// <returns></returns>
     protected IEnumerator LerpMove(Node destination, float duration = 0.15f)
     {
-        if (moving || destination == null || map == null)
+        if (destination == null || map == null)
             yield break;
         if (destination.x == x && destination.y == y)
             yield break;
@@ -124,7 +124,7 @@ public class Character : Unit
         Vector2 start = new Vector2(x + map.nodeOffsetX, y + map.nodeOffsetY);
         Vector2 end = new Vector2(destination.x + map.nodeOffsetX, destination.y + map.nodeOffsetY);
         float lerpTime = 0f;
-        moving = true;
+
         while (t < 1)
         {
             t = lerpTime / duration;
@@ -136,7 +136,7 @@ public class Character : Unit
         x = destination.x;
         y = destination.y;
         map.nodes[x, y].unitOnNode = this;
-        moving = false;
+
     }
 
     /// <summary>
@@ -153,7 +153,6 @@ public class Character : Unit
     protected IEnumerator WalkingPath(List<Node> path)
     {
 
-
         if (map == null || path == null)
             yield break;
         if (moving)
@@ -165,12 +164,12 @@ public class Character : Unit
         ClearAttackRange();
         ClearWalkRange();
         ////
-
+        moving = true;
         foreach (Node n in path)
         {
             yield return LerpMove(n);
         }
-
+        moving = false;
     }
 
     /// <summary>
@@ -333,8 +332,21 @@ public class Character : Unit
                 result.Add(n);
             n.g = 0;
         }
-        return result;
+        return FilterArea(result);
     }
+
+    protected List<Node> FilterArea(List<Node> area)
+    {
+        List<Node> newNodes = new List<Node>();
+        foreach (Node n in area)
+        {
+            if (n.unitOnNode != null)
+                continue;
+            newNodes.Add(n);
+        }
+        return newNodes;
+    }
+
 
     /// <summary>
     /// Used to extend an area by a range. Can be used to find the attack range of a character based on his move area.
