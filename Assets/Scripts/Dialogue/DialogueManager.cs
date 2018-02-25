@@ -13,6 +13,10 @@ public enum DialogueSpeed
     Fast
 }
 
+/// <summary>
+/// Place this script on gameobject to have a dialogue manager on scene. To start a dialogue, use the StartConversation function with a ConversationData.
+/// <para>To progress through the dialogues, call the function NextSentence.</para>
+/// </summary>
 public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager instance;
@@ -28,10 +32,11 @@ public class DialogueManager : MonoBehaviour
     /// The main text to type the dialogue.
     /// </summary>
     public TextMeshProUGUI mainDialogueText;
+    public GameObject dialogueBox;
     /// <summary>
     /// The speaker sprite.
     /// </summary>
-    public Image speakerSprite;
+    public Image speakerSpriteHolder;
     public delegate void DialogueEventHandler();
 
     public event DialogueEventHandler OnComplete;
@@ -73,11 +78,6 @@ public class DialogueManager : MonoBehaviour
 
     }
 
-    private void Start()
-    {
-
-    }
-
     /// <summary>
     /// Initiates the conversation.
     /// </summary>
@@ -88,6 +88,9 @@ public class DialogueManager : MonoBehaviour
             return;
         if (conversation.dialogueList != null ? conversation.dialogueList.Count == 0 : true)
             return;
+
+        if (dialogueBox != null)
+            dialogueBox.SetActive(true);
 
         if (IsAltering())
         {
@@ -158,9 +161,10 @@ public class DialogueManager : MonoBehaviour
 
         mainDialogueText.text = "";
         mainDialogueText.color = currentDialogue.textColor;
+        mainDialogueText.gameObject.SetActive(true);
 
-        if (speakerSprite != null)
-            speakerSprite.sprite = currentDialogue.speaker;
+        if (speakerSpriteHolder != null)
+            speakerSpriteHolder.sprite = currentDialogue.speaker;
 
         if (instant)
         {
@@ -178,6 +182,10 @@ public class DialogueManager : MonoBehaviour
     {
         if (mainDialogueText != null)
             mainDialogueText.text = "";
+        dialogues.Clear();
+        sentences.Clear();
+        currentDialogue = null;
+
         isDone = true;
         if (OnComplete != null)
             OnComplete();
@@ -284,6 +292,12 @@ public class DialogueManager : MonoBehaviour
             }
         }
 
+    }
+
+    public void HideDialogueBox()
+    {
+        if (dialogueBox != null)
+            dialogueBox.SetActive(false);
     }
 
     /// <summary>

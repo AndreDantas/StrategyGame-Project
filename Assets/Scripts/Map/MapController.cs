@@ -59,6 +59,10 @@ public class MapController : MonoBehaviour
         {
             LoadNodeReference();
         }
+        if (currentMap == null)
+            currentMap = FindObjectOfType<Map>();
+        if (grid == null)
+            grid = FindObjectOfType<TileGrid>();
         InitializeMap();
 
     }
@@ -199,7 +203,7 @@ public class MapController : MonoBehaviour
             return;
 
 
-        if (currentMap.GenerateBaseMap()) //If the creation of the base map and the tile grid succeeds.
+        if (currentMap.GenerateBaseMap()) //If the creation of the base map succeeds.
         {
             grid.CreateTileMap();
             for (int i = 0; i < currentMap.nodes.GetLength(0); i++)

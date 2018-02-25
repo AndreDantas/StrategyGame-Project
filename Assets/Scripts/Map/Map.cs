@@ -307,6 +307,29 @@ public class Map : MonoBehaviour
     }
 
     /// <summary>
+    /// Returns a list of the nodes that are closer to te target.
+    /// </summary>
+    /// <param name="availableArea">The area to check.</param>
+    /// <param name="target">The target node</param>
+    /// <param name="optimalDistance">The best possible distance.</param>
+    /// <returns></returns>
+    public static List<Node> GetClosestNode(List<Node> availableArea, Node target, int optimalDistance)
+    {
+        List<Node> result = new List<Node>();
+        foreach (Node n in availableArea)
+        {
+            if (n.x == target.x && n.y == target.y)
+                continue;
+            int distance = Mathf.Abs(n.x - target.x) + Mathf.Abs(n.y - target.y);
+            if (distance <= optimalDistance)
+            {
+                result.Add(n);
+            }
+        }
+        return result;
+    }
+
+    /// <summary>
     /// O(n^2) solution to find the Manhattan distance to "on" nodes in a two dimension array
     /// </summary>
     /// <param name="area">The "on" nodes.</param>
@@ -359,6 +382,11 @@ public class Map : MonoBehaviour
             }
         }
         return rangeMap;
+    }
+
+    public static int DefaultManhattanDistance(Node a, Node b)
+    {
+        return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y);
     }
 
 #if UNITY_EDITOR

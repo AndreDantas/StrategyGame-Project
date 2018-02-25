@@ -9,6 +9,8 @@ public class DialogueState : BattleState
     protected override void Awake()
     {
         base.Awake();
+        //TEST
+        data = Resources.Load<ConversationData>("Conversations/TestConversation");
     }
 
     public override void Enter()
@@ -16,6 +18,8 @@ public class DialogueState : BattleState
         base.Enter();
         if (DialogueManager.instance)
             DialogueManager.instance.StartConversation(data);
+        if (cameraControl)
+            cameraControl.canMove = false;
     }
 
     protected override void OnDestroy()
@@ -40,7 +44,12 @@ public class DialogueState : BattleState
 
     void OnCompleteConversation()
     {
+        if (DialogueManager.instance)
+            DialogueManager.instance.HideDialogueBox();
+        if (cameraControl)
+            cameraControl.canMove = true;
         owner.ChangeState<SelectTargetState>();
+
     }
     protected override void OnClick(Vector2 originPos, Vector2 releasePos)
     {

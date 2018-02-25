@@ -9,7 +9,9 @@ public class BattleState : State
     public Transform nodeSelectSprite { get { return owner.nodeSelectSprite; } }
     public Map map { get { return owner.map; } }
     public Node currentNode { get { return owner.currentNode; } set { owner.currentNode = value; } }
-    public Character currentCharacter { get { return owner.currentCharacter; } set { owner.currentCharacter = value; } }
+    public CameraControl cameraControl { get { return owner.cameraControl; } }
+    public List<Character> units { get { return owner.units; } }
+    public Turn turn { get { return owner.turn; } }
 
     protected virtual void Awake()
     {

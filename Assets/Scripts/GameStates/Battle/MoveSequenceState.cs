@@ -15,9 +15,20 @@ public class MoveSequenceState : BattleState
     IEnumerator Movement()
     {
         yield return null;
-        currentCharacter.WalkPath(currentCharacter.PathFind(currentNode));
-        while (currentCharacter.IsMoving())
+        List<Node> path = turn.actor.PathFind(currentNode);
+        float pathCost = turn.actor.GetPathCost(path);
+
+        if (pathCost > turn.actor.currentStamina)
+        {
+            owner.ChangeState<ActionState>();
+            yield break;
+        }
+
+        turn.actor.WalkPath(path);
+        while (turn.actor.IsMoving())
             yield return null;
-        owner.ChangeState<SelectTargetState>();
+        turn.actor.currentStamina -= pathCost;
+        turn.hasUnitMoved = true;
+        owner.ChangeState<ActionState>();
     }
 }

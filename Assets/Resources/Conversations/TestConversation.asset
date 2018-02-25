@@ -21,7 +21,7 @@ MonoBehaviour:
     dialogueSound: {fileID: 0}
   - name: Enemy
     sentences:
-    - Stop! Give me all your gold!
+    - Stop!<w> Give me all your gold!
     textColor: {r: 0.844, g: 0.034604006, b: 0.034604006, a: 1}
     speaker: {fileID: 0}
     dialogueSound: {fileID: 0}

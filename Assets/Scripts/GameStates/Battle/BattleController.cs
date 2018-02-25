@@ -11,7 +11,9 @@ public class BattleController : StateMachine
     public Transform nodeSelectSprite;
     public Map map;
     public Node currentNode;
-    public Character currentCharacter;
+    public CameraControl cameraControl;
+    public List<Character> units = new List<Character>();
+    public Turn turn = new Turn();
 
     private void Start()
     {

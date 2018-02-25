@@ -2,25 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
-public class MoveTargetState : BattleState
+public class ExploreState : BattleState
 {
-    List<Node> movementNodes;
-
-    public override void Enter()
+    protected override void AddListeners()
     {
-        base.Enter();
-        movementNodes = currentCharacter.FindRange(currentCharacter.x, currentCharacter.y, currentCharacter.currentStamina);
-        currentCharacter.ShowAttackRange();
-        currentCharacter.ShowWalkRange();
+        base.AddListeners();
+        if (InputManager.instance != null)
+            InputManager.instance.OnBackPress += OnBackPress;
     }
 
-    public override void Exit()
+    protected override void RemoveListeners()
     {
-        base.Exit();
-        currentCharacter.ClearAttackRange();
-        currentCharacter.ClearWalkRange();
-        movementNodes = null;
+        base.RemoveListeners();
+        if (InputManager.instance != null)
+            InputManager.instance.OnBackPress -= OnBackPress;
     }
 
     protected override void OnClick(Vector2 originPos, Vector2 releasePos)
@@ -42,16 +37,24 @@ public class MoveTargetState : BattleState
                 if (originNode == releaseNode) // The click was on the same Node.
                 {
                     SelectNode(originNode);
-                    if (movementNodes.Contains(originNode)) // The node was in the movement range
+                    if (originNode.unitOnNode != null)
                     {
-                        owner.ChangeState<MoveSequenceState>();
+                        if ((Character)originNode.unitOnNode == turn.actor)
+                        {
+                            owner.ChangeState<ActionState>();
+                        }
                     }
-                    else // The node wasn't in the movement range. Return to select state.
-                    {
-                        owner.ChangeState<SelectTargetState>();
-                    }
+
                 }
             }
         }
+    }
+
+    public void OnBackPress()
+    {
+        owner.ChangeState<ActionState>();
+
+        //Center camera on current character
+        Camera.main.transform.position = new Vector3(turn.actor.transform.position.x, turn.actor.transform.position.y, Camera.main.transform.position.z);
     }
 }

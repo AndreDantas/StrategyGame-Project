@@ -21,7 +21,7 @@ public class Character : Unit
             if (value > maxHp)
                 _currentHp = maxHp;
             else
-                _currentHp = maxHp;
+                _currentHp = value;
         }
     }
 
@@ -40,8 +40,8 @@ public class Character : Unit
     }
 
     [SerializeField]
-    int _currentStamina;
-    public int currentStamina
+    float _currentStamina;
+    public float currentStamina
     {
         get { return _currentStamina; }
         set
@@ -49,13 +49,13 @@ public class Character : Unit
             if (value > maxStamina)
                 _currentStamina = maxStamina;
             else
-                _currentStamina = maxStamina;
+                _currentStamina = value;
         }
     }
 
     [SerializeField]
-    int _maxStamina;
-    public int maxStamina
+    float _maxStamina;
+    public float maxStamina
     {
         get { return _maxStamina; }
         set
@@ -66,6 +66,39 @@ public class Character : Unit
                 _maxStamina = value;
         }
     }
+    [SerializeField]
+    int _attack = 3;
+    public int attack
+    {
+        get
+        {
+            return _attack;
+        }
+        set
+        {
+            if (value < 0)
+                _attack = 0;
+            else
+                _attack = value;
+        }
+    }
+    [SerializeField]
+    int _defense = 1;
+    public int defense
+    {
+        get
+        {
+            return _defense;
+        }
+        set
+        {
+            if (value < 0)
+                _defense = 0;
+            else
+                _defense = value;
+        }
+    }
+
     public int attackRange = 1;
 
     public AreaRangeRenderer walkRangeRenderer;
@@ -80,10 +113,6 @@ public class Character : Unit
     private void Start()
     {
         InitializeOnMap();
-    }
-    private void Update()
-    {
-
     }
 
     /// <summary>
@@ -106,6 +135,42 @@ public class Character : Unit
 
     }
 
+    public void Place(int x, int y)
+    {
+        if (map == null)
+            return;
+        if (map.ValidCoordinate(x, y) ? map.nodes[x, y].unitOnNode == null && map.nodes[x, y].walkable == true : false)
+        {
+            if (map.ValidCoordinate(this.x, this.y) ? (Character)map.nodes[this.x, this.y].unitOnNode == this : false)
+            {
+                map.nodes[this.x, this.y].unitOnNode = null;
+            }
+            this.x = x;
+            this.y = y;
+            map.nodes[x, y].unitOnNode = this;
+            transform.position = new Vector2(x + map.nodeOffsetX, y + map.nodeOffsetY);
+        }
+    }
+
+    public bool InRange(Node n)
+    {
+        return Map.DefaultManhattanDistance(n, new Node(x, y)) <= attackRange;
+    }
+
+    public virtual void StartTurn()
+    {
+        currentStamina = maxStamina;
+    }
+    public virtual void Damage(int damage)
+    {
+        int newDamage = MathOperations.ClampMin(damage - defense, 0);
+        currentHp -= newDamage;
+        if (currentHp <= 0) // Character dies
+            currentHp = 0;
+
+    }
+
+    #region Movement
     /// <summary>
     /// Moves the character between nodes.
     /// </summary>
@@ -171,7 +236,16 @@ public class Character : Unit
         }
         moving = false;
     }
-
+    /// <summary>
+    /// If the character is moving.
+    /// </summary>
+    /// <returns></returns>
+    public bool IsMoving()
+    {
+        return moving;
+    }
+    #endregion
+    #region Pathfinding and AreaRange
     /// <summary>
     /// A* path find algorithm. 
     /// </summary>
@@ -280,7 +354,7 @@ public class Character : Unit
     /// </summary>
     /// <param name="range">The max range.</param>
     /// <returns></returns>
-    public List<Node> FindRange(int x, int y, int range)
+    public List<Node> FindRange(int x, int y, float range)
     {
         // Based on Dijkstra's Algorithm: https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
 
@@ -335,7 +409,7 @@ public class Character : Unit
         return FilterArea(result);
     }
 
-    protected List<Node> FilterArea(List<Node> area)
+    protected virtual List<Node> FilterArea(List<Node> area)
     {
         List<Node> newNodes = new List<Node>();
         foreach (Node n in area)
@@ -353,11 +427,20 @@ public class Character : Unit
     /// </summary>
     /// <param name="baseArea">The area to be expanded.</param>
     /// <param name="range">The range of the expansion.</param>
+    /// <param name="includeCurrentNode">If the node the character is standing should be included.</param>
     /// <returns>This function doesn't return all nodes, only the new ones.</returns>
-    public List<Node> ExpandArea(List<Node> baseArea, int range)
+    public List<Node> ExpandArea(List<Node> baseArea, int range, bool includeCurrentNode = false)
     {
         if (!map) // The map can't be null.
             return null;
+        if (baseArea == null ? true : baseArea.Count == 0)
+        {
+            baseArea = new List<Node>();
+            baseArea.Add(map.nodes[x, y]);
+        }
+        else if (includeCurrentNode)
+            baseArea.Add(map.nodes[x, y]);
+
         int[,] rangeMap = map.Manhattan(baseArea);
         List<Node> newNodes = new List<Node>();
         for (int i = 0; i < rangeMap.GetLength(0); i++)
@@ -395,10 +478,10 @@ public class Character : Unit
     /// </summary>
     /// <param name="path"></param>
     /// <returns></returns>
-    protected float GetPathCost(List<Node> path)
+    public float GetPathCost(List<Node> path)
     {
         if (path == null)
-            return -1;
+            return float.MaxValue;
         float cost = 0;
         foreach (Node n in path)
         {
@@ -409,8 +492,30 @@ public class Character : Unit
         return cost;
     }
 
+    /// <summary>
+    /// Returns the node that has the shortest path to it.
+    /// </summary>
+    /// <param name="nodes"></param>
+    /// <returns></returns>
+    public Node ClosetNode(List<Node> nodes)
+    {
+        float cost = float.MaxValue;
+        Node closest = null;
+        foreach (Node n in nodes)
+        {
+            float temp = GetPathCost(PathFind(n));
+            if (temp < cost)
+            {
+                cost = temp;
+                closest = n;
+            }
+        }
 
+        return closest;
+    }
 
+    #endregion
+    #region Area Range Renderer
     /// <summary>
     /// Displays the walk range of the character using the AreaRangeRenderer script.
     /// </summary>
@@ -445,7 +550,7 @@ public class Character : Unit
         if (attackRangeRenderer == null)
             return;
         List<Vector3> posList = new List<Vector3>();
-        foreach (Node n in ExpandArea(FindRange(x, y, currentStamina), attackRange))
+        foreach (Node n in ExpandArea(FindRange(x, y, currentStamina), attackRange, true))
         {
             if (n.x == x && n.y == y)
                 continue;
@@ -461,6 +566,7 @@ public class Character : Unit
         if (attackRangeRenderer)
             attackRangeRenderer.Clear();
     }
+    #endregion
 
 
     /// <summary>
@@ -500,12 +606,5 @@ public class Character : Unit
         return n.cost;
     }
 
-    /// <summary>
-    /// If the character is moving.
-    /// </summary>
-    /// <returns></returns>
-    public bool IsMoving()
-    {
-        return moving;
-    }
+
 }
