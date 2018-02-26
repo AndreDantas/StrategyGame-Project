@@ -394,8 +394,8 @@
     <Compile Include="Assets\Tilemap\Tiles\Terrain Tile\Scripts\TerrainTile.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Fonts\8-bit-operator\SIL Open Font License.txt" />
     <None Include="Assets\Fonts\aenigma-systematic\aesystematic.txt" />
+    <None Include="Assets\Fonts\pixel_noir\readme-pixelnoir.txt" />
     <None Include="Assets\PixelPerfectCamera\README.txt" />
     <None Include="Assets\PixelPerfectCamera\background_art_license.txt" />
     <None Include="Assets\Resources\XML Files\Nodes.xml" />

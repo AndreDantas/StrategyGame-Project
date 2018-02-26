@@ -10,7 +10,8 @@ public class BattleController : StateMachine
     /// </summary>
     public Transform nodeSelectSprite;
     public Map map;
-    public Node currentNode;
+    public Node selectedNode;
+    public Node movementNode;
     public CameraControl cameraControl;
     public List<Character> units = new List<Character>();
     public Turn turn = new Turn();

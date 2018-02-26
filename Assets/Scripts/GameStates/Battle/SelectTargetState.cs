@@ -17,6 +17,7 @@ public class SelectTargetState : BattleState
         index = (index + 1) % units.Count;
         turn.Change(units[index]);
         yield return null;
+        DeactivateSelectNode();
         owner.ChangeState<ActionState>();
     }
 }

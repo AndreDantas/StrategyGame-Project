@@ -37,6 +37,7 @@ public class ExploreState : BattleState
                 if (originNode == releaseNode) // The click was on the same Node.
                 {
                     SelectNode(originNode);
+                    UpdateFieldInfoBox(originNode);
                     if (originNode.unitOnNode != null)
                     {
                         if ((Character)originNode.unitOnNode == turn.actor)
@@ -47,13 +48,30 @@ public class ExploreState : BattleState
 
                 }
             }
+
+        }
+    }
+
+    public void UpdateFieldInfoBox(Node n)
+    {
+        if (CombatUIController.instance != null)
+        {
+            CombatUIController.instance.ShowFieldInfoBox(n);
+        }
+    }
+
+    public void HideFieldInfoBox()
+    {
+        if (CombatUIController.instance != null)
+        {
+            CombatUIController.instance.HideFieldInfoBox();
         }
     }
 
     public void OnBackPress()
     {
         owner.ChangeState<ActionState>();
-
+        DeactivateSelectNode();
         //Center camera on current character
         Camera.main.transform.position = new Vector3(turn.actor.transform.position.x, turn.actor.transform.position.y, Camera.main.transform.position.z);
     }

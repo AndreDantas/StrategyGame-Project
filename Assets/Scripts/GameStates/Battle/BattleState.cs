@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Battle base state.
+/// </summary>
 public class BattleState : State
 {
 
     protected BattleController owner;
     public Transform nodeSelectSprite { get { return owner.nodeSelectSprite; } }
     public Map map { get { return owner.map; } }
-    public Node currentNode { get { return owner.currentNode; } set { owner.currentNode = value; } }
+    public Node selectedNode { get { return owner.selectedNode; } set { owner.selectedNode = value; } }
+    public Node movementNode { get { return owner.movementNode; } set { owner.movementNode = value; } }
     public CameraControl cameraControl { get { return owner.cameraControl; } }
     public List<Character> units { get { return owner.units; } }
     public Turn turn { get { return owner.turn; } }
@@ -44,13 +48,13 @@ public class BattleState : State
     /// </summary>
     protected virtual void SelectNode(Node node)
     {
-        if (node == currentNode || map != null ? !map.ValidCoordinate(node) : true)
+        if (node == selectedNode || map != null ? !map.ValidCoordinate(node) : true)
             return;
 
-        currentNode = map.nodes[node.x, node.y];
+        selectedNode = map.nodes[node.x, node.y];
         if (nodeSelectSprite)
         {
-            nodeSelectSprite.position = map.GetWorldPositionFromNode(currentNode);
+            nodeSelectSprite.position = map.GetWorldPositionFromNode(selectedNode);
             if (!nodeSelectSprite.gameObject.activeSelf)
                 nodeSelectSprite.gameObject.SetActive(true);
         }
@@ -63,6 +67,7 @@ public class BattleState : State
 
             if (nodeSelectSprite.gameObject.activeSelf)
                 nodeSelectSprite.gameObject.SetActive(false);
+            selectedNode = null;
         }
     }
 }

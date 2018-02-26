@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+
 public class ActionState : BattleState
 {
     List<Node> movementNodes;
@@ -12,6 +13,8 @@ public class ActionState : BattleState
         base.Enter();
         SetUpCharacterRange();
         StartCoroutine(CheckStatus());
+        if (selectedNode == null ? true : selectedNode.name.Trim() == "")
+            HideFieldInfoBox();
     }
 
 
@@ -84,15 +87,16 @@ public class ActionState : BattleState
                 if (originNode == releaseNode) // The click was on the same Node.
                 {
                     SelectNode(originNode);
+                    UpdateFieldInfoBox(originNode);
                     /// TO DO
                     /// Check if target is valid if on action range.
-                    /// Create method that checks the current situation.
                     /// Create interactions for different targets.
-                    /// Create attack state.
                     /// Create way to confirm attack, and attack graphics.
-                    /// Fix Find Range filtering characters node.
+                    /// Create graphic to represent a target.
                     if (movementNodes.Contains(originNode))// The node was in the movement range
                     {
+                        movementNode = selectedNode;
+                        turn.target = null;
                         owner.ChangeState<MoveSequenceState>();
                     }
                     else if (actionNodes.Contains(originNode) && !turn.hasUnitActed)
@@ -100,28 +104,42 @@ public class ActionState : BattleState
                         // Action
                         if (originNode.unitOnNode == null) // No unit on node
                         {
-                            if (!turn.actor.InRange(originNode))
-                            {
-                                SelectNode(turn.actor.ClosetNode(Map.GetClosestNode(movementNodes, originNode, turn.actor.attackRange)));
-                                owner.ChangeState<MoveSequenceState>();
-                            }
+                            turn.target = null;
 
                         }
                         else // Unit on node
                         {
-                            if (originNode.unitOnNode == turn.actor)
+                            if (originNode.unitOnNode == turn.actor) // Unit is the actor
                                 return;
-                            if (!turn.actor.InRange(originNode)) // Move to attack
+                            if (originNode.unitOnNode is Character) // Unit is a character
                             {
+                                Character target = (Character)originNode.unitOnNode;
 
-                                SelectNode(turn.actor.ClosetNode(Map.GetClosestNode(movementNodes, originNode, turn.actor.attackRange)));
-                                owner.ChangeState<MoveSequenceState>();
+                                if (target.team == turn.actor.team) // Same team
+                                    return;
+                                if (turn.target == null ? true : turn.target != target)
+                                {
+                                    turn.target = target;
+                                    return;
+                                }
+                                if (!turn.actor.InRange(originNode)) // Not in range, move to attack
+                                {
+
+                                    movementNode = turn.actor.ClosetNode(Map.GetClosestNode(movementNodes, originNode, turn.actor.attackRange));
+
+                                    owner.ChangeState<MoveSequenceState>();
+                                }
+                                else
+                                {
+
+                                    turn.target = target;
+                                    owner.ChangeState<AttackState>();
+                                }
+
                             }
                             else
                             {
 
-                                turn.target = (Character)originNode.unitOnNode;
-                                owner.ChangeState<AttackState>();
                             }
                         }
                     }
@@ -137,6 +155,7 @@ public class ActionState : BattleState
 
     IEnumerator CheckStatus()
     {
+        //Check if target is on range and can attack. Place attack graphic
         yield return null;
         if (CombatUIController.instance.endTurn != null)
             CombatUIController.instance.endTurn.SetActive(true);
@@ -163,6 +182,7 @@ public class ActionState : BattleState
         owner.ChangeState<SelectTargetState>();
     }
 
+
     public void ClearUI()
     {
         if (CombatUIController.instance != null)
@@ -171,6 +191,22 @@ public class ActionState : BattleState
                 CombatUIController.instance.cancelMove.SetActive(false);
             if (CombatUIController.instance.endTurn != null)
                 CombatUIController.instance.endTurn.SetActive(false);
+        }
+    }
+
+    public void UpdateFieldInfoBox(Node n)
+    {
+        if (CombatUIController.instance != null)
+        {
+            CombatUIController.instance.ShowFieldInfoBox(n);
+        }
+    }
+
+    public void HideFieldInfoBox()
+    {
+        if (CombatUIController.instance != null)
+        {
+            CombatUIController.instance.HideFieldInfoBox();
         }
     }
 
@@ -198,6 +234,10 @@ public class ActionState : BattleState
                 if (CombatUIController.instance.cancelMove != null)
                     CombatUIController.instance.cancelMove.SetActive(false);
             }
+        }
+        else
+        {
+            // Open pause menu
         }
     }
 }

@@ -15,7 +15,7 @@ public class MoveToAttackState : BattleState
     IEnumerator Movement()
     {
         yield return null;
-        List<Node> path = turn.actor.PathFind(currentNode);
+        List<Node> path = turn.actor.PathFind(selectedNode);
         float pathCost = turn.actor.GetPathCost(path);
 
         if (pathCost > turn.actor.currentStamina)

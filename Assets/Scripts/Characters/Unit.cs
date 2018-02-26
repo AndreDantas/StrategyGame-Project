@@ -12,4 +12,5 @@ public abstract class Unit : MonoBehaviour
     /// The current map.
     /// </summary>
     public Map map;
+    public int team = 0;
 }

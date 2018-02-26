@@ -9,13 +9,12 @@ public class MoveSequenceState : BattleState
     {
         base.Enter();
         StartCoroutine(Movement());
-        DeactivateSelectNode();
     }
 
     IEnumerator Movement()
     {
         yield return null;
-        List<Node> path = turn.actor.PathFind(currentNode);
+        List<Node> path = turn.actor.PathFind(movementNode);
         float pathCost = turn.actor.GetPathCost(path);
 
         if (pathCost > turn.actor.currentStamina)

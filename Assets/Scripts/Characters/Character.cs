@@ -530,7 +530,7 @@ public class Character : Unit
                 continue;
             posList.Add(new Vector3(n.x + map.nodeOffsetX, n.y + map.nodeOffsetY, 0));
         }
-        walkRangeRenderer.RenderSquaresArea(posList, 0.8f);
+        walkRangeRenderer.RenderSquaresArea(posList, 0.85f);
     }
 
     /// <summary>
@@ -556,7 +556,7 @@ public class Character : Unit
                 continue;
             posList.Add(new Vector3(n.x + map.nodeOffsetX, n.y + map.nodeOffsetY, 0));
         }
-        attackRangeRenderer.RenderSquaresArea(posList, 0.8f);
+        attackRangeRenderer.RenderSquaresArea(posList, 0.85f);
     }
     /// <summary>
     /// Removes the attack range render.

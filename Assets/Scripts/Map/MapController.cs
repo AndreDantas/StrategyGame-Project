@@ -103,18 +103,25 @@ public class MapController : MonoBehaviour
             {
                 string nodeName = "";
                 float cost = 1;
+                float atk = 0;
+                float def = 0;
                 bool walkable = false;
                 nodeName = nodeDict["name"];
 
-                if (nodeDict["cost"] != null)
+                if (nodeDict.ContainsKey("cost"))
                     float.TryParse(nodeDict["cost"], out cost);
-
-                if (nodeDict["walkable"] != null)
+                if (nodeDict.ContainsKey("attackBonus"))
+                    float.TryParse(nodeDict["attackBonus"], out atk);
+                if (nodeDict.ContainsKey("defenseBonus"))
+                    float.TryParse(nodeDict["defenseBonus"], out def);
+                if (nodeDict.ContainsKey("walkable"))
                     bool.TryParse(nodeDict["walkable"], out walkable);
 
                 Node n = new Node();
                 n.name = nodeName;
                 n.cost = cost;
+                n.attackBonus = atk;
+                n.defenseBonus = def;
                 n.walkable = walkable;
                 normalNodes.Add(n);
             }
@@ -127,21 +134,28 @@ public class MapController : MonoBehaviour
             {
                 string nodeName = "";
                 float cost = 1;
+                float atk = 0;
+                float def = 0;
                 bool walkable = false;
                 int maxHp = 1;
                 nodeName = nodeDict["name"];
 
-                if (nodeDict["cost"] != null)
+                if (nodeDict.ContainsKey("cost"))
                     float.TryParse(nodeDict["cost"], out cost);
-
-                if (nodeDict["walkable"] != null)
+                if (nodeDict.ContainsKey("attackBonus"))
+                    float.TryParse(nodeDict["attackBonus"], out atk);
+                if (nodeDict.ContainsKey("defenseBonus"))
+                    float.TryParse(nodeDict["defenseBonus"], out def);
+                if (nodeDict.ContainsKey("walkable"))
                     bool.TryParse(nodeDict["walkable"], out walkable);
-                if (nodeDict["maxHp"] != null)
+                if (nodeDict.ContainsKey("maxHp"))
                     int.TryParse(nodeDict["maxHp"], out maxHp);
 
                 DestroyableNode n = new DestroyableNode();
                 n.name = nodeName;
                 n.cost = cost;
+                n.attackBonus = atk;
+                n.defenseBonus = def;
                 n.walkable = walkable;
                 n.maxHp = maxHp;
                 destroyableNodes.Add(n);

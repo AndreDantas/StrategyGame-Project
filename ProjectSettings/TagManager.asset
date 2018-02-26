@@ -47,7 +47,7 @@ TagManager:
   - name: GridRender
     uniqueID: 948002233
     locked: 0
-  - name: Player
+  - name: Characters
     uniqueID: 1048238209
     locked: 0
   - name: UI
