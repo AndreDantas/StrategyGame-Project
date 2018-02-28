@@ -4,6 +4,12 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 public class ExploreState : BattleState
 {
+
+    public override void Enter()
+    {
+        base.Enter();
+        turn.target = null;
+    }
     protected override void AddListeners()
     {
         base.AddListeners();
@@ -54,17 +60,17 @@ public class ExploreState : BattleState
 
     public void UpdateFieldInfoBox(Node n)
     {
-        if (CombatUIController.instance != null)
+        if (fieldInfoController != null)
         {
-            CombatUIController.instance.ShowFieldInfoBox(n);
+            fieldInfoController.ShowFieldInfoBox(n);
         }
     }
 
     public void HideFieldInfoBox()
     {
-        if (CombatUIController.instance != null)
+        if (fieldInfoController != null)
         {
-            CombatUIController.instance.HideFieldInfoBox();
+            fieldInfoController.HideFieldInfoBox();
         }
     }
 

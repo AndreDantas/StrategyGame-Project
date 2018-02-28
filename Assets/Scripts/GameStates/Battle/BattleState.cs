@@ -16,6 +16,9 @@ public class BattleState : State
     public CameraControl cameraControl { get { return owner.cameraControl; } }
     public List<Character> units { get { return owner.units; } }
     public Turn turn { get { return owner.turn; } }
+    public GameObject turnActorIndicator { get { return owner.turnActorIndicator; } }
+    public GameObject turnTargetIndicator { get { return owner.turnTargetIndicator; } }
+    public FieldInfoController fieldInfoController { get { return owner.fieldInfoController; } }
 
     protected virtual void Awake()
     {
@@ -70,4 +73,6 @@ public class BattleState : State
             selectedNode = null;
         }
     }
+
+
 }

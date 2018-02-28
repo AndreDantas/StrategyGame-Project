@@ -15,9 +15,29 @@ public class BattleController : StateMachine
     public CameraControl cameraControl;
     public List<Character> units = new List<Character>();
     public Turn turn = new Turn();
+    public GameObject turnActorIndicator;
+    public GameObject turnTargetIndicator;
+    public FieldInfoController fieldInfoController;
 
     private void Start()
     {
         ChangeState<InitBattleState>();
+    }
+    private void Update()
+    {
+        if (selectedNode != null)
+        {
+            float posY = Camera.main.WorldToScreenPoint(new Vector2(selectedNode.x, selectedNode.y)).y;
+            if (posY > Screen.height * 0.65f)
+            {
+                if (fieldInfoController)
+                    fieldInfoController.anchoredPos = AnchoredPosition.BottomLeft;
+            }
+            else if (posY < Screen.height * 0.3f)
+            {
+                if (fieldInfoController)
+                    fieldInfoController.anchoredPos = AnchoredPosition.TopLeft;
+            }
+        }
     }
 }

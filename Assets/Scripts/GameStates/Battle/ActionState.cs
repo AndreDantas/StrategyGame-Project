@@ -93,6 +93,7 @@ public class ActionState : BattleState
                     /// Create interactions for different targets.
                     /// Create way to confirm attack, and attack graphics.
                     /// Create graphic to represent a target.
+                    /// 
                     if (movementNodes.Contains(originNode))// The node was in the movement range
                     {
                         movementNode = selectedNode;
@@ -115,25 +116,27 @@ public class ActionState : BattleState
                             {
                                 Character target = (Character)originNode.unitOnNode;
 
-                                if (target.team == turn.actor.team) // Same team
-                                    return;
+
                                 if (turn.target == null ? true : turn.target != target)
                                 {
                                     turn.target = target;
                                     return;
                                 }
-                                if (!turn.actor.InRange(originNode)) // Not in range, move to attack
+                                if (target.team != turn.actor.team) // The target is an enemy
                                 {
+                                    if (!turn.actor.InRange(originNode)) // Not in range, move to attack
+                                    {
 
-                                    movementNode = turn.actor.ClosetNode(Map.GetClosestNode(movementNodes, originNode, turn.actor.attackRange));
+                                        movementNode = turn.actor.ClosetNode(Map.GetClosestNode(movementNodes, originNode, turn.actor.attackRange));
 
-                                    owner.ChangeState<MoveSequenceState>();
-                                }
-                                else
-                                {
+                                        owner.ChangeState<MoveSequenceState>();
+                                    }
+                                    else
+                                    {
 
-                                    turn.target = target;
-                                    owner.ChangeState<AttackState>();
+                                        turn.target = target;
+                                        owner.ChangeState<AttackState>();
+                                    }
                                 }
 
                             }
@@ -145,6 +148,8 @@ public class ActionState : BattleState
                     }
                     else
                     {
+                        if (originNode.unitOnNode == turn.actor)
+                            return;
                         owner.ChangeState<ExploreState>(); // The node wasn't in the movement or action range. Go to explore mode.
                     }
 
@@ -152,6 +157,8 @@ public class ActionState : BattleState
             }
         }
     }
+
+
 
     IEnumerator CheckStatus()
     {
@@ -196,17 +203,17 @@ public class ActionState : BattleState
 
     public void UpdateFieldInfoBox(Node n)
     {
-        if (CombatUIController.instance != null)
+        if (fieldInfoController != null)
         {
-            CombatUIController.instance.ShowFieldInfoBox(n);
+            fieldInfoController.ShowFieldInfoBox(n);
         }
     }
 
     public void HideFieldInfoBox()
     {
-        if (CombatUIController.instance != null)
+        if (fieldInfoController != null)
         {
-            CombatUIController.instance.HideFieldInfoBox();
+            fieldInfoController.HideFieldInfoBox();
         }
     }
 
@@ -229,6 +236,7 @@ public class ActionState : BattleState
             turn.UndoMove();
             SetUpCharacterRange();
             DeactivateSelectNode();
+            HideFieldInfoBox();
             if (CombatUIController.instance != null)
             {
                 if (CombatUIController.instance.cancelMove != null)

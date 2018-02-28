@@ -333,7 +333,12 @@
     <Compile Include="Assets\Scripts\Technical\ReadOnlyAttribute.cs" />
     <Compile Include="Assets\Scripts\Technical\ScreenClicks.cs" />
     <Compile Include="Assets\Scripts\Technical\ShowFps.cs" />
+    <Compile Include="Assets\Scripts\UI\Bar.cs" />
+    <Compile Include="Assets\Scripts\UI\ChangeColorByScale.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\CombatUIController.cs" />
+    <Compile Include="Assets\Scripts\UI\FieldInfoController.cs" />
+    <Compile Include="Assets\Scripts\UI\SpriteSwap.cs" />
+    <Compile Include="Assets\Scripts\UI\Stat.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />

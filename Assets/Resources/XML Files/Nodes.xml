@@ -20,21 +20,26 @@
       <name>Tree</name>
       <cost>1.5</cost>
       <walkable>true</walkable>
+      <defenseBonus>1</defenseBonus>
     </node>
     <node>
       <name>Forest</name>
       <cost>2</cost>
       <walkable>true</walkable>
+    <defenseBonus>2</defenseBonus>
     </node>
     <node>
       <name>Mountain</name>
       <cost>3</cost>
       <walkable>false</walkable>
+     <defenseBonus>1</defenseBonus>
+      <attackBonus>-2</attackBonus>
     </node>
     <node>
       <name>Road</name>
       <cost>0.5</cost>
       <walkable>true</walkable>
+      <defenseBonus>-1</defenseBonus>
     </node>
     <node>
       <name>Rock</name>
@@ -55,6 +60,7 @@
       <name>Building</name>
       <cost>1</cost>
       <walkable>true</walkable>
+      <defenseBonus>1</defenseBonus>
     </node>
     <node>
       <name>Castle</name>
@@ -65,6 +71,13 @@
       <name>Ruins</name>
       <cost>1</cost>
       <walkable>false</walkable>
+    </node>
+    <node>
+      <name>Fort</name>
+      <cost>1</cost>
+      <walkable>true</walkable>
+      <defenseBonus>4</defenseBonus>
+      <attackBonus>2</attackBonus>
     </node>
     <node>
       <name>Bridge</name>

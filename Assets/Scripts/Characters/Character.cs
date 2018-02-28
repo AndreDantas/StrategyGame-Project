@@ -9,8 +9,8 @@ public class Character : Unit
     /// If the character is moving.
     /// </summary>
     protected bool moving;
-
-
+    public Stat healthBar = new Stat();
+    Canvas healthUI;
     [SerializeField]
     int _currentHp;
     public int currentHp
@@ -113,6 +113,28 @@ public class Character : Unit
     private void Start()
     {
         InitializeOnMap();
+        if (healthBar.GetBar() == null)
+            healthBar.SetBar(GetComponentInChildren<Bar>());
+        healthBar.MaxValue = maxHp;
+        healthBar.CurrentValue = currentHp;
+        healthUI = GetComponentInChildren<Canvas>();
+        ShowHealthBar();
+    }
+
+    public void ShowHealthBar()
+    {
+        if (healthUI)
+        {
+            healthUI.gameObject.SetActive(true);
+            healthUI.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0.6f);
+        }
+    }
+    public void HideHealthBar()
+    {
+        if (healthUI)
+        {
+            healthUI.gameObject.SetActive(false);
+        }
     }
 
     /// <summary>
@@ -167,7 +189,7 @@ public class Character : Unit
         currentHp -= newDamage;
         if (currentHp <= 0) // Character dies
             currentHp = 0;
-
+        healthBar.CurrentValue = currentHp;
     }
 
     #region Movement

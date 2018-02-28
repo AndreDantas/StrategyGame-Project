@@ -18,6 +18,12 @@ public class SelectTargetState : BattleState
         turn.Change(units[index]);
         yield return null;
         DeactivateSelectNode();
+
+        if (fieldInfoController != null)
+        {
+            fieldInfoController.HideFieldInfoBox();
+        }
+
         owner.ChangeState<ActionState>();
     }
 }
