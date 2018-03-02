@@ -8,8 +8,17 @@ public class Character : Unit
     /// <summary>
     /// If the character is moving.
     /// </summary>
-    protected bool moving;
-    public Stat healthBar = new Stat();
+    protected bool isMoving;
+    /// <summary>
+    /// If the character is attacking.
+    /// </summary>
+    protected bool isAttacking;
+    /// <summary>
+    /// If the character is taking damage.
+    /// </summary>
+    protected bool isTakingDamage;
+    protected bool isDown;
+    public HealthController healthBar;
     Canvas healthUI;
     [SerializeField]
     int _currentHp;
@@ -103,6 +112,7 @@ public class Character : Unit
 
     public AreaRangeRenderer walkRangeRenderer;
     public AreaRangeRenderer attackRangeRenderer;
+    public HitAnimation hitAnimation;
 
     private void OnValidate()
     {
@@ -112,11 +122,16 @@ public class Character : Unit
     }
     private void Start()
     {
+        if (map == null)
+            map = FindObjectOfType<Map>();
         InitializeOnMap();
-        if (healthBar.GetBar() == null)
-            healthBar.SetBar(GetComponentInChildren<Bar>());
-        healthBar.MaxValue = maxHp;
-        healthBar.CurrentValue = currentHp;
+        if (healthBar)
+        {
+            if (healthBar.GetBar() == null)
+                healthBar.SetBar(GetComponentInChildren<Bar>());
+            healthBar.MaxValue = maxHp;
+            healthBar.CurrentValue = currentHp;
+        }
         healthUI = GetComponentInChildren<Canvas>();
         ShowHealthBar();
     }
@@ -152,11 +167,24 @@ public class Character : Unit
             map.nodes[x, y].unitOnNode = this;
         }
 
+        isDown = false;
         currentHp = maxHp;
         currentStamina = maxStamina;
 
     }
 
+    public void RemoveFromMap()
+    {
+        if (map != null ? map.ValidCoordinate(x, y) ? map.nodes[x, y].unitOnNode == this : false : false)
+            map.nodes[x, y].unitOnNode = null;
+
+    }
+
+    /// <summary>
+    /// Places the unit on a point in the map.
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
     public void Place(int x, int y)
     {
         if (map == null)
@@ -183,15 +211,89 @@ public class Character : Unit
     {
         currentStamina = maxStamina;
     }
+    #region Attack and Damage
+    public virtual int Attack()
+    {
+        return attack + (map.ValidCoordinate(x, y) ? map.nodes[x, y].attackBonus : 0);
+    }
     public virtual void Damage(int damage)
     {
-        int newDamage = MathOperations.ClampMin(damage - defense, 0);
-        currentHp -= newDamage;
-        if (currentHp <= 0) // Character dies
+
+        this.currentHp -= DamageEvaluation(damage);
+        if (currentHp <= 0)
+        {
             currentHp = 0;
-        healthBar.CurrentValue = currentHp;
+            isDown = true;
+        }
     }
 
+    public virtual int DamageEvaluation(int damage)
+    {
+        return MathOperations.ClampMin(damage - (defense + (map.ValidCoordinate(x, y) ? map.nodes[x, y].defenseBonus : 0)), 0);
+    }
+
+    /// <summary>
+    /// Starts the attack animation.
+    /// </summary>
+    /// <param name="x">The X coordinate of the target.</param>
+    /// <param name="y">The Y coordinate of the target.</param>
+    public virtual void AttackAnim(int x, int y)
+    {
+        StartCoroutine(AttackAnimation(x, y));
+    }
+
+    protected virtual IEnumerator AttackAnimation(int x, int y)
+    {
+        yield return null;
+        Vector2 attackDirection = (new Vector2(x, y) - new Vector2(this.x, this.y)).normalized;
+
+        float t = 0;
+        float lerpTime = 0;
+        if (hitAnimation)
+        {
+            hitAnimation.gameObject.transform.position = new Vector2(x + map.nodeOffsetX, y + map.nodeOffsetY);
+            hitAnimation.Play();
+            yield return new WaitForSeconds(hitAnimation.AnimLength());
+        }
+    }
+
+    /// <summary>
+    /// Starts the damage animation.
+    /// </summary>
+    /// <param name="damage"></param>
+    public virtual void DamageAnim(int damage)
+    {
+        StartCoroutine(DamageAnimation(DamageEvaluation(damage)));
+    }
+
+    protected virtual IEnumerator DamageAnimation(int damage)
+    {
+        if (isTakingDamage || healthBar == null)
+        {
+            yield break;
+        }
+        isTakingDamage = true;
+        yield return null;
+        yield return healthBar.DamageAnim(damage);
+
+        isTakingDamage = false;
+    }
+
+    public bool IsAttacking()
+    {
+        return isAttacking;
+    }
+
+    public bool IsTakingDamage()
+    {
+        return isTakingDamage;
+    }
+
+    public bool IsDown()
+    {
+        return isDown;
+    }
+    #endregion
     #region Movement
     /// <summary>
     /// Moves the character between nodes.
@@ -242,7 +344,7 @@ public class Character : Unit
 
         if (map == null || path == null)
             yield break;
-        if (moving)
+        if (isMoving)
             yield break;
 
         // TEST
@@ -251,12 +353,12 @@ public class Character : Unit
         ClearAttackRange();
         ClearWalkRange();
         ////
-        moving = true;
+        isMoving = true;
         foreach (Node n in path)
         {
             yield return LerpMove(n);
         }
-        moving = false;
+        isMoving = false;
     }
     /// <summary>
     /// If the character is moving.
@@ -264,7 +366,7 @@ public class Character : Unit
     /// <returns></returns>
     public bool IsMoving()
     {
-        return moving;
+        return isMoving;
     }
     #endregion
     #region Pathfinding and AreaRange

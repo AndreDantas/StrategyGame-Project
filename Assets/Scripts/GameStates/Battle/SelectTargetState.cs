@@ -14,8 +14,10 @@ public class SelectTargetState : BattleState
     }
     IEnumerator ChangeCurrentUnit()
     {
-        index = (index + 1) % units.Count;
-        turn.Change(units[index]);
+        if (activeUnits.Count == 0)
+            yield break;
+        index = (index + 1) % activeUnits.Count;
+        turn.Change(activeUnits[index]);
         yield return null;
         DeactivateSelectNode();
 

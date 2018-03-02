@@ -31,8 +31,8 @@
     <node>
       <name>Mountain</name>
       <cost>3</cost>
-      <walkable>false</walkable>
-     <defenseBonus>1</defenseBonus>
+      <walkable>true</walkable>
+     <defenseBonus>4</defenseBonus>
       <attackBonus>-2</attackBonus>
     </node>
     <node>

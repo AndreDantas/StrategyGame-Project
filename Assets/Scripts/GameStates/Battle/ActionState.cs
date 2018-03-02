@@ -8,13 +8,17 @@ public class ActionState : BattleState
 {
     List<Node> movementNodes;
     List<Node> actionNodes;
+    bool start = false;
     public override void Enter()
     {
+        start = false;
         base.Enter();
-        SetUpCharacterRange();
-        StartCoroutine(CheckStatus());
+
         if (selectedNode == null ? true : selectedNode.name.Trim() == "")
             HideFieldInfoBox();
+        SetUpCharacterRange();
+        StartCoroutine(CheckStatus());
+
     }
 
 
@@ -70,7 +74,7 @@ public class ActionState : BattleState
 
     protected override void OnClick(Vector2 originPos, Vector2 releasePos)
     {
-        if (map == null)
+        if (map == null || !start)
             return;
 
         originPos = Camera.main.ScreenToWorldPoint(originPos);
@@ -89,11 +93,10 @@ public class ActionState : BattleState
                     SelectNode(originNode);
                     UpdateFieldInfoBox(originNode);
                     /// TO DO
-                    /// Check if target is valid if on action range.
                     /// Create interactions for different targets.
-                    /// Create way to confirm attack, and attack graphics.
+                    /// Create way to confirm attack
                     /// Create graphic to represent a target.
-                    /// 
+                    /// Create attack animation
                     if (movementNodes.Contains(originNode))// The node was in the movement range
                     {
                         movementNode = selectedNode;
@@ -117,7 +120,7 @@ public class ActionState : BattleState
                                 Character target = (Character)originNode.unitOnNode;
 
 
-                                if (turn.target == null ? true : turn.target != target)
+                                if (turn.target == null ? true : turn.target != target) // If it's a new target
                                 {
                                     turn.target = target;
                                     return;
@@ -182,6 +185,7 @@ public class ActionState : BattleState
                     CombatUIController.instance.cancelMove.SetActive(false);
             }
         }
+        start = true;
     }
 
     public void OnEndTurn()

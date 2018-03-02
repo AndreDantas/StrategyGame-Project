@@ -297,6 +297,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Editor\AnimationHierarchyEditor.cs" />
     <Compile Include="Assets\Editor\AssetCreator.cs" />
     <Compile Include="Assets\Editor\AssetUsageDetector.cs" />
     <Compile Include="Assets\Editor\ConditionalHidePropertyDrawer.cs" />

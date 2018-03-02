@@ -32,8 +32,8 @@ public class Node
             _cost = Mathf.Clamp(_cost, MinCost, MaxCost);
         }
     }
-    public float defenseBonus = 0;
-    public float attackBonus = 0;
+    public int defenseBonus = 0;
+    public int attackBonus = 0;
 
     public float g { get; set; }
     public float h { get; set; }
@@ -94,7 +94,8 @@ public class Node
         this.parent = other.parent;
         this.team = other.team;
         this.unitOnNode = other.unitOnNode;
-
+        this.attackBonus = other.attackBonus;
+        this.defenseBonus = other.defenseBonus;
     }
 
 

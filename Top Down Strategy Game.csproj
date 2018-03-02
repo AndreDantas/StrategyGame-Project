@@ -299,8 +299,10 @@
     <Compile Include="Assets\PixelPerfectCamera\Scripts\Scroller.cs" />
     <Compile Include="Assets\Scripts\Characters\Character.cs" />
     <Compile Include="Assets\Scripts\Characters\Enemy\EnemyCharacter.cs" />
+    <Compile Include="Assets\Scripts\Characters\HitAnimation.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\PlayerCharacter.cs" />
     <Compile Include="Assets\Scripts\Characters\Unit.cs" />
+    <Compile Include="Assets\Scripts\Dialogue\ConversationData.cs" />
     <Compile Include="Assets\Scripts\Dialogue\Dialogue.cs" />
     <Compile Include="Assets\Scripts\Dialogue\DialogueManager.cs" />
     <Compile Include="Assets\Scripts\Dialogue\DialogueSupporter.cs" />
@@ -323,7 +325,6 @@
     <Compile Include="Assets\Scripts\Map\Nodes\DestroyableNode.cs" />
     <Compile Include="Assets\Scripts\Map\Nodes\Node.cs" />
     <Compile Include="Assets\Scripts\Map\TileGrid.cs" />
-    <Compile Include="Assets\Scripts\Model\ConversationData.cs" />
     <Compile Include="Assets\Scripts\ObjectPool\GameObjectPoolController.cs" />
     <Compile Include="Assets\Scripts\ObjectPool\Poolable.cs" />
     <Compile Include="Assets\Scripts\Technical\CameraControl.cs" />
@@ -333,12 +334,12 @@
     <Compile Include="Assets\Scripts\Technical\ReadOnlyAttribute.cs" />
     <Compile Include="Assets\Scripts\Technical\ScreenClicks.cs" />
     <Compile Include="Assets\Scripts\Technical\ShowFps.cs" />
-    <Compile Include="Assets\Scripts\UI\Bar.cs" />
     <Compile Include="Assets\Scripts\UI\ChangeColorByScale.cs" />
+    <Compile Include="Assets\Scripts\UI\Combat\Bar.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\CombatUIController.cs" />
-    <Compile Include="Assets\Scripts\UI\FieldInfoController.cs" />
+    <Compile Include="Assets\Scripts\UI\Combat\FieldInfoController.cs" />
+    <Compile Include="Assets\Scripts\UI\Combat\HealthController.cs" />
     <Compile Include="Assets\Scripts\UI\SpriteSwap.cs" />
-    <Compile Include="Assets\Scripts\UI\Stat.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />

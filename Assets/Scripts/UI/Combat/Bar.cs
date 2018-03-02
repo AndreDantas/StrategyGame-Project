@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-public class Bar : MonoBehaviour
+[System.Serializable]
+public class Bar
 {
 
     [SerializeField]
@@ -44,6 +45,12 @@ public class Bar : MonoBehaviour
     {
         if (content.fillAmount != this.fillAmount)
             content.fillAmount = this.fillAmount;
+    }
+
+    public void SetColor(Color color)
+    {
+        if (content != null)
+            content.color = color;
     }
 
     float Map(float value, float inMin, float inMax)

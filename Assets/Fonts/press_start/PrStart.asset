@@ -11,19 +11,19 @@ MonoBehaviour:
   m_Script: {fileID: -667331979, guid: 89f0137620f6af44b9ba852b4190e64e, type: 3}
   m_Name: PrStart
   m_EditorClassIdentifier: 
-  hashCode: 0
+  hashCode: -1621731230
   material: {fileID: 21930259739199470}
-  materialHashCode: 0
+  materialHashCode: 1832145065
   fontAssetType: 2
   m_fontInfo:
     Name: Press Start
     PointSize: 34
-    Scale: 0
+    Scale: 1
     CharacterCount: 210
     LineHeight: 34
     Baseline: 0
     Ascender: 30
-    CapHeight: 0
+    CapHeight: 30
     Descender: -4
     CenterLine: 0
     SuperscriptOffset: 30
@@ -33,7 +33,7 @@ MonoBehaviour:
     UnderlineThickness: 0.796875
     strikethrough: 9.454545
     strikethroughThickness: 0.796875
-    TabWidth: 0
+    TabWidth: 340
     Padding: 5
     AtlasWidth: 512
     AtlasHeight: 512
@@ -42,10 +42,10 @@ MonoBehaviour:
   - id: 32
     x: 5
     y: 507
-    width: 0
-    height: 0
+    width: 34
+    height: 34
     xOffset: 0
-    yOffset: 0
+    yOffset: 30
     xAdvance: 34
     scale: 1
   - id: 33

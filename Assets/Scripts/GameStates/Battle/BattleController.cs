@@ -13,7 +13,8 @@ public class BattleController : StateMachine
     public Node selectedNode;
     public Node movementNode;
     public CameraControl cameraControl;
-    public List<Character> units = new List<Character>();
+    public List<Character> activeUnits = new List<Character>();
+    public List<Character> knockedDownUnits = new List<Character>();
     public Turn turn = new Turn();
     public GameObject turnActorIndicator;
     public GameObject turnTargetIndicator;

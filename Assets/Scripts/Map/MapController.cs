@@ -103,17 +103,17 @@ public class MapController : MonoBehaviour
             {
                 string nodeName = "";
                 float cost = 1;
-                float atk = 0;
-                float def = 0;
+                int atk = 0;
+                int def = 0;
                 bool walkable = false;
                 nodeName = nodeDict["name"];
 
                 if (nodeDict.ContainsKey("cost"))
                     float.TryParse(nodeDict["cost"], out cost);
                 if (nodeDict.ContainsKey("attackBonus"))
-                    float.TryParse(nodeDict["attackBonus"], out atk);
+                    int.TryParse(nodeDict["attackBonus"], out atk);
                 if (nodeDict.ContainsKey("defenseBonus"))
-                    float.TryParse(nodeDict["defenseBonus"], out def);
+                    int.TryParse(nodeDict["defenseBonus"], out def);
                 if (nodeDict.ContainsKey("walkable"))
                     bool.TryParse(nodeDict["walkable"], out walkable);
 
@@ -134,8 +134,8 @@ public class MapController : MonoBehaviour
             {
                 string nodeName = "";
                 float cost = 1;
-                float atk = 0;
-                float def = 0;
+                int atk = 0;
+                int def = 0;
                 bool walkable = false;
                 int maxHp = 1;
                 nodeName = nodeDict["name"];
@@ -143,9 +143,9 @@ public class MapController : MonoBehaviour
                 if (nodeDict.ContainsKey("cost"))
                     float.TryParse(nodeDict["cost"], out cost);
                 if (nodeDict.ContainsKey("attackBonus"))
-                    float.TryParse(nodeDict["attackBonus"], out atk);
+                    int.TryParse(nodeDict["attackBonus"], out atk);
                 if (nodeDict.ContainsKey("defenseBonus"))
-                    float.TryParse(nodeDict["defenseBonus"], out def);
+                    int.TryParse(nodeDict["defenseBonus"], out def);
                 if (nodeDict.ContainsKey("walkable"))
                     bool.TryParse(nodeDict["walkable"], out walkable);
                 if (nodeDict.ContainsKey("maxHp"))

@@ -23,8 +23,30 @@ public class AttackState : BattleState
             owner.ChangeState<ActionState>();
             yield break;
         }
-        turn.target.Damage(turn.actor.attack);
+
+        turn.actor.AttackAnim(turn.target.x, turn.target.y); // Start attack animation.
+
+        while (turn.actor.IsAttacking())
+            yield return null;
+
+        yield return null;
+
+        turn.target.DamageAnim(turn.actor.Attack()); // Start damage animation.
+
+        while (turn.target.IsTakingDamage())
+            yield return null;
+
+        turn.target.Damage(turn.actor.Attack()); // Deal damage to target.
+        if (turn.target.IsDown())
+        {
+            turn.target.RemoveFromMap();
+            activeUnits.Remove(turn.target);
+            knockedDownUnits.Add(turn.target);
+            turn.target.gameObject.SetActive(false);
+            turn.target = null;
+        }
         turn.hasUnitActed = true;
+
         if (turn.hasUnitMoved)
             owner.ChangeState<SelectTargetState>();
         else
