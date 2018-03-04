@@ -6,7 +6,6 @@ using UnityEngine.EventSystems;
 public class SelectTargetState : BattleState
 {
 
-    int index = -1;
     public override void Enter()
     {
         base.Enter();
@@ -14,10 +13,20 @@ public class SelectTargetState : BattleState
     }
     IEnumerator ChangeCurrentUnit()
     {
+
         if (activeUnits.Count == 0)
             yield break;
-        index = (index + 1) % activeUnits.Count;
-        turn.Change(activeUnits[index]);
+
+        if (turn.turnIndex > activeUnits.Count)
+            turn.turnIndex = 0;
+
+        turn.turnIndex = (turn.turnIndex + 1) % activeUnits.Count;
+
+        if (turn.turnIndex < 0)
+            turn.turnIndex = 0;
+
+        //print("Character turn: " + index);
+        turn.Change(activeUnits[turn.turnIndex]);
         yield return null;
         DeactivateSelectNode();
 

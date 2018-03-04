@@ -19,6 +19,7 @@ public class BattleState : State
     public Turn turn { get { return owner.turn; } }
     public GameObject turnActorIndicator { get { return owner.turnActorIndicator; } }
     public GameObject turnTargetIndicator { get { return owner.turnTargetIndicator; } }
+    public Vector2 indicatorOffset { get { return owner.indicatorOffset; } }
     public FieldInfoController fieldInfoController { get { return owner.fieldInfoController; } }
 
     protected virtual void Awake()
@@ -75,5 +76,42 @@ public class BattleState : State
         }
     }
 
+    protected virtual void ShowActorIndicator()
+    {
+        if (turn.actor == null || turnActorIndicator == null)
+            return;
+        turnActorIndicator.SetActive(true);
+        turnActorIndicator.transform.position = turn.actor.transform.position + (Vector3)indicatorOffset;
+    }
 
+    protected virtual void HideActorIndicator()
+    {
+        if (turnActorIndicator == null)
+            return;
+        turnActorIndicator.SetActive(false);
+    }
+
+    protected virtual void ShowTargetIndicator()
+    {
+        if (turn.target == null || turnTargetIndicator == null)
+            return;
+        turnTargetIndicator.SetActive(true);
+        turnTargetIndicator.transform.position = turn.target.transform.position + (Vector3)indicatorOffset;
+    }
+
+    protected virtual void HideTargetIndicator()
+    {
+        if (turnTargetIndicator == null)
+            return;
+        turnTargetIndicator.SetActive(false);
+    }
+
+
+    public void HideFieldInfoBox()
+    {
+        if (fieldInfoController != null)
+        {
+            fieldInfoController.HideFieldInfoBox();
+        }
+    }
 }

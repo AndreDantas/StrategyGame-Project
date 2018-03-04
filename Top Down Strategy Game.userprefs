@@ -1,11 +1,12 @@
 ﻿<Properties StartupItem="Top Down Strategy Game.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Characters\Character.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GameStates\Battle\BattleController.cs">
     <Files>
       <File FileName="Assets\Scripts\Map\TileGrid.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Map\Map.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Technical\ScreenClicks.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Characters\Character.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\GameStates\Battle\BattleController.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

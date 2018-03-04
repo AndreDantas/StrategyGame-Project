@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Character : Unit
 {
-
+    #region Parameters
     /// <summary>
     /// If the character is moving.
     /// </summary>
@@ -19,6 +19,7 @@ public class Character : Unit
     protected bool isTakingDamage;
     protected bool isDown;
     public HealthController healthBar;
+    public SpriteRenderer sprite;
     Canvas healthUI;
     [SerializeField]
     int _currentHp;
@@ -109,11 +110,12 @@ public class Character : Unit
     }
 
     public int attackRange = 1;
-
+    [Range(0, 10f)]
+    public float attackTime = 0.4f;
     public AreaRangeRenderer walkRangeRenderer;
     public AreaRangeRenderer attackRangeRenderer;
     public HitAnimation hitAnimation;
-
+    #endregion
     private void OnValidate()
     {
         //TEST
@@ -136,6 +138,9 @@ public class Character : Unit
         ShowHealthBar();
     }
 
+    /// <summary>
+    /// Shows the health UI.
+    /// </summary>
     public void ShowHealthBar()
     {
         if (healthUI)
@@ -144,6 +149,9 @@ public class Character : Unit
             healthUI.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0.6f);
         }
     }
+    /// <summary>
+    /// Hides the health UI.
+    /// </summary>
     public void HideHealthBar()
     {
         if (healthUI)
@@ -152,70 +160,36 @@ public class Character : Unit
         }
     }
 
-    /// <summary>
-    /// Initializes the unit on the map.
-    /// </summary>
-    public void InitializeOnMap()
+    public override void InitializeOnMap()
     {
-
-        if (map == null)
-            return;
-
-        transform.position = new Vector2(x + map.nodeOffsetX, y + map.nodeOffsetY);
-        if (map.ValidCoordinate(x, y))
-        {
-            map.nodes[x, y].unitOnNode = this;
-        }
-
+        base.InitializeOnMap();
         isDown = false;
         currentHp = maxHp;
         currentStamina = maxStamina;
-
     }
 
-    public void RemoveFromMap()
-    {
-        if (map != null ? map.ValidCoordinate(x, y) ? map.nodes[x, y].unitOnNode == this : false : false)
-            map.nodes[x, y].unitOnNode = null;
-
-    }
 
     /// <summary>
-    /// Places the unit on a point in the map.
+    /// To be used at the start of each turn.
     /// </summary>
-    /// <param name="x"></param>
-    /// <param name="y"></param>
-    public void Place(int x, int y)
-    {
-        if (map == null)
-            return;
-        if (map.ValidCoordinate(x, y) ? map.nodes[x, y].unitOnNode == null && map.nodes[x, y].walkable == true : false)
-        {
-            if (map.ValidCoordinate(this.x, this.y) ? (Character)map.nodes[this.x, this.y].unitOnNode == this : false)
-            {
-                map.nodes[this.x, this.y].unitOnNode = null;
-            }
-            this.x = x;
-            this.y = y;
-            map.nodes[x, y].unitOnNode = this;
-            transform.position = new Vector2(x + map.nodeOffsetX, y + map.nodeOffsetY);
-        }
-    }
-
-    public bool InRange(Node n)
-    {
-        return Map.DefaultManhattanDistance(n, new Node(x, y)) <= attackRange;
-    }
-
     public virtual void StartTurn()
     {
         currentStamina = maxStamina;
     }
+
     #region Attack and Damage
+    /// <summary>
+    /// Returns the base attack + modifiers.
+    /// </summary>
+    /// <returns></returns>
     public virtual int Attack()
     {
         return attack + (map.ValidCoordinate(x, y) ? map.nodes[x, y].attackBonus : 0);
     }
+    /// <summary>
+    /// Deals damage to character.
+    /// </summary>
+    /// <param name="damage"></param>
     public virtual void Damage(int damage)
     {
 
@@ -227,6 +201,11 @@ public class Character : Unit
         }
     }
 
+    /// <summary>
+    /// Changes damage based on modifiers.
+    /// </summary>
+    /// <param name="damage"></param>
+    /// <returns></returns>
     public virtual int DamageEvaluation(int damage)
     {
         return MathOperations.ClampMin(damage - (defense + (map.ValidCoordinate(x, y) ? map.nodes[x, y].defenseBonus : 0)), 0);
@@ -244,17 +223,55 @@ public class Character : Unit
 
     protected virtual IEnumerator AttackAnimation(int x, int y)
     {
+        isAttacking = true;
         yield return null;
         Vector2 attackDirection = (new Vector2(x, y) - new Vector2(this.x, this.y)).normalized;
 
         float t = 0;
         float lerpTime = 0;
+        Vector2 origin = transform.position;
+        Vector2 start = transform.position;
+        Vector2 end = (Vector2)transform.position + ((attackDirection * -1) * 0.5f);
+        while (t < 0.99f)
+        {
+            t = lerpTime / attackTime;
+            t = MathOperations.ChangeLerpT(LerpMode.EaseIn, t);
+            transform.position = Vector2.Lerp(start, end, t);
+            lerpTime += Time.deltaTime;
+            yield return null;
+        }
+        start = end;
+        end = origin + (attackDirection * 0.5f);
+        t = 0;
+        lerpTime = 0;
+        while (t < 0.99f)
+        {
+            t = lerpTime / (attackTime / 4f);
+            t = MathOperations.ChangeLerpT(LerpMode.EaseOut, t);
+            transform.position = Vector2.Lerp(start, end, t);
+            lerpTime += Time.deltaTime;
+            yield return null;
+        }
+        start = end;
+        end = origin;
+        t = 0;
+        lerpTime = 0;
+        while (t < 0.99f)
+        {
+            t = lerpTime / (attackTime / 2f);
+            t = MathOperations.ChangeLerpT(LerpMode.Exponential, t);
+            transform.position = Vector2.Lerp(start, end, t);
+            lerpTime += Time.deltaTime;
+            yield return null;
+        }
         if (hitAnimation)
         {
             hitAnimation.gameObject.transform.position = new Vector2(x + map.nodeOffsetX, y + map.nodeOffsetY);
             hitAnimation.Play();
-            yield return new WaitForSeconds(hitAnimation.AnimLength());
+            yield return new WaitForSeconds(hitAnimation.AnimLength() * 0.5f);
         }
+        isAttacking = false;
+
     }
 
     /// <summary>
@@ -636,6 +653,11 @@ public class Character : Unit
         }
 
         return closest;
+    }
+
+    public bool InRange(Node n)
+    {
+        return Map.DefaultManhattanDistance(n, new Node(x, y)) <= attackRange;
     }
 
     #endregion

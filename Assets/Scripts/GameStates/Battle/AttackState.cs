@@ -37,16 +37,20 @@ public class AttackState : BattleState
             yield return null;
 
         turn.target.Damage(turn.actor.Attack()); // Deal damage to target.
+
         if (turn.target.IsDown())
         {
+            if (activeUnits.IndexOf(turn.target) <= turn.turnIndex)
+                turn.turnIndex--;
             turn.target.RemoveFromMap();
             activeUnits.Remove(turn.target);
             knockedDownUnits.Add(turn.target);
             turn.target.gameObject.SetActive(false);
             turn.target = null;
         }
-        turn.hasUnitActed = true;
 
+        turn.hasUnitActed = true;
+        turn.target = null;
         if (turn.hasUnitMoved)
             owner.ChangeState<SelectTargetState>();
         else

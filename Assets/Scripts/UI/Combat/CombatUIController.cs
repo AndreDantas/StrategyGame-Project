@@ -1,12 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+
 public class CombatUIController : MonoBehaviour
 {
 
     public static CombatUIController instance;
-    public float animationTime = 0.15f;
     public GameObject cancelMove;
     public GameObject endTurn;
 
@@ -22,6 +21,8 @@ public class CombatUIController : MonoBehaviour
         else
             instance = this;
     }
+
+
 
     public void CancelMove()
     {

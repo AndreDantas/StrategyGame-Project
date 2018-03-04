@@ -13,7 +13,9 @@ public class InitBattleState : BattleState
     IEnumerator Init()
     {
         //Actions before battle.
-
+        HideFieldInfoBox();
+        turn.turnCount = 0;
+        turn.turnIndex = -1;
         yield return null;
         owner.ChangeState<SelectTargetState>();
     }

@@ -89,7 +89,7 @@ f61c0793411f10cf5fbfa1473fef5ef2 UnityEngine.UI.dll:UnityEngine.UI.ToggleGroup
 7cb0adf1bd7eeda64798e948850c404c Assembly-CSharp.dll:UnityEngine.Tilemaps.RandomTile
 6a492d7b8465b2c00d15794caa46ec2e Assembly-CSharp.dll:TMPro.Examples.TMPro_InstructionOverlay
 6b1e0ce245edb3794e32aceb8b105a40 Assembly-CSharp.dll:.CombatUIController
-86665c07c02bab11f058ed01db24b9e3 Assembly-CSharp.dll:.Character
+79c68416d9acc04bcd6816899cc1e106 Assembly-CSharp.dll:.Character
 765037da3d8faeee91e39d672b924c61 Assembly-CSharp.dll:.EnvMapAnimator
 202b062131929fe73caacfaf39510afa Assembly-CSharp.dll:UnityEngine.RuleTile
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationPlayableAsset
@@ -277,6 +277,7 @@ af7666733efcc974926d7d470e1732a6 Assembly-CSharp.dll:TMPro.Examples.SkewTextExam
 d146d3d8148b2f35a8c7980d63a88f0e Assembly-CSharp.dll:.CanvasWorldScaler
 329bcbf88b3c0197d230f5b9ceb88333 Assembly-CSharp.dll:Tiled2Unity.TmxObject
 1e2fa205d2944c79f6d1972e2bb9acaa Assembly-CSharp.dll:.ScreenClicks
-800401795af3c69d692ea398859fc6f8 Assembly-CSharp.dll:.BattleController
+3ffbfdba6ac2f5679ee7552fc58737f8 Assembly-CSharp.dll:.BattleController
+c2f5ce41cd75e17442b437e3b9dbb6b0 Assembly-CSharp.dll:.SpriteOutline
 34e025057ef78b1bf238460cdf6583a3 Assembly-CSharp.dll:TMPro.Examples.ObjectSpin
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:TMPro.Examples.SimpleScript

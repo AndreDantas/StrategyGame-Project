@@ -9,6 +9,7 @@ public class ExploreState : BattleState
     {
         base.Enter();
         turn.target = null;
+        ShowActorIndicator();
     }
     protected override void AddListeners()
     {
@@ -46,9 +47,16 @@ public class ExploreState : BattleState
                     UpdateFieldInfoBox(originNode);
                     if (originNode.unitOnNode != null)
                     {
-                        if ((Character)originNode.unitOnNode == turn.actor)
+                        if (originNode.unitOnNode is Character)
                         {
-                            owner.ChangeState<ActionState>();
+                            Character target = (Character)originNode.unitOnNode;
+                            if (target == turn.actor)
+                            {
+                                owner.ChangeState<ActionState>();
+                                return;
+                            }
+
+
                         }
                     }
 
@@ -63,14 +71,6 @@ public class ExploreState : BattleState
         if (fieldInfoController != null)
         {
             fieldInfoController.ShowFieldInfoBox(n);
-        }
-    }
-
-    public void HideFieldInfoBox()
-    {
-        if (fieldInfoController != null)
-        {
-            fieldInfoController.HideFieldInfoBox();
         }
     }
 

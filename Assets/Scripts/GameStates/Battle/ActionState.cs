@@ -14,11 +14,13 @@ public class ActionState : BattleState
         start = false;
         base.Enter();
 
-        if (selectedNode == null ? true : selectedNode.name.Trim() == "")
-            HideFieldInfoBox();
         SetUpCharacterRange();
         StartCoroutine(CheckStatus());
-
+        ShowActorIndicator();
+        if (turn.target != null)
+            ShowTargetIndicator();
+        else
+            HideTargetIndicator();
     }
 
 
@@ -28,6 +30,8 @@ public class ActionState : BattleState
         base.Exit();
         ClearCharacterRange();
         ClearUI();
+        HideTargetIndicator();
+        HideActorIndicator();
     }
 
 
@@ -109,7 +113,7 @@ public class ActionState : BattleState
                         if (originNode.unitOnNode == null) // No unit on node
                         {
                             turn.target = null;
-
+                            HideTargetIndicator();
                         }
                         else // Unit on node
                         {
@@ -123,10 +127,15 @@ public class ActionState : BattleState
                                 if (turn.target == null ? true : turn.target != target) // If it's a new target
                                 {
                                     turn.target = target;
+                                    if (target.team != turn.actor.team)
+                                        ShowTargetIndicator();
+                                    else
+                                        HideTargetIndicator();
                                     return;
                                 }
                                 if (target.team != turn.actor.team) // The target is an enemy
                                 {
+
                                     if (!turn.actor.InRange(originNode)) // Not in range, move to attack
                                     {
 
@@ -213,22 +222,17 @@ public class ActionState : BattleState
         }
     }
 
-    public void HideFieldInfoBox()
-    {
-        if (fieldInfoController != null)
-        {
-            fieldInfoController.HideFieldInfoBox();
-        }
-    }
 
     public void OnBackPress()
     {
 
         OnCancelMove();
+
     }
     public void OnCancelMove()
     {
         StartCoroutine(CancelMove());
+
     }
 
     IEnumerator CancelMove()
@@ -246,10 +250,14 @@ public class ActionState : BattleState
                 if (CombatUIController.instance.cancelMove != null)
                     CombatUIController.instance.cancelMove.SetActive(false);
             }
+            turn.target = null;
+            HideTargetIndicator();
+            ShowActorIndicator();
         }
         else
         {
             // Open pause menu
         }
+
     }
 }

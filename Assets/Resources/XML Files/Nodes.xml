@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding = "utf-8"?>
 <Nodes>
-	<normalNodes>
-		<node>
-			<name>Meadow</name>
+  <normalNodes>
+    <node>
+      <name>Meadow</name>
       <cost>1</cost>
       <walkable>true</walkable>
-		</node>
+    </node>
     <node>
       <name>Shore</name>
       <cost>1</cost>
@@ -26,13 +26,13 @@
       <name>Forest</name>
       <cost>2</cost>
       <walkable>true</walkable>
-    <defenseBonus>2</defenseBonus>
+      <defenseBonus>2</defenseBonus>
     </node>
     <node>
       <name>Mountain</name>
       <cost>3</cost>
       <walkable>true</walkable>
-     <defenseBonus>4</defenseBonus>
+      <defenseBonus>4</defenseBonus>
       <attackBonus>-2</attackBonus>
     </node>
     <node>
@@ -89,7 +89,7 @@
       <cost>1</cost>
       <walkable>false</walkable>
     </node>
-	</normalNodes>
+  </normalNodes>
   <destroyableNodes>
     <node>
       <name>Wall</name>

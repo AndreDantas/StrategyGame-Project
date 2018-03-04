@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>Android:13</UnityBuildTarget>
     <UnityVersion>2017.3.0f3</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -314,7 +316,6 @@
     <Compile Include="Assets\Scripts\GameStates\Battle\ExploreState.cs" />
     <Compile Include="Assets\Scripts\GameStates\Battle\InitBattleState.cs" />
     <Compile Include="Assets\Scripts\GameStates\Battle\MoveSequenceState.cs" />
-    <Compile Include="Assets\Scripts\GameStates\Battle\MoveToAttackState.cs" />
     <Compile Include="Assets\Scripts\GameStates\Battle\SelectTargetState.cs" />
     <Compile Include="Assets\Scripts\GameStates\Battle\Turn.cs" />
     <Compile Include="Assets\Scripts\GameStates\StateMachine\State.cs" />
@@ -340,6 +341,7 @@
     <Compile Include="Assets\Scripts\UI\Combat\FieldInfoController.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\HealthController.cs" />
     <Compile Include="Assets\Scripts\UI\SpriteSwap.cs" />
+    <Compile Include="Assets\SpriteOutline\Scripts\SpriteOutline.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
@@ -404,7 +406,10 @@
     <None Include="Assets\Fonts\pixel_noir\readme-pixelnoir.txt" />
     <None Include="Assets\PixelPerfectCamera\README.txt" />
     <None Include="Assets\PixelPerfectCamera\background_art_license.txt" />
-    <None Include="Assets\Resources\XML Files\Nodes.xml" />
+    <None Include="Assets\Resources\XML Files\Nodes.xml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Assets\SpriteOutline\Shaders\Sprites-Outline.shader" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Anton OFL.txt" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Bangers - OFL.txt" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\LiberationSans - OFL.txt" />

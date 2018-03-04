@@ -18,6 +18,7 @@ public class BattleController : StateMachine
     public Turn turn = new Turn();
     public GameObject turnActorIndicator;
     public GameObject turnTargetIndicator;
+    public Vector2 indicatorOffset;
     public FieldInfoController fieldInfoController;
 
     private void Start()
