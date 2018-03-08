@@ -8,7 +8,8 @@ public class HealthController : MonoBehaviour
     [SerializeField]
     Bar bar;
     public TextMeshProUGUI damageText;
-
+    public static float animTime = 0.4f;
+    public static float countdownWaitTime = 0.02f;
     private void Start()
     {
         if (damageText)
@@ -47,15 +48,15 @@ public class HealthController : MonoBehaviour
         damageText.text = "-" + damage.ToString();
         damageText.enabled = true;
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(animTime);
         while (damage > 0)
         {
             damage -= 1;
             CurrentValue -= 1;
             damageText.text = "-" + damage.ToString();
-            yield return new WaitForSeconds(0.02f);
+            yield return new WaitForSeconds(countdownWaitTime);
         }
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(animTime / 2);
         damageText.enabled = false;
     }
 

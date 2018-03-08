@@ -301,6 +301,8 @@
     <Compile Include="Assets\Editor\AssetCreator.cs" />
     <Compile Include="Assets\Editor\AssetUsageDetector.cs" />
     <Compile Include="Assets\Editor\ConditionalHidePropertyDrawer.cs" />
+    <Compile Include="Assets\Editor\ExposeProperties.cs" />
+    <Compile Include="Assets\Editor\HealthControllerEditor.cs" />
     <Compile Include="Assets\Editor\MeshRendererSortingLayerEditor.cs" />
     <Compile Include="Assets\Editor\ReadOnlyDrawer.cs" />
     <Compile Include="Assets\Editor\ScriptableObjectUtility.cs" />

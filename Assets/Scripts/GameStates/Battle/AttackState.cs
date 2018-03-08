@@ -24,34 +24,25 @@ public class AttackState : BattleState
             yield break;
         }
 
-        turn.actor.AttackAnim(turn.target.x, turn.target.y); // Start attack animation.
-
-        while (turn.actor.IsAttacking())
-            yield return null;
-
-        yield return null;
-
-        turn.target.DamageAnim(turn.actor.Attack()); // Start damage animation.
-
-        while (turn.target.IsTakingDamage())
-            yield return null;
-
-        turn.target.Damage(turn.actor.Attack()); // Deal damage to target.
-
+        yield return AttackTarget(turn.actor, turn.target);
         if (turn.target.IsDown())
         {
-            if (activeUnits.IndexOf(turn.target) <= turn.turnIndex)
-                turn.turnIndex--;
-            turn.target.RemoveFromMap();
-            activeUnits.Remove(turn.target);
-            knockedDownUnits.Add(turn.target);
-            turn.target.gameObject.SetActive(false);
+            RemoveKnockedDown(turn.target);
             turn.target = null;
+        }
+        else if (turn.target.CanCounter(turn.actor))
+        {
+            yield return AttackTarget(turn.target, turn.actor);
+            if (turn.actor.IsDown())
+            {
+                RemoveKnockedDown(turn.actor);
+                turn.actor = null;
+            }
         }
 
         turn.hasUnitActed = true;
         turn.target = null;
-        if (turn.hasUnitMoved)
+        if (turn.hasUnitMoved || turn.actor == null)
             owner.ChangeState<SelectTargetState>();
         else
         {
@@ -59,5 +50,36 @@ public class AttackState : BattleState
         }
     }
 
+    static IEnumerator AttackTarget(Character attacker, Character target)
+    {
+
+        attacker.AttackAnim(target.x, target.y); // Start attack animation.
+
+        while (attacker.IsAttacking())
+            yield return null;
+
+        yield return null;
+
+        target.DamageAnim(attacker.Attack()); // Start damage animation.
+
+        while (target.IsTakingDamage())
+            yield return null;
+
+        target.Damage(attacker.Attack()); // Deal damage to target.
+
+    }
+
+    public void RemoveKnockedDown(Character down)
+    {
+        if (down.IsDown() && activeUnits != null ? activeUnits.Contains(down) : false)
+        {
+            if (activeUnits.IndexOf(down) <= turn.turnIndex)
+                turn.turnIndex--;
+            down.RemoveFromMap();
+            activeUnits.Remove(down);
+            knockedDownUnits.Add(down);
+            down.gameObject.SetActive(false);
+        }
+    }
 
 }

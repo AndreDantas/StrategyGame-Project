@@ -386,7 +386,12 @@ public class Map : MonoBehaviour
 
     public static int DefaultManhattanDistance(Node a, Node b)
     {
-        return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y);
+        return DefaultManhattanDistance(a.x, a.y, b.x, b.y);
+    }
+
+    public static int DefaultManhattanDistance(int Ax, int Ay, int Bx, int By)
+    {
+        return Mathf.Abs(Ax - Bx) + Mathf.Abs(Ay - By);
     }
 
 #if UNITY_EDITOR

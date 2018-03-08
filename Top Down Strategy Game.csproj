@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>Android:13</UnityBuildTarget>
     <UnityVersion>2017.3.0f3</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -330,6 +328,7 @@
     <Compile Include="Assets\Scripts\ObjectPool\Poolable.cs" />
     <Compile Include="Assets\Scripts\Technical\CameraControl.cs" />
     <Compile Include="Assets\Scripts\Technical\ConditionalHideAttribute.cs" />
+    <Compile Include="Assets\Scripts\Technical\ExposePropertyAttribute.cs" />
     <Compile Include="Assets\Scripts\Technical\InputManager.cs" />
     <Compile Include="Assets\Scripts\Technical\MathOperations.cs" />
     <Compile Include="Assets\Scripts\Technical\ReadOnlyAttribute.cs" />
@@ -406,9 +405,7 @@
     <None Include="Assets\Fonts\pixel_noir\readme-pixelnoir.txt" />
     <None Include="Assets\PixelPerfectCamera\README.txt" />
     <None Include="Assets\PixelPerfectCamera\background_art_license.txt" />
-    <None Include="Assets\Resources\XML Files\Nodes.xml">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="Assets\Resources\XML Files\Nodes.xml" />
     <None Include="Assets\SpriteOutline\Shaders\Sprites-Outline.shader" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Anton OFL.txt" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Bangers - OFL.txt" />

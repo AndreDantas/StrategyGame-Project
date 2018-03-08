@@ -110,19 +110,19 @@ public class Character : Unit
     }
 
     public int attackRange = 1;
-    [Range(0, 10f)]
+    [Range(0.3f, 5f)]
     public float attackTime = 0.4f;
     public AreaRangeRenderer walkRangeRenderer;
     public AreaRangeRenderer attackRangeRenderer;
     public HitAnimation hitAnimation;
     #endregion
-    private void OnValidate()
+    protected virtual void OnValidate()
     {
         //TEST
         transform.position = new Vector2(x + 0.5f, y + 0.5f);
 
     }
-    private void Start()
+    protected virtual void Start()
     {
         if (map == null)
             map = FindObjectOfType<Map>();
@@ -232,7 +232,7 @@ public class Character : Unit
         Vector2 origin = transform.position;
         Vector2 start = transform.position;
         Vector2 end = (Vector2)transform.position + ((attackDirection * -1) * 0.5f);
-        while (t < 0.99f)
+        while (t < 0.95f || Vector2.Distance(transform.position, end) > 0.05f)
         {
             t = lerpTime / attackTime;
             t = MathOperations.ChangeLerpT(LerpMode.EaseIn, t);
@@ -244,7 +244,7 @@ public class Character : Unit
         end = origin + (attackDirection * 0.5f);
         t = 0;
         lerpTime = 0;
-        while (t < 0.99f)
+        while (t < 0.95f || Vector2.Distance(transform.position, end) > 0.05f)
         {
             t = lerpTime / (attackTime / 4f);
             t = MathOperations.ChangeLerpT(LerpMode.EaseOut, t);
@@ -256,7 +256,7 @@ public class Character : Unit
         end = origin;
         t = 0;
         lerpTime = 0;
-        while (t < 0.99f)
+        while (t < 0.95f || Vector2.Distance(transform.position, end) > 0.05f)
         {
             t = lerpTime / (attackTime / 2f);
             t = MathOperations.ChangeLerpT(LerpMode.Exponential, t);
@@ -294,6 +294,11 @@ public class Character : Unit
         yield return healthBar.DamageAnim(damage);
 
         isTakingDamage = false;
+    }
+
+    public virtual bool CanCounter(Character other)
+    {
+        return Map.DefaultManhattanDistance(x, y, other.x, other.y) <= attackRange;
     }
 
     public bool IsAttacking()
