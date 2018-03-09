@@ -40,21 +40,36 @@ public abstract class AIController : MonoBehaviour
         EndTurn();
     }
 
+    /// <summary>
+    /// The function to choose a target.
+    /// </summary>
+    /// <returns></returns>
     protected virtual Character ChooseTarget()
     {
         return null;
     }
 
+    /// <summary>
+    /// The function to determine the movement.
+    /// </summary>
+    /// <returns></returns>
     protected virtual IEnumerator Movement()
     {
         yield return null;
     }
 
+    /// <summary>
+    /// The action after movement.
+    /// </summary>
+    /// <returns></returns>
     protected virtual IEnumerator Action()
     {
         yield return null;
     }
 
+    /// <summary>
+    /// Executes at the start of the turn. It's unrelated to the character StartTurn() function.
+    /// </summary>
     public virtual void StartTurn()
     {
         isDone = false;
@@ -63,6 +78,10 @@ public abstract class AIController : MonoBehaviour
         attackArea = character.ExpandArea(walkArea, character.attackRange, true);
     }
 
+
+    /// <summary>
+    /// Executes at the end of the turn.
+    /// </summary>
     public virtual void EndTurn()
     {
 
@@ -71,6 +90,10 @@ public abstract class AIController : MonoBehaviour
             battleController.RemoveKnockedDown(character);
     }
 
+    /// <summary>
+    /// If the AI is done.
+    /// </summary>
+    /// <returns></returns>
     public bool IsDone()
     {
         return isDone;

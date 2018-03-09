@@ -517,6 +517,7 @@ MonoBehaviour:
   map: {fileID: 0}
   team: 0
   healthBar: {fileID: 114651560180940998}
+  sprite: {fileID: 0}
   _currentHp: 0
   _maxHp: 10
   _currentStamina: 0
@@ -524,6 +525,7 @@ MonoBehaviour:
   _attack: 3
   _defense: 1
   attackRange: 2
+  attackTime: 0.4
   walkRangeRenderer: {fileID: 114717154209149270}
   attackRangeRenderer: {fileID: 114846675390730912}
   hitAnimation: {fileID: 114235258377788386}

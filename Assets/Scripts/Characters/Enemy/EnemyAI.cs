@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Basic Enemy AI. Will attack (or move to attack) the closest target.
+/// </summary>
 public class EnemyAI : AIController
 {
     public override void StartTurn()
@@ -17,7 +20,18 @@ public class EnemyAI : AIController
         {
             if (targets[i].team == character.team)
                 continue;
-            float temp = character.GetPathCost(character.PathFind(character.map.nodes[targets[i].x, targets[i].y])); // Bug, destination cant be a character
+            if (character.InRange(targets[i].x, targets[i].y))
+            {
+                target = targets[i];
+                break;
+            }
+            List<Node> tempPath = character.PathFind(character.ClosestNode(character.map.GetNeighbors(targets[i].x, targets[i].y))); // Bug, destination cant be a character
+            float temp = 0;
+            if (tempPath == null ? true : tempPath.Count == 0)
+                continue;
+            else
+                temp = character.GetPathCost(tempPath);
+
             if (temp < dist)
             {
                 dist = temp;
@@ -34,22 +48,29 @@ public class EnemyAI : AIController
         Node movementNode = null;
         if (target != null)
         {
-
-            if (attackArea.Contains(character.map.nodes[target.x, target.y]))
+            if (character.InRange(target.x, target.y))
+            {
+                // No need to move
+            }
+            else if (attackArea.Contains(character.map.nodes[target.x, target.y]))
             {
                 movementNode = character.ClosestNode(Map.GetClosestNode(walkArea, character.map.nodes[target.x, target.y], character.attackRange));
             }
             else
             {
-                List<Node> path = character.PathFind(character.map.nodes[target.x, target.y]);
-                float totalCost = 0;
-                foreach (Node n in path)
+                List<Node> path = character.PathFind(character.ClosestNode(character.map.GetNeighbors(target.x, target.y)));
+
+                if (path != null ? path.Count > 0 : false)
                 {
-                    totalCost += n.cost;
-                    if (totalCost > character.currentStamina)
+                    float totalCost = 0;
+                    foreach (Node n in path)
                     {
-                        movementNode = n;
-                        break;
+                        totalCost += n.cost;
+                        if (totalCost > character.currentStamina)
+                        {
+                            movementNode = n;
+                            break;
+                        }
                     }
                 }
             }

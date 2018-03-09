@@ -89,7 +89,7 @@ f61c0793411f10cf5fbfa1473fef5ef2 UnityEngine.UI.dll:UnityEngine.UI.ToggleGroup
 7cb0adf1bd7eeda64798e948850c404c Assembly-CSharp.dll:UnityEngine.Tilemaps.RandomTile
 6a492d7b8465b2c00d15794caa46ec2e Assembly-CSharp.dll:TMPro.Examples.TMPro_InstructionOverlay
 717cadcc080193ac4b02b75154e7262f Assembly-CSharp.dll:.CombatUIController
-79c68416d9acc04bcd6816899cc1e106 Assembly-CSharp.dll:.Character
+7ff23be03fd865b7eef1b86a97ea8618 Assembly-CSharp.dll:.Character
 765037da3d8faeee91e39d672b924c61 Assembly-CSharp.dll:.EnvMapAnimator
 202b062131929fe73caacfaf39510afa Assembly-CSharp.dll:UnityEngine.RuleTile
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.AIState

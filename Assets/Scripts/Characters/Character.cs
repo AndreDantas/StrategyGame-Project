@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum LookDirection
+{
+    Left,
+    Right
+}
 public class Character : Unit
 {
     #region Parameters
@@ -18,6 +23,40 @@ public class Character : Unit
     /// </summary>
     protected bool isTakingDamage;
     protected bool isDown;
+
+    [SerializeField]
+    LookDirection _lookDirection = LookDirection.Right;
+
+    /// <summary>
+    /// The direction the character is facing.
+    /// </summary>
+    public LookDirection lookDirection
+    {
+        get
+        {
+            return _lookDirection;
+        }
+
+        set
+        {
+            _lookDirection = value;
+            switch (_lookDirection)
+            {
+                case LookDirection.Right:
+                    if (sprite)
+                    {
+                        sprite.flipX = false;
+                    }
+                    break;
+                case LookDirection.Left:
+                    if (sprite)
+                    {
+                        sprite.flipX = true;
+                    }
+                    break;
+            }
+        }
+    }
     public HealthController healthBar;
     public SpriteRenderer sprite;
     Canvas healthUI;
@@ -116,16 +155,34 @@ public class Character : Unit
     public AreaRangeRenderer attackRangeRenderer;
     public HitAnimation hitAnimation;
     #endregion
+
     protected virtual void OnValidate()
     {
         //TEST
         transform.position = new Vector2(x + 0.5f, y + 0.5f);
+        switch (lookDirection)
+        {
+            case LookDirection.Right:
+                if (sprite)
+                {
+                    sprite.flipX = false;
+                }
+                break;
+            case LookDirection.Left:
+                if (sprite)
+                {
+                    sprite.flipX = true;
+                }
+                break;
+        }
 
     }
     protected virtual void Start()
     {
         if (map == null)
             map = FindObjectOfType<Map>();
+        if (sprite == null)
+            sprite = GetComponent<SpriteRenderer>();
         InitializeOnMap();
         if (healthBar)
         {
@@ -223,6 +280,10 @@ public class Character : Unit
 
     public IEnumerator AttackTarget(Character target)
     {
+        if (target.x > x)
+            lookDirection = LookDirection.Right;
+        else if (target.x < x)
+            lookDirection = LookDirection.Left;
 
         AttackAnim(target.x, target.y); // Start attack animation.
 
@@ -358,6 +419,11 @@ public class Character : Unit
         Vector2 start = new Vector2(x + map.nodeOffsetX, y + map.nodeOffsetY);
         Vector2 end = new Vector2(destination.x + map.nodeOffsetX, destination.y + map.nodeOffsetY);
         float lerpTime = 0f;
+
+        if (destination.x > x)
+            lookDirection = LookDirection.Right;
+        else if (destination.x < x)
+            lookDirection = LookDirection.Left;
 
         while (t < 1)
         {
@@ -525,61 +591,56 @@ public class Character : Unit
     /// <returns></returns>
     public List<Node> FindRange(int x, int y, float range)
     {
-        // Based on Dijkstra's Algorithm: https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
+        // Algorithm used: https://services.studiomonolith.ca/redirect/index.php?q=nNjZ1mtnYquYnaGdqqmZm52h1cZflaTSYGZpZJuQYm9jlJ2VpZmWq5mbqGGrpJdkp5nXyV6YntOVnaealQ
 
         if (!map) // The map can't be null.
             return null;
         if (!map.ValidCoordinate(x, y))
             return null;
 
-        range = MathOperations.ClampMin(range, 0);
-        List<Node> openSet = new List<Node>();
-        List<Node> closedSet = new List<Node>();
-
+        List<Node> result = new List<Node>();
         foreach (Node n in map.GetNodes())
         {
-            n.g = 0f;
+            n.g = float.PositiveInfinity;
         }
 
-        Node current;
-        openSet.Add(map.nodes[x, y]);
+        Queue<Node> checkNext = new Queue<Node>();
+        Queue<Node> checkNow = new Queue<Node>();
+        Node current = map.nodes[x, y];
+        current.g = 0;
+        checkNow.Enqueue(current);
 
-        while (openSet.Count > 0)
+        while (checkNow.Count > 0)
         {
-            current = openSet[0];
-            closedSet.Add(current);
-            openSet.RemoveAt(0);
-
-            if (current.g <= range)
+            current = checkNow.Dequeue();
+            List<Node> neighbors = map.GetNeighbors(current);
+            for (int i = 0; i < neighbors.Count; i++)
             {
-                foreach (Node neighbor in map.GetNeighbors(current))
-                {
-                    if (!ValidNode(neighbor))
-                        continue;
-                    if (closedSet.Contains(neighbor))
-                        continue;
-                    float newG = current.g + NodeCostEvaluation(neighbor);
-                    if (neighbor.g == 0 || newG < neighbor.g)
-                    {
-                        neighbor.g = newG;
-                        if (!openSet.Contains(neighbor))
-                            openSet.Add(neighbor);
-                    }
-                }
+                float newG = current.g + neighbors[i].cost;
+                if (!ValidNode(neighbors[i]) || neighbors[i].g <= newG || newG > range)
+                    continue;
+
+                neighbors[i].g = current.g + neighbors[i].cost;
+                neighbors[i].parent = current;
+                checkNext.Enqueue(neighbors[i]);
+                result.Add(neighbors[i]);
             }
-        }
-        List<Node> result = new List<Node>();
-        foreach (Node n in closedSet)
-        {
-            if (n.g <= range)
-                result.Add(n);
-            n.g = 0;
+            if (checkNow.Count == 0)
+                SwapReference(ref checkNow, ref checkNext);
         }
         return FilterArea(result);
+    }
+    static void SwapReference(ref Queue<Node> a, ref Queue<Node> b)
+    {
+        Queue<Node> temp = a;
+        a = b;
+        b = temp;
     }
 
     protected virtual List<Node> FilterArea(List<Node> area)
     {
+
+
         List<Node> newNodes = new List<Node>();
         foreach (Node n in area)
         {

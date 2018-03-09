@@ -89,18 +89,14 @@ public class PlayerState : BattleState
             Node originNode = map.GetNodeFromWorldPosition(originPos);
             Node releaseNode = map.GetNodeFromWorldPosition(releasePos);
 
-            if (!EventSystem.current.IsPointerOverGameObject(-1) && !ScreenClicks.IsPointerOverUIObject()) //The click wasn't on UI element.
+            if (!EventSystem.current.IsPointerOverGameObject(-1) && !ScreenClicks.IsPointerOverUIObject()) //The click wasn't on UI element
             {
 
-                if (originNode == releaseNode) // The click was on the same Node.
+                if (originNode == releaseNode) // The click was on the same Node
                 {
                     SelectNode(originNode);
                     UpdateFieldInfoBox(originNode);
-                    /// TO DO
-                    /// Create interactions for different targets.
-                    /// Create way to confirm attack
-                    /// Create graphic to represent a target.
-                    /// Create attack animation
+
                     if (movementNodes.Contains(originNode))// The node was in the movement range
                     {
                         movementNode = selectedNode;
@@ -152,7 +148,7 @@ public class PlayerState : BattleState
                                 }
 
                             }
-                            else
+                            else // Unit is not a character
                             {
 
                             }
@@ -162,7 +158,7 @@ public class PlayerState : BattleState
                     {
                         if (originNode.unitOnNode == turn.actor)
                             return;
-                        owner.ChangeState<ExploreState>(); // The node wasn't in the movement or action range. Go to explore mode.
+                        owner.ChangeState<ExploreState>(); // The node wasn't in the movement nor action range. Go to explore mode
                     }
 
                 }
@@ -174,7 +170,7 @@ public class PlayerState : BattleState
 
     IEnumerator CheckStatus()
     {
-        //Check if target is on range and can attack. Place attack graphic
+
         yield return null;
         if (CombatUIController.instance.endTurn != null)
             CombatUIController.instance.endTurn.SetActive(true);
