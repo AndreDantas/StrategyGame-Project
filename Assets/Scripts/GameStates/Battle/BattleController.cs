@@ -42,4 +42,18 @@ public class BattleController : StateMachine
             }
         }
     }
+
+    public void RemoveKnockedDown(Character down)
+    {
+        if (down.IsDown() && activeUnits != null ? activeUnits.Contains(down) : false)
+        {
+            if (activeUnits.IndexOf(down) <= turn.turnIndex)
+                turn.turnIndex--;
+            down.RemoveFromMap();
+            activeUnits.Remove(down);
+            knockedDownUnits.Add(down);
+
+            down.gameObject.SetActive(false);
+        }
+    }
 }

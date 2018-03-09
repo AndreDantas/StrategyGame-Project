@@ -52,7 +52,7 @@ public class ExploreState : BattleState
                             Character target = (Character)originNode.unitOnNode;
                             if (target == turn.actor)
                             {
-                                owner.ChangeState<ActionState>();
+                                owner.ChangeState<PlayerState>();
                                 return;
                             }
 
@@ -76,7 +76,7 @@ public class ExploreState : BattleState
 
     public void OnBackPress()
     {
-        owner.ChangeState<ActionState>();
+        owner.ChangeState<PlayerState>();
         DeactivateSelectNode();
         //Center camera on current character
         Camera.main.transform.position = new Vector3(turn.actor.transform.position.x, turn.actor.transform.position.y, Camera.main.transform.position.z);

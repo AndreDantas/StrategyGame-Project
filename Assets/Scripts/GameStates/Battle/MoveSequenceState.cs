@@ -19,7 +19,7 @@ public class MoveSequenceState : BattleState
 
         if (pathCost > turn.actor.currentStamina)
         {
-            owner.ChangeState<ActionState>();
+            owner.ChangeState<PlayerState>();
             yield break;
         }
 
@@ -28,6 +28,6 @@ public class MoveSequenceState : BattleState
             yield return null;
         turn.actor.currentStamina -= pathCost;
         turn.hasUnitMoved = true;
-        owner.ChangeState<ActionState>();
+        owner.ChangeState<PlayerState>();
     }
 }

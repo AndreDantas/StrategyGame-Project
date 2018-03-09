@@ -20,22 +20,22 @@ public class AttackState : BattleState
         yield return null;
         if (turn.target == null)
         {
-            owner.ChangeState<ActionState>();
+            owner.ChangeState<PlayerState>();
             yield break;
         }
 
-        yield return AttackTarget(turn.actor, turn.target);
+        yield return turn.actor.AttackTarget(turn.target);
         if (turn.target.IsDown())
         {
-            RemoveKnockedDown(turn.target);
+            owner.RemoveKnockedDown(turn.target);
             turn.target = null;
         }
         else if (turn.target.CanCounter(turn.actor))
         {
-            yield return AttackTarget(turn.target, turn.actor);
+            yield return turn.target.AttackTarget(turn.actor);
             if (turn.actor.IsDown())
             {
-                RemoveKnockedDown(turn.actor);
+                owner.RemoveKnockedDown(turn.actor);
                 turn.actor = null;
             }
         }
@@ -46,40 +46,11 @@ public class AttackState : BattleState
             owner.ChangeState<SelectTargetState>();
         else
         {
-            owner.ChangeState<ActionState>();
+            owner.ChangeState<PlayerState>();
         }
     }
 
-    static IEnumerator AttackTarget(Character attacker, Character target)
-    {
 
-        attacker.AttackAnim(target.x, target.y); // Start attack animation.
 
-        while (attacker.IsAttacking())
-            yield return null;
-
-        yield return null;
-
-        target.DamageAnim(attacker.Attack()); // Start damage animation.
-
-        while (target.IsTakingDamage())
-            yield return null;
-
-        target.Damage(attacker.Attack()); // Deal damage to target.
-
-    }
-
-    public void RemoveKnockedDown(Character down)
-    {
-        if (down.IsDown() && activeUnits != null ? activeUnits.Contains(down) : false)
-        {
-            if (activeUnits.IndexOf(down) <= turn.turnIndex)
-                turn.turnIndex--;
-            down.RemoveFromMap();
-            activeUnits.Remove(down);
-            knockedDownUnits.Add(down);
-            down.gameObject.SetActive(false);
-        }
-    }
 
 }

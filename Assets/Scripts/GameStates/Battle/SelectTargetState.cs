@@ -25,6 +25,8 @@ public class SelectTargetState : BattleState
         if (turn.turnIndex < 0)
             turn.turnIndex = 0;
 
+
+
         //print("Character turn: " + index);
         turn.Change(activeUnits[turn.turnIndex]);
         yield return null;
@@ -34,7 +36,9 @@ public class SelectTargetState : BattleState
         {
             fieldInfoController.HideFieldInfoBox();
         }
-
-        owner.ChangeState<ActionState>();
+        if (turn.actor.GetComponent<AIController>())
+            owner.ChangeState<AIState>();
+        else
+            owner.ChangeState<PlayerState>();
     }
 }

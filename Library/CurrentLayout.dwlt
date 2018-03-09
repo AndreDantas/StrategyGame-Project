@@ -110,7 +110,7 @@ MonoBehaviour:
   m_MinSize: {x: 817, y: 442}
   m_MaxSize: {x: 22012, y: 10021}
   vertical: 0
-  controlID: 83
+  controlID: 121
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -134,7 +134,7 @@ MonoBehaviour:
   m_MinSize: {x: 306, y: 442}
   m_MaxSize: {x: 8006, y: 8042}
   vertical: 1
-  controlID: 118
+  controlID: 122
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -158,7 +158,7 @@ MonoBehaviour:
   m_MinSize: {x: 306, y: 221}
   m_MaxSize: {x: 8006, y: 4021}
   vertical: 0
-  controlID: 119
+  controlID: 123
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -179,15 +179,15 @@ MonoBehaviour:
     height: 372
   m_MinSize: {x: 102, y: 121}
   m_MaxSize: {x: 4002, y: 4021}
-  m_ActualView: {fileID: 14}
+  m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 14}
   - {fileID: 15}
   - {fileID: 16}
   - {fileID: 17}
   - {fileID: 18}
-  m_Selected: 0
-  m_LastSelected: 1
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -206,8 +206,8 @@ MonoBehaviour:
     y: 0
     width: 225
     height: 372
-  m_MinSize: {x: 204, y: 221}
-  m_MaxSize: {x: 4004, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 19}
   m_Panes:
   - {fileID: 19}
@@ -360,7 +360,7 @@ MonoBehaviour:
       width: 1846.3215
       height: 800
     m_MinimalGUI: 1
-  m_defaultScale: 0.45875
+  m_defaultScale: 1
   m_TargetTexture: {fileID: 0}
   m_CurrentColorSpace: 0
   m_LastWindowPixelSize: {x: 847, y: 384}
@@ -400,9 +400,9 @@ MonoBehaviour:
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 14.310485, y: 9.260522, z: -5.14131}
+    m_Target: {x: 14.173782, y: 9.603476, z: -5.0429688}
     speed: 2
-    m_Value: {x: 14.310485, y: 9.260522, z: -5.14131}
+    m_Value: {x: 14.173782, y: 9.603476, z: -5.0429688}
   m_RenderMode: 0
   m_ValidateTrueMetals: 0
   m_SceneViewState:
@@ -430,9 +430,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 20.622122
+    m_Target: 10.041715
     speed: 2
-    m_Value: 20.622122
+    m_Value: 10.041715
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -645,7 +645,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 9efbffff00000000
+    m_ExpandedIDs: 5ef3ffff04f4ffff0ef6ffff9efbffff00000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -736,19 +736,19 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Editor
+    - Assets/Scripts/Characters/Enemy
   m_ViewMode: 1
   m_StartGridSize: 49
   m_LastFolders:
-  - Assets/Editor
+  - Assets/Scripts/Characters/Enemy
   m_LastFoldersGridSize: 49
   m_LastProjectPath: D:\Andre Dantas\Unity\Top Down Strategy Game
   m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: b62e0000
-    m_LastClickedID: 11958
-    m_ExpandedIDs: 00000000282900007c2a0000be2a0000fe2b0000242d0000042e0000542e00009a2e0000242f0000a62f0000583000002631000000ca9a3bffffff7f
+    m_SelectedIDs: e82c0000
+    m_LastClickedID: 11496
+    m_ExpandedIDs: 00000000462900009a2a0000da2a00001c2c0000422d0000242e0000742e0000ba2e0000442f0000ca2f0000783000004631000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -776,7 +776,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000282900007c2a0000be2a0000fe2b0000242d0000042e0000542e00009a2e0000242f0000a62f00005830000026310000
+    m_ExpandedIDs: 00000000462900009a2a0000da2a00001c2c0000422d0000242e0000742e0000ba2e0000442f0000ca2f00007830000046310000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -803,7 +803,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 1
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: e81c000020060000e61c0000a02d00002c1e0000a61c0000a01c0000421e0000e41c0000461e0000861e0000ba1c00004a1e0000aa1c0000161c0000a0250000321c0000aa230000f2b3feff962300003855fdff882600004c1c00009c250000561c0000441c00002e1c000070250000341c00001c270000c21c0000401c00005c1c000032270000681c0000382a0000ec2b00001c2a00008c85ffff582700007c1c0000701c0000661c0000d42b00006a300000f8300000c83300004c320000143100002a2500003e330000d82f0000a42f00003a2700006427000050250000384400002ac2ffffc63600004c2a0000ca2900001c3600008c2c0000be3800000e2c0000b229ffff8a2d00005648000022280000ee480000282800003a2900002e300000c62a00008ab600005829000044300000602900002e2800000c330000f83200002c28000074290000de2800002428000010260000ec28000012260000922e00007a2b00009a2d0000d6260000000000006033000004260000d83200003c2a00008e390000de2c0000dc2c0000a0290000162b0000922800002a28000084300000b0310000402b0000be2a0000bca5feff8e9000009e900000
     m_RenameOverlay:
       m_UserAcceptedRename: 0

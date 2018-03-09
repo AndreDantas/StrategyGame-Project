@@ -15858,6 +15858,25 @@ Tilemap:
     m_DirtyIndex: 0
   - serializedVersion: 1
     m_DirtyIndex: 0
+--- !u!1 &860513438 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1357699703748360, guid: db458e9270b657a43a448ae64d73f93f,
+    type: 2}
+  m_PrefabInternal: {fileID: 1927529817}
+--- !u!114 &860513440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 860513438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c469644079246f42a12c0b439496f5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: {fileID: 0}
+  walkArea: []
+  attackArea: []
 --- !u!1 &897766989
 GameObject:
   m_ObjectHideFlags: 0
@@ -18423,6 +18442,25 @@ Transform:
   m_Father: {fileID: 362753107}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1754552257 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1357699703748360, guid: db458e9270b657a43a448ae64d73f93f,
+    type: 2}
+  m_PrefabInternal: {fileID: 2005586922}
+--- !u!114 &1754552260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1754552257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c469644079246f42a12c0b439496f5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: {fileID: 0}
+  walkArea: []
+  attackArea: []
 --- !u!1 &1815450567
 GameObject:
   m_ObjectHideFlags: 0

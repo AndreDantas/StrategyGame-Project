@@ -221,6 +221,26 @@ public class Character : Unit
         StartCoroutine(AttackAnimation(x, y));
     }
 
+    public IEnumerator AttackTarget(Character target)
+    {
+
+        AttackAnim(target.x, target.y); // Start attack animation.
+
+        while (IsAttacking())
+            yield return null;
+
+        yield return null;
+
+        target.DamageAnim(Attack()); // Start damage animation.
+
+        while (target.IsTakingDamage())
+            yield return null;
+
+        target.Damage(Attack()); // Deal damage to target.
+
+    }
+
+
     protected virtual IEnumerator AttackAnimation(int x, int y)
     {
         isAttacking = true;
@@ -232,7 +252,7 @@ public class Character : Unit
         Vector2 origin = transform.position;
         Vector2 start = transform.position;
         Vector2 end = (Vector2)transform.position + ((attackDirection * -1) * 0.5f);
-        while (t < 0.95f || Vector2.Distance(transform.position, end) > 0.05f)
+        while (t < 0.95f || lerpTime < attackTime)
         {
             t = lerpTime / attackTime;
             t = MathOperations.ChangeLerpT(LerpMode.EaseIn, t);
@@ -240,11 +260,12 @@ public class Character : Unit
             lerpTime += Time.deltaTime;
             yield return null;
         }
+        transform.position = end;
         start = end;
         end = origin + (attackDirection * 0.5f);
         t = 0;
         lerpTime = 0;
-        while (t < 0.95f || Vector2.Distance(transform.position, end) > 0.05f)
+        while (t < 0.95f || lerpTime < attackTime / 4f)
         {
             t = lerpTime / (attackTime / 4f);
             t = MathOperations.ChangeLerpT(LerpMode.EaseOut, t);
@@ -252,11 +273,12 @@ public class Character : Unit
             lerpTime += Time.deltaTime;
             yield return null;
         }
+        transform.position = end;
         start = end;
         end = origin;
         t = 0;
         lerpTime = 0;
-        while (t < 0.95f || Vector2.Distance(transform.position, end) > 0.05f)
+        while (t < 0.95f || lerpTime < attackTime / 2f)
         {
             t = lerpTime / (attackTime / 2f);
             t = MathOperations.ChangeLerpT(LerpMode.Exponential, t);
@@ -264,6 +286,7 @@ public class Character : Unit
             lerpTime += Time.deltaTime;
             yield return null;
         }
+        transform.position = end;
         if (hitAnimation)
         {
             hitAnimation.gameObject.transform.position = new Vector2(x + map.nodeOffsetX, y + map.nodeOffsetY);
@@ -643,7 +666,7 @@ public class Character : Unit
     /// </summary>
     /// <param name="nodes"></param>
     /// <returns></returns>
-    public Node ClosetNode(List<Node> nodes)
+    public Node ClosestNode(List<Node> nodes)
     {
         float cost = float.MaxValue;
         Node closest = null;
@@ -663,6 +686,11 @@ public class Character : Unit
     public bool InRange(Node n)
     {
         return Map.DefaultManhattanDistance(n, new Node(x, y)) <= attackRange;
+    }
+
+    public bool InRange(int x, int y)
+    {
+        return Map.DefaultManhattanDistance(this.x, this.y, x, y) <= attackRange;
     }
 
     #endregion
