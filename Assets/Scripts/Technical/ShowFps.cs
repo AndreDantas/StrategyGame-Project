@@ -10,10 +10,6 @@ public class ShowFps : MonoBehaviour
 
     float deltaTime = 0.0f;
 
-    private void Awake()
-    {
-        Application.targetFrameRate = 60;
-    }
     void Update()
     {
         deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;

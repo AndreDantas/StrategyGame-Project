@@ -13,6 +13,7 @@ public class BattleController : StateMachine
     public Node selectedNode;
     public Node movementNode;
     public CameraControl cameraControl;
+    public float cameraMoveTime = 0.3f;
     public List<Character> activeUnits = new List<Character>();
     public List<Character> knockedDownUnits = new List<Character>();
     public Turn turn = new Turn();

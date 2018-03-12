@@ -24,6 +24,7 @@ public class Turn
     public Character target;
     public bool hasUnitMoved;
     public bool hasUnitActed;
+    public LookDirection actorLookDirection;
     int startX, startY;
     public void Change(Character current)
     {
@@ -31,6 +32,7 @@ public class Turn
         target = null;
         hasUnitMoved = false;
         hasUnitActed = false;
+        actorLookDirection = actor.lookDirection;
         startX = actor.x;
         startY = actor.y;
         actor.StartTurn();
@@ -39,6 +41,7 @@ public class Turn
     {
         hasUnitMoved = false;
         actor.Place(startX, startY);
+        actor.lookDirection = actorLookDirection;
         actor.currentStamina = actor.maxStamina;
     }
 }

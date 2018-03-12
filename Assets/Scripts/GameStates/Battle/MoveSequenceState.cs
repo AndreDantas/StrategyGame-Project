@@ -24,8 +24,13 @@ public class MoveSequenceState : BattleState
         }
 
         turn.actor.WalkPath(path);
+        CameraControl.instance.StartFollow(turn.actor.transform);
+
         while (turn.actor.IsMoving())
             yield return null;
+
+        yield return new WaitForSeconds(CameraControl.instance.followSmoothTime);
+        CameraControl.instance.StopFollow();
         turn.actor.currentStamina -= pathCost;
         turn.hasUnitMoved = true;
         owner.ChangeState<PlayerState>();

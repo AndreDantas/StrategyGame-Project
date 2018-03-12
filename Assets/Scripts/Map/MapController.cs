@@ -24,10 +24,6 @@ public class MapController : MonoBehaviour
     /// </summary>
     public TileGrid grid;
 
-    //TEST 
-    public TextMeshProUGUI selectedNodeText;
-    //
-
     /// <summary>
     /// If it should use the reference XML file.
     /// </summary>
@@ -67,27 +63,6 @@ public class MapController : MonoBehaviour
 
     }
 
-    private void Update()
-    {
-        //TEST
-        if (currentMap && selectedNodeText != null)
-        {
-            Node n = currentMap.GetSelectedNode();
-            if (n != null)
-            {
-                if (n.unitOnNode == null)
-                    selectedNodeText.text = n.name;
-                else
-                    selectedNodeText.text = "Unit";
-
-            }
-            else
-            {
-                selectedNodeText.text = "";
-            }
-        }
-        //
-    }
     /// <summary>
     /// Loads the XML file with all nodes references.
     /// </summary>

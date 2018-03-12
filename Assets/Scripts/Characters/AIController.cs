@@ -4,12 +4,14 @@ using UnityEngine;
 
 public abstract class AIController : MonoBehaviour
 {
-
+    [HideInInspector]
     public Character character;
     protected bool isDone;
     protected BattleController battleController;
     protected Character target;
+    [HideInInspector]
     public List<Node> walkArea;
+    [HideInInspector]
     public List<Node> attackArea;
     protected void Awake()
     {
@@ -33,6 +35,8 @@ public abstract class AIController : MonoBehaviour
 
     protected virtual IEnumerator Turn()
     {
+        if (character == null)
+            yield break;
         StartTurn();
         target = ChooseTarget();
         yield return Movement();

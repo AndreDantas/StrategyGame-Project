@@ -312,7 +312,6 @@
     <Compile Include="Assets\Scripts\GameStates\Battle\BattleController.cs" />
     <Compile Include="Assets\Scripts\GameStates\Battle\BattleState.cs" />
     <Compile Include="Assets\Scripts\GameStates\Battle\DialogueState.cs" />
-    <Compile Include="Assets\Scripts\GameStates\Battle\EnemyAttackState.cs" />
     <Compile Include="Assets\Scripts\GameStates\Battle\ExploreState.cs" />
     <Compile Include="Assets\Scripts\GameStates\Battle\InitBattleState.cs" />
     <Compile Include="Assets\Scripts\GameStates\Battle\MoveSequenceState.cs" />
@@ -321,6 +320,8 @@
     <Compile Include="Assets\Scripts\GameStates\Battle\Turn.cs" />
     <Compile Include="Assets\Scripts\GameStates\StateMachine\State.cs" />
     <Compile Include="Assets\Scripts\GameStates\StateMachine\StateMachine.cs" />
+    <Compile Include="Assets\Scripts\Levels\Level.cs" />
+    <Compile Include="Assets\Scripts\Levels\LevelManager.cs" />
     <Compile Include="Assets\Scripts\Map\AreaRangeRenderer.cs" />
     <Compile Include="Assets\Scripts\Map\Map.cs" />
     <Compile Include="Assets\Scripts\Map\MapController.cs" />
@@ -332,6 +333,7 @@
     <Compile Include="Assets\Scripts\Technical\CameraControl.cs" />
     <Compile Include="Assets\Scripts\Technical\ConditionalHideAttribute.cs" />
     <Compile Include="Assets\Scripts\Technical\ExposePropertyAttribute.cs" />
+    <Compile Include="Assets\Scripts\Technical\GameQualitySettings.cs" />
     <Compile Include="Assets\Scripts\Technical\InputManager.cs" />
     <Compile Include="Assets\Scripts\Technical\MathOperations.cs" />
     <Compile Include="Assets\Scripts\Technical\ReadOnlyAttribute.cs" />
@@ -402,6 +404,12 @@
     <Compile Include="Assets\Tilemap\Tiles\Random Tile\Scripts\RandomTile.cs" />
     <Compile Include="Assets\Tilemap\Tiles\Rule Tile\Scripts\RuleTile.cs" />
     <Compile Include="Assets\Tilemap\Tiles\Terrain Tile\Scripts\TerrainTile.cs" />
+    <Compile Include="Assets\Unity-Logs-Viewer\Reporter\MultiKeyDictionary.cs" />
+    <Compile Include="Assets\Unity-Logs-Viewer\Reporter\Reporter.cs" />
+    <Compile Include="Assets\Unity-Logs-Viewer\Reporter\ReporterGUI.cs" />
+    <Compile Include="Assets\Unity-Logs-Viewer\Reporter\ReporterMessageReceiver.cs" />
+    <Compile Include="Assets\Unity-Logs-Viewer\Reporter\Test\Rotate.cs" />
+    <Compile Include="Assets\Unity-Logs-Viewer\Reporter\Test\TestReporter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Fonts\aenigma-systematic\aesystematic.txt" />
@@ -410,6 +418,7 @@
     <None Include="Assets\PixelPerfectCamera\background_art_license.txt" />
     <None Include="Assets\Resources\XML Files\Nodes.xml" />
     <None Include="Assets\SpriteOutline\Shaders\Sprites-Outline.shader" />
+    <None Include="Assets\StreamingAssets\build_info.txt" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Anton OFL.txt" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Bangers - OFL.txt" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\LiberationSans - OFL.txt" />

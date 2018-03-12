@@ -14,6 +14,7 @@ public class BattleState : State
     public Node selectedNode { get { return owner.selectedNode; } set { owner.selectedNode = value; } }
     public Node movementNode { get { return owner.movementNode; } set { owner.movementNode = value; } }
     public CameraControl cameraControl { get { return owner.cameraControl; } }
+    public float cameraMoveTime { get { return owner.cameraMoveTime; } set { owner.cameraMoveTime = value; } }
     public List<Character> activeUnits { get { return owner.activeUnits; } }
     public List<Character> knockedDownUnits { get { return owner.knockedDownUnits; } }
     public Turn turn { get { return owner.turn; } }

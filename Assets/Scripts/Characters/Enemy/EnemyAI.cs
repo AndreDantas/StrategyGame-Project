@@ -77,9 +77,13 @@ public class EnemyAI : AIController
         }
         if (movementNode != null)
         {
+            yield return new WaitForSeconds(0.5f);
             character.WalkPath(character.PathFind(movementNode));
+            CameraControl.instance.StartFollow(character.transform);
             while (character.IsMoving())
                 yield return null;
+            yield return new WaitForSeconds(CameraControl.instance.followSmoothTime);
+            CameraControl.instance.StopFollow();
         }
 
     }

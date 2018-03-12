@@ -42,12 +42,13 @@ public class AttackState : BattleState
 
         turn.hasUnitActed = true;
         turn.target = null;
-        if (turn.hasUnitMoved || turn.actor == null)
-            owner.ChangeState<SelectTargetState>();
-        else
-        {
-            owner.ChangeState<PlayerState>();
-        }
+        //if (turn.hasUnitMoved || turn.actor == null)
+        //    owner.ChangeState<SelectTargetState>();
+        //else
+        //{
+        //    owner.ChangeState<PlayerState>();
+        //}
+        owner.ChangeState<SelectTargetState>();
     }
 
 

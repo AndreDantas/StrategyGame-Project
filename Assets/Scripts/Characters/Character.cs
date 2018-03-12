@@ -57,6 +57,7 @@ public class Character : Unit
             }
         }
     }
+    public float moveTime = 0.1f;
     public HealthController healthBar;
     public SpriteRenderer sprite;
     Canvas healthUI;
@@ -407,7 +408,7 @@ public class Character : Unit
     /// <param name="destination">The destination node.</param>
     /// <param name="duration">How long the movement takes in seconds.</param>
     /// <returns></returns>
-    protected IEnumerator LerpMove(Node destination, float duration = 0.15f)
+    protected IEnumerator LerpMove(Node destination)
     {
         if (destination == null || map == null)
             yield break;
@@ -427,7 +428,7 @@ public class Character : Unit
 
         while (t < 1)
         {
-            t = lerpTime / duration;
+            t = lerpTime / moveTime;
             transform.position = Vector3.Lerp(start, end, t);
             lerpTime += Time.deltaTime;
             yield return null;
@@ -616,11 +617,11 @@ public class Character : Unit
             List<Node> neighbors = map.GetNeighbors(current);
             for (int i = 0; i < neighbors.Count; i++)
             {
-                float newG = current.g + neighbors[i].cost;
+                float newG = current.g + NodeCostEvaluation(neighbors[i]);
                 if (!ValidNode(neighbors[i]) || neighbors[i].g <= newG || newG > range)
                     continue;
 
-                neighbors[i].g = current.g + neighbors[i].cost;
+                neighbors[i].g = newG;
                 neighbors[i].parent = current;
                 checkNext.Enqueue(neighbors[i]);
                 result.Add(neighbors[i]);
@@ -827,7 +828,7 @@ public class Character : Unit
     /// <returns></returns>
     public virtual Node validDestination(Node n)
     {
-        // Can be used to find a new destination and return the new node.
+        // Can be modified to find a new destination and return the new node.
         if (ValidNode(n) && map.ValidCoordinate(n))
         {
             return n;

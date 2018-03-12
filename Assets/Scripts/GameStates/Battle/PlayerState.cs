@@ -249,6 +249,7 @@ public class PlayerState : BattleState
             turn.target = null;
             HideTargetIndicator();
             ShowActorIndicator();
+            Camera.main.transform.position = new Vector3(turn.actor.transform.position.x, turn.actor.transform.position.y, Camera.main.transform.position.z);
         }
         else
         {

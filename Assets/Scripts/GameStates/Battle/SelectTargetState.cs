@@ -36,6 +36,9 @@ public class SelectTargetState : BattleState
         {
             fieldInfoController.HideFieldInfoBox();
         }
+        CameraControl.instance.MoveCameraToPos(turn.actor.gameObject.transform.position, cameraMoveTime);
+        while (CameraControl.instance.IsMoving())
+            yield return null;
         if (turn.actor.GetComponent<AIController>())
             owner.ChangeState<AIState>();
         else

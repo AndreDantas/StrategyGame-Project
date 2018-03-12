@@ -47,10 +47,6 @@ public class Map : MonoBehaviour
     public Node[,] nodes;
 
     /// <summary>
-    /// The current selected node.
-    /// </summary>
-    protected Node selectedNode;
-    /// <summary>
     /// The current selected Character.
     /// </summary>
     protected Character selectedCharacter;
@@ -94,14 +90,6 @@ public class Map : MonoBehaviour
         List<Node> allNodes = GetNodes();
         for (int i = 0; i < allNodes.Count; i++)
         {
-            //Draw selectedNode.
-            if (selectedNode != null ? selectedNode == allNodes[i] : false)
-            {
-                Gizmos.color = Color.red;
-                Gizmos.DrawWireCube(new Vector2(allNodes[i].x + nodeOffsetX, allNodes[i].y + nodeOffsetY) + (Vector2)transform.position,
-                                    Vector2.one * 0.9f);
-                Gizmos.color = Color.white;
-            }
 
             //Node drawing
             Gizmos.DrawWireCube(new Vector2(allNodes[i].x + nodeOffsetX, allNodes[i].y + nodeOffsetY) + (Vector2)transform.position, Vector2.one);
@@ -137,14 +125,6 @@ public class Map : MonoBehaviour
             }
         }
         return result;
-    }
-
-    /// <summary>
-    /// Returns the selected node.
-    /// </summary>
-    public Node GetSelectedNode()
-    {
-        return selectedNode;
     }
 
     /// <summary>
