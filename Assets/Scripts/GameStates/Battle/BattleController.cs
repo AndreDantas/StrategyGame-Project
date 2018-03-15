@@ -12,6 +12,7 @@ public class BattleController : StateMachine
     public Map map;
     public Node selectedNode;
     public Node movementNode;
+    public LevelDetails levelDetails;
     public CameraControl cameraControl;
     public float cameraMoveTime = 0.3f;
     public List<Character> activeUnits = new List<Character>();

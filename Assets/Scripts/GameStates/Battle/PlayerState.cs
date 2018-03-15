@@ -99,6 +99,8 @@ public class PlayerState : BattleState
 
                     if (movementNodes.Contains(originNode))// The node was in the movement range
                     {
+                        if (originNode.x == turn.actor.x && originNode.y == turn.actor.y) // Same location as the actor, return.
+                            return;
                         movementNode = selectedNode;
                         turn.target = null;
                         owner.ChangeState<MoveSequenceState>();
@@ -106,6 +108,7 @@ public class PlayerState : BattleState
                     else if (actionNodes.Contains(originNode) && !turn.hasUnitActed)
                     {
                         // Action
+
                         if (originNode.unitOnNode == null) // No unit on node
                         {
                             turn.target = null;
@@ -113,12 +116,12 @@ public class PlayerState : BattleState
                         }
                         else // Unit on node
                         {
-                            if (originNode.unitOnNode == turn.actor) // Unit is the actor
-                                return;
+
                             if (originNode.unitOnNode is Character) // Unit is a character
                             {
+                                if (originNode.unitOnNode == turn.actor) // Unit is the actor
+                                    return;
                                 Character target = (Character)originNode.unitOnNode;
-
 
                                 if (turn.target == null ? true : turn.target != target) // If it's a new target
                                 {
@@ -156,7 +159,8 @@ public class PlayerState : BattleState
                     }
                     else
                     {
-                        if (originNode.unitOnNode == turn.actor)
+
+                        if (originNode.unitOnNode == turn.actor) // Unit is the actor
                             return;
                         owner.ChangeState<ExploreState>(); // The node wasn't in the movement nor action range. Go to explore mode
                     }

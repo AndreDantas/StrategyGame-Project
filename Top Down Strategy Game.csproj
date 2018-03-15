@@ -320,8 +320,14 @@
     <Compile Include="Assets\Scripts\GameStates\Battle\Turn.cs" />
     <Compile Include="Assets\Scripts\GameStates\StateMachine\State.cs" />
     <Compile Include="Assets\Scripts\GameStates\StateMachine\StateMachine.cs" />
-    <Compile Include="Assets\Scripts\Levels\Level.cs" />
-    <Compile Include="Assets\Scripts\Levels\LevelManager.cs" />
+    <Compile Include="Assets\Scripts\Levels\Level Details\Level1Test.cs" />
+    <Compile Include="Assets\Scripts\Levels\Level Details\LevelDetails.cs" />
+    <Compile Include="Assets\Scripts\Levels\LevelConditions\LC_AllAlliesDefeated.cs" />
+    <Compile Include="Assets\Scripts\Levels\LevelConditions\LC_AllEnemiesDefeated.cs" />
+    <Compile Include="Assets\Scripts\Levels\LevelConditions\LC_ReachTurn.cs" />
+    <Compile Include="Assets\Scripts\Levels\LevelConditions\LevelCondition.cs" />
+    <Compile Include="Assets\Scripts\Levels\Overworld\Level.cs" />
+    <Compile Include="Assets\Scripts\Levels\Overworld\LevelUIController.cs" />
     <Compile Include="Assets\Scripts\Map\AreaRangeRenderer.cs" />
     <Compile Include="Assets\Scripts\Map\Map.cs" />
     <Compile Include="Assets\Scripts\Map\MapController.cs" />
@@ -330,6 +336,9 @@
     <Compile Include="Assets\Scripts\Map\TileGrid.cs" />
     <Compile Include="Assets\Scripts\ObjectPool\GameObjectPoolController.cs" />
     <Compile Include="Assets\Scripts\ObjectPool\Poolable.cs" />
+    <Compile Include="Assets\Scripts\SaveAndLoad\GameData.cs" />
+    <Compile Include="Assets\Scripts\SaveAndLoad\LevelManager.cs" />
+    <Compile Include="Assets\Scripts\SaveAndLoad\SaveLoad.cs" />
     <Compile Include="Assets\Scripts\Technical\CameraControl.cs" />
     <Compile Include="Assets\Scripts\Technical\ConditionalHideAttribute.cs" />
     <Compile Include="Assets\Scripts\Technical\ExposePropertyAttribute.cs" />

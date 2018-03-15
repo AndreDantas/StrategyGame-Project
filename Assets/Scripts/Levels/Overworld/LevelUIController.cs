@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(SpriteRenderer))]
-public class Level : MonoBehaviour
-{
 
+[RequireComponent(typeof(SpriteRenderer))]
+public class LevelUIController : MonoBehaviour
+{
     public SpriteRenderer spriteRenderer;
     public int levelIndex;
     [SerializeField]
@@ -40,18 +40,17 @@ public class Level : MonoBehaviour
     public Sprite lockedSprite;
     public Sprite unlockedSprite;
     public Sprite completedSprite;
-    public List<Level> unlockLevels = new List<Level>();
-
-    private void Start()
+    public List<LevelUIController> unlockLevels = new List<LevelUIController>();
+    // Use this for initialization
+    void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        UpdateSprite();
+        if (spriteRenderer == null)
+            spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void OnValidate()
     {
         UpdateSprite();
-
     }
 
     public void UpdateSprite()
@@ -72,6 +71,32 @@ public class Level : MonoBehaviour
     private void OnMouseUpAsButton()
     {
         if (!locked)
-            LevelManager.instance.LoadLevel(this);
+            LevelManager.instance.LoadLevel(GetLevel());
+    }
+
+    public Level GetLevel()
+    {
+        Level l = new Level();
+        l.levelIndex = levelIndex;
+        l.locked = locked;
+        l.completed = completed;
+        return l;
+    }
+
+    public void SetLevel(Level l)
+    {
+        levelIndex = l.levelIndex;
+        locked = l.locked;
+        completed = l.completed;
+        UpdateSprite();
+    }
+
+    public void CompleteLevel()
+    {
+        completed = true;
+        foreach (LevelUIController l in unlockLevels)
+        {
+            l.locked = false;
+        }
     }
 }

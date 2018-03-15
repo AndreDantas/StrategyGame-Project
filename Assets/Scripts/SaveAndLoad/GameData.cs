@@ -2,20 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-public class LevelManager : MonoBehaviour
+[System.Serializable]
+public class GameData
 {
-    public static LevelManager instance;
+    public static GameData instance;
     public List<Level> levels;
-
-    private void Awake()
-    {
-        if (instance != null && instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        instance = this;
-    }
 
 
     public void LoadLevel(Level l)

@@ -13,7 +13,25 @@ public class SelectTargetState : BattleState
     }
     IEnumerator ChangeCurrentUnit()
     {
-
+        if (levelDetails != null)
+        {
+            if (levelDetails.winConditions != null ? levelDetails.winConditions.Count > 0 : false)
+            {
+                if (LevelCondition.AllConditionsMet(levelDetails.winConditions, owner))
+                {
+                    // Player wins
+                    Debug.Log("Player wins");
+                }
+            }
+            if (levelDetails.failConditions != null ? levelDetails.failConditions.Count > 0 : false)
+            {
+                if (LevelCondition.AnyConditionMet(levelDetails.failConditions, owner))
+                {
+                    Debug.Log("Player loses");
+                    // Player loses
+                }
+            }
+        }
         if (activeUnits.Count == 0)
             yield break;
 

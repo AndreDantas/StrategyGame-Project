@@ -13,6 +13,7 @@ public class BattleState : State
     public Map map { get { return owner.map; } }
     public Node selectedNode { get { return owner.selectedNode; } set { owner.selectedNode = value; } }
     public Node movementNode { get { return owner.movementNode; } set { owner.movementNode = value; } }
+    public LevelDetails levelDetails { get { return owner.levelDetails; } }
     public CameraControl cameraControl { get { return owner.cameraControl; } }
     public float cameraMoveTime { get { return owner.cameraMoveTime; } set { owner.cameraMoveTime = value; } }
     public List<Character> activeUnits { get { return owner.activeUnits; } }
