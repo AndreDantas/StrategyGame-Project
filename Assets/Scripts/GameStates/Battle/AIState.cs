@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class AIState : BattleState
 {
-    public static float MAX_WAIT_TIME = 180;
     public override void Enter()
     {
         base.Enter();
@@ -21,10 +20,8 @@ public class AIState : BattleState
         }
 
         ai.ExecuteTurn();
-        float counter = 0;
-        while (!ai.IsDone() || counter > MAX_WAIT_TIME)
+        while (!ai.IsDone())
         {
-            counter += Time.deltaTime;
             yield return null;
         }
 

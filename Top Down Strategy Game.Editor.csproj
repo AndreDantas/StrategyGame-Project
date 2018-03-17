@@ -335,6 +335,7 @@
     <None Include="Assets\PixelPerfectCamera\README.txt" />
     <None Include="Assets\PixelPerfectCamera\background_art_license.txt" />
     <None Include="Assets\Resources\XML Files\Nodes.xml" />
+    <None Include="Assets\Shaders\Transparent.shader" />
     <None Include="Assets\SpriteOutline\Shaders\Sprites-Outline.shader" />
     <None Include="Assets\StreamingAssets\build_info.txt" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Anton OFL.txt" />

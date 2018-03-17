@@ -17,6 +17,7 @@ public class BattleController : StateMachine
     public float cameraMoveTime = 0.3f;
     public List<Character> activeUnits = new List<Character>();
     public List<Character> knockedDownUnits = new List<Character>();
+    [ReadOnly]
     public Turn turn = new Turn();
     public GameObject turnActorIndicator;
     public GameObject turnTargetIndicator;
@@ -26,6 +27,11 @@ public class BattleController : StateMachine
     private void Start()
     {
         ChangeState<InitBattleState>();
+        levelDetails = GetComponent<LevelDetails>();
+        if (levelDetails == null)
+            levelDetails = gameObject.AddComponent<DefaultLevelDetails>();
+        levelDetails.battleController = this;
+
     }
     private void Update()
     {

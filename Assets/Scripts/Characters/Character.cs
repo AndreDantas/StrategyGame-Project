@@ -154,6 +154,7 @@ public class Character : Unit
     public float attackTime = 0.4f;
     public AreaRangeRenderer walkRangeRenderer;
     public AreaRangeRenderer attackRangeRenderer;
+    public float areaRangeSize = 0.85f;
     public HitAnimation hitAnimation;
     #endregion
 
@@ -765,13 +766,16 @@ public class Character : Unit
         if (walkRangeRenderer == null)
             return;
         List<Vector3> posList = new List<Vector3>();
+        List<Node> closed = new List<Node>();
         foreach (Node n in FindRange(x, y, currentStamina))
         {
-            if (n.x == x && n.y == y)
+            if (n.x == x && n.y == y || closed.Contains(n))
                 continue;
+            closed.Add(n);
             posList.Add(new Vector3(n.x + map.nodeOffsetX, n.y + map.nodeOffsetY, 0));
         }
-        walkRangeRenderer.RenderSquaresArea(posList, 0.85f);
+
+        walkRangeRenderer.RenderSquaresArea(posList, areaRangeSize);
     }
 
     /// <summary>
@@ -797,7 +801,7 @@ public class Character : Unit
                 continue;
             posList.Add(new Vector3(n.x + map.nodeOffsetX, n.y + map.nodeOffsetY, 0));
         }
-        attackRangeRenderer.RenderSquaresArea(posList, 0.85f);
+        attackRangeRenderer.RenderSquaresArea(posList, areaRangeSize);
     }
     /// <summary>
     /// Removes the attack range render.

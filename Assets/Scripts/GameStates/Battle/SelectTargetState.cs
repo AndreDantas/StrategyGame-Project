@@ -15,21 +15,12 @@ public class SelectTargetState : BattleState
     {
         if (levelDetails != null)
         {
-            if (levelDetails.winConditions != null ? levelDetails.winConditions.Count > 0 : false)
+            switch (levelDetails.levelState)
             {
-                if (LevelCondition.AllConditionsMet(levelDetails.winConditions, owner))
-                {
-                    // Player wins
-                    Debug.Log("Player wins");
-                }
-            }
-            if (levelDetails.failConditions != null ? levelDetails.failConditions.Count > 0 : false)
-            {
-                if (LevelCondition.AnyConditionMet(levelDetails.failConditions, owner))
-                {
-                    Debug.Log("Player loses");
-                    // Player loses
-                }
+                case LevelState.Victory:
+                    break;
+                case LevelState.Loss:
+                    break;
             }
         }
         if (activeUnits.Count == 0)

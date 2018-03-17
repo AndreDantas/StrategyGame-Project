@@ -27,7 +27,7 @@ public class LevelManager : MonoBehaviour
         SaveLoad.Load();
     }
 
-    public void LoadLevel(Level l)
+    public void LoadLevel(LevelUI l)
     {
         if (l == null)
             return;
