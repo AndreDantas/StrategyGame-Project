@@ -8,7 +8,7 @@ public class GoldReward : LevelReward
     public override void SetReward(int value)
     {
         base.SetReward(value);
-        rewardValueText.text += "G";
+        rewardValueText.text += " G";
         if (descriptionText)
             descriptionText.text = "Gold earned: ";
     }

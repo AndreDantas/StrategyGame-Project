@@ -6,9 +6,11 @@ using UnityEngine.SceneManagement;
 public class GameData
 {
     public static GameData instance;
-    public int playerGold { get; internal set; }
-    public int playerExperience { get; internal set; }
-    public List<LevelUI> levels;
+    [SerializeField]
+    protected int playerGold;
+    [SerializeField]
+    protected int playerExperience;
+    public List<LevelUI> levels = new List<LevelUI>();
 
 
     public void LoadLevel(LevelUI l)
@@ -17,6 +19,11 @@ public class GameData
             return;
         SceneManager.LoadScene(l.levelIndex);
 
+    }
+
+    public int GetGold()
+    {
+        return playerGold;
     }
 
     public void AddGold(int add)
@@ -32,6 +39,11 @@ public class GameData
 
         playerGold -= remove;
         return true;
+    }
+
+    public int GetExperience()
+    {
+        return playerExperience;
     }
 
     public void AddExperience(int add)

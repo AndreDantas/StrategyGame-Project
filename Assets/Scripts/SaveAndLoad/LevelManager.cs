@@ -27,7 +27,7 @@ public class LevelManager : MonoBehaviour
         SaveLoad.Load();
     }
 
-    public void LoadLevel(LevelUI l)
+    public static void LoadLevel(LevelUI l)
     {
         if (l == null)
             return;
@@ -36,5 +36,11 @@ public class LevelManager : MonoBehaviour
 
         if (Application.CanStreamedLevelBeLoaded(l.levelIndex))
             SceneManager.LoadScene(l.levelIndex);
+    }
+
+    public static void LoadLevel(int index)
+    {
+        if (Application.CanStreamedLevelBeLoaded(index))
+            SceneManager.LoadScene(index);
     }
 }

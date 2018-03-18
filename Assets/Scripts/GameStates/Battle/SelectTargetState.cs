@@ -13,12 +13,14 @@ public class SelectTargetState : BattleState
     }
     IEnumerator ChangeCurrentUnit()
     {
+        yield return null;
         if (levelDetails != null)
         {
             switch (levelDetails.levelState)
             {
                 case LevelState.Victory:
-                    break;
+                    owner.ChangeState<EndBattleState>();
+                    yield break;
                 case LevelState.Loss:
                     break;
             }

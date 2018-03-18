@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -132,7 +133,10 @@ public class CameraControl : MonoBehaviour
     {
         if (moving)
             return;
-        StartCoroutine(MoveCamera(pos, time));
+        //StartCoroutine(MoveCamera(pos, time));
+        moving = true;
+        transform.MoveTo(new Vector3(pos.x, pos.y, transform.position.z), time).easingControl.completedEvent += StopCamera;
+
     }
 
     public void CameraFollow()
@@ -144,6 +148,10 @@ public class CameraControl : MonoBehaviour
         }
     }
 
+    public void StopCamera(object sender, EventArgs e)
+    {
+        moving = false;
+    }
     IEnumerator MoveCamera(Vector2 pos, float time = 0.5f)
     {
         moving = true;

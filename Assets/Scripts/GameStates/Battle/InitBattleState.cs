@@ -16,6 +16,13 @@ public class InitBattleState : BattleState
         HideFieldInfoBox();
         turn.turnCount = 0;
         turn.turnIndex = -1;
+        for (int i = activeUnits.Count - 1; i >= 0; i--)
+        {
+
+            if (activeUnits[i].gameObject.activeSelf == false)
+                activeUnits.Remove(activeUnits[i]);
+
+        }
         yield return null;
         owner.ChangeState<SelectTargetState>();
     }

@@ -15,7 +15,7 @@ public class ExperienceReward : LevelReward
     {
         base.SetReward(value);
 
-        rewardValueText.text += "xp";
+        rewardValueText.text += " xp";
 
         if (descriptionText)
             descriptionText.text = "Experience earned: ";

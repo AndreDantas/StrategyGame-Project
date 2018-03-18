@@ -10,6 +10,7 @@ public class Level1Test : LevelDetails
         winConditions.Add(new LC_AllEnemiesDefeated());
         failConditions.Add(new LC_AllAlliesDefeated());
         failConditions.Add(new LC_ReachTurn("Exceed 20 turns.", 20));
+        LevelRewardManager.instance.AddReward("gold", 300);
     }
 
 }

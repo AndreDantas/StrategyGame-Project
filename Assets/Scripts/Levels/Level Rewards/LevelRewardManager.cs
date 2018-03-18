@@ -15,7 +15,7 @@ public class LevelRewardManager : MonoBehaviour
     public List<RewardDictonary> rewards = new List<RewardDictonary>();
     protected List<LevelReward> rewardsReference;
     public GameObject rewardsDisplayObject;
-
+    public GameObject rewardsWindow;
     public delegate void OnContinueEventHandler();
     public OnContinueEventHandler OnContinue;
     private void Awake()
@@ -27,6 +27,8 @@ public class LevelRewardManager : MonoBehaviour
         }
         rewardsReference = new List<LevelReward>();
         instance = this;
+        ClearRewards();
+        CloseWindow();
     }
 
     public void AddReward(string name, int value)
@@ -42,6 +44,7 @@ public class LevelRewardManager : MonoBehaviour
                     {
                         GameObject newReward = Instantiate(reward.rewardPrefab);
                         newReward.transform.SetParent(rewardsDisplayObject.transform);
+                        newReward.transform.localScale = Vector3.one;
                         lr.SetReward(value);
                         rewardsReference.Add(lr);
                     }
@@ -74,6 +77,18 @@ public class LevelRewardManager : MonoBehaviour
                 Destroy(destroyList[i]);
             }
         }
+    }
+
+    public void CloseWindow()
+    {
+        if (rewardsWindow)
+            rewardsWindow.SetActive(false);
+    }
+
+    public void OpenWindow()
+    {
+        if (rewardsWindow)
+            rewardsWindow.SetActive(true);
     }
 
     public void Continue()

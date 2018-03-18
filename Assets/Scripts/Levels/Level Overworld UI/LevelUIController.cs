@@ -71,7 +71,7 @@ public class LevelUIController : MonoBehaviour
     private void OnMouseUpAsButton()
     {
         if (!locked)
-            LevelManager.instance.LoadLevel(GetLevel());
+            LevelManager.LoadLevel(GetLevel());
     }
 
     public LevelUI GetLevel()
