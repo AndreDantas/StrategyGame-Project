@@ -23,6 +23,8 @@ ff05dcdf90651c3d98a9cad3df5e471e UnityEngine.Timeline.dll:UnityEngine.Timeline.C
 df374c01140c2d578bf70cbd60073d1d UnityEngine.Timeline.dll:UnityEngine.Timeline.TimelineAsset
 21ea8faaa4b866899167619dd9ca3110 Assembly-CSharp.dll:.DialogueSupporter
 76b67c157fc78f887e635d573c3b4839 Assembly-CSharp.dll:Tiled2Unity.GPUInstancing
+05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.RewardsState
+05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.ReturnLevelScreenState
 21d86878e35192996ad421f57161deff Assembly-CSharp.dll:.DefaultLevelDetails
 51e922dd5eabf992d273086c89dd410f Assembly-CSharp.dll:.AreaRangeRenderer
 a35dc9cca2faebc5f5f1aeb9e8e47bbe UnityEngine.UI.dll:UnityEngine.UI.AspectRatioFitter
@@ -169,7 +171,7 @@ c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.Spa
 5052c6e74c456cfa107927c76c936663 Assembly-CSharp.dll:UnityEngine.Tilemaps.AnimatedTile
 a5291903cd45f6887279dca0b80daf3a Assembly-CSharp.dll:.DialogueManager
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.PlayerState
-a71f8e08b6108f76ab13a46bcecf32fd Assembly-CSharp.dll:.GoldReward
+6ee6b4962a486a1e0e4a3b08d805357f Assembly-CSharp.dll:.GoldReward
 020550babdb991365f61c5bffe1f4f52 Assembly-CSharp.dll:TMPro.Examples.Benchmark03
 b9332c0eee630779376843b5343eb250 Assembly-CSharp.dll:TMPro.Examples.TMP_TextInfoDebugTool
 c5b77decb97ffc0c36e810b155d27dde Assembly-CSharp.dll:Tiled2Unity.TiledMap
@@ -246,9 +248,10 @@ e9bdabf9265d758d56f01bb188916fa8 UnityEngine.Networking.dll:UnityEngine.Networki
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.SelectTargetState
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.CanvasScreenSpaceScaler
 62229a3e4d53ca59bec192e89627ed52 Assembly-CSharp.dll:TMPro.Examples.CameraController
-a71f8e08b6108f76ab13a46bcecf32fd Assembly-CSharp.dll:.ExperienceReward
+6ee6b4962a486a1e0e4a3b08d805357f Assembly-CSharp.dll:.ExperienceReward
 329bcbf88b3c0197d230f5b9ceb88333 Assembly-CSharp.dll:Tiled2Unity.PolygonObject
 329bcbf88b3c0197d230f5b9ceb88333 Assembly-CSharp.dll:Tiled2Unity.CircleObject
+8e2fc35bbe163bc423125bcfe6749e27 Assembly-CSharp.dll:.EasingControl
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.Callbacks.PlayModeRunnerCallback
 96d0fbde9fd209878a0a291f82c9bcdd UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.PlaymodeTestsController
 64eb32cc721b1cc68a91ed57461e188c UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.Callbacks.RemoteTestResultSender
@@ -267,7 +270,7 @@ c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.Spa
 8ff8e4f2fdfb53cf0cef85f24f6f7740 Assembly-CSharp.dll:Tiled2Unity.TileLayer
 47bec90ad4b6d1d131aa8a7843fd8d34 Assembly-CSharp.dll:UnityEngine.Tilemaps.GridInformation
 1cd4893b18ef6c9e1612214d23ea08a3 Assembly-CSharp.dll:.ChatController
-f89d51efb6bb512a04c3093ca8473925 Assembly-CSharp.dll:.LevelManager
+55bdc693b91a0b0796e64f0289c2a51a Assembly-CSharp.dll:.LevelManager
 2bb4e18461e94fedf7d0b6939718e859 Assembly-CSharp.dll:.MapController
 f3fcb3b4fa04402fd8346a564165b372 Assembly-CSharp.dll:.HitAnimation
 48a9dee325686d1924a2646b71c83f08 Assembly-CSharp.dll:TMPro.Examples.Benchmark01
@@ -292,9 +295,7 @@ af7666733efcc974926d7d470e1732a6 Assembly-CSharp.dll:TMPro.Examples.SkewTextExam
 d146d3d8148b2f35a8c7980d63a88f0e Assembly-CSharp.dll:.CanvasWorldScaler
 329bcbf88b3c0197d230f5b9ceb88333 Assembly-CSharp.dll:Tiled2Unity.TmxObject
 1e2fa205d2944c79f6d1972e2bb9acaa Assembly-CSharp.dll:.ScreenClicks
-613a6efb7316cea2b3374805cea2d912 Assembly-CSharp.dll:.BattleController
+ac9962f4ba02470c029a748c06b476d4 Assembly-CSharp.dll:.BattleController
 c2f5ce41cd75e17442b437e3b9dbb6b0 Assembly-CSharp.dll:.SpriteOutline
 34e025057ef78b1bf238460cdf6583a3 Assembly-CSharp.dll:TMPro.Examples.ObjectSpin
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:TMPro.Examples.SimpleScript
-05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.RewardsState
-8e2fc35bbe163bc423125bcfe6749e27 Assembly-CSharp.dll:.EasingControl

@@ -79,6 +79,16 @@ public static class MathOperations
         return (NewValue);
     }
 
+    public static List<T> ToList<T>(T[] array)
+    {
+        List<T> result = new List<T>();
+        foreach (T t in array)
+        {
+            result.Add(t);
+        }
+        return result;
+    }
+
     public static Vector3 RoundVector3(Vector3 v)
     {
         return new Vector3(Mathf.Round(v.x), Mathf.Round(v.y), Mathf.Round(v.z));

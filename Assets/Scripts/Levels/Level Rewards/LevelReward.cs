@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 public abstract class LevelReward : MonoBehaviour
 {
+    [SerializeField]
     protected int rewardValue;
     public Image rewardImage;
     public TextMeshProUGUI descriptionText;
@@ -17,6 +18,5 @@ public abstract class LevelReward : MonoBehaviour
         rewardValue = value;
         if (rewardValueText)
             rewardValueText.text = value.ToString();
-        rewardValue = value;
     }
 }

@@ -7,7 +7,7 @@ public class ExperienceReward : LevelReward
 {
     public override void GetReward()
     {
-        throw new NotImplementedException();
+        GameData.instance.playerExperience += rewardValue;
 
     }
 

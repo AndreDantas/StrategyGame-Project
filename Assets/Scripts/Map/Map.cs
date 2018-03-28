@@ -46,16 +46,10 @@ public class Map : MonoBehaviour
     /// </summary>
     public Node[,] nodes;
 
-    /// <summary>
-    /// The current selected Character.
-    /// </summary>
-    protected Character selectedCharacter;
-
     private void OnValidate()
     {
         rows = MathOperations.ClampMin(rows, 1);
         columns = MathOperations.ClampMin(columns, 1);
-        transform.position = Vector3.zero;
     }
 
     /// <summary>

@@ -19,6 +19,15 @@ public class RewardsState : BattleState
         {
             // Continue to level select.
         }
+        foreach (LevelReward l in rewardManager.GetRewards())
+            l.GetReward();
+
+        if (LevelManager.instance)
+        {
+            LevelManager.instance.CompleteCurrentLevel();
+            SaveLoad.Save();
+
+        }
     }
 
     protected override void AddListeners()
@@ -44,7 +53,7 @@ public class RewardsState : BattleState
         if (rewardManager)
             rewardManager.CloseWindow();
 
-        LevelManager.LoadLevel(0);
+        owner.ChangeState<ReturnLevelScreenState>();
         // Continue to level select.
     }
 }

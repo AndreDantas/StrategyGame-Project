@@ -218,22 +218,29 @@ public class CameraControl : MonoBehaviour
         if (touchCount == 1)
         {
             float panSpeedMulti = MathOperations.Map(minZoom, maxZoom, 1f, 2f, pixelPerfectCam.targetCameraHalfHeight);
-            if (Input.GetTouch(0).phase == TouchPhase.Began && !EventSystem.current.IsPointerOverGameObject(-1)
+            if (Input.GetTouch(0).phase == TouchPhase.Began && !bDragging && !EventSystem.current.IsPointerOverGameObject(-1)
                 && !EventSystem.current.IsPointerOverGameObject(0))
             {
+                bDragging = true;
                 oldPos = transform.position;
                 panOrigin = Camera.main.ScreenToViewportPoint(Input.mousePosition); //Get the ScreenVector the mouse clicked
             }
 
-            if (Input.GetTouch(0).phase == TouchPhase.Moved)
+            if (Input.GetTouch(0).phase == TouchPhase.Moved && bDragging)
             {
                 Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition) - panOrigin; //Get the difference between where the mouse clicked and where it moved
                 transform.position = oldPos + -pos * cameraPanSpeed * panSpeedMulti;  //Move the position of the camera to simulate a drag, speed * 10 for screen to worldspace conversion
             }
 
+            if (Input.GetTouch(0).phase == TouchPhase.Ended)
+            {
+                bDragging = false;
+            }
+
         }
         // Check Pinching to Zoom in - out on Mobile device
-        if (touchCount == 2 && canZoom)
+        if (touchCount == 2 && canZoom && !EventSystem.current.IsPointerOverGameObject(-1)
+            && !EventSystem.current.IsPointerOverGameObject(0))
         {
             Touch touch0 = Input.GetTouch(0);
             Touch touch1 = Input.GetTouch(1);

@@ -9,6 +9,7 @@ public class BattleController : StateMachine
     /// The sprite of the current selected node.
     /// </summary>
     public Transform nodeSelectSprite;
+    public LevelManager levelManager;
     public Map map;
     public Node selectedNode;
     public Node movementNode;
@@ -30,6 +31,7 @@ public class BattleController : StateMachine
         levelDetails = GetComponent<LevelDetails>();
         if (levelDetails == null)
             levelDetails = gameObject.AddComponent<DefaultLevelDetails>();
+        levelManager = LevelManager.instance;
         levelDetails.battleController = this;
 
     }

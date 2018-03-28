@@ -321,6 +321,7 @@
     <Compile Include="Assets\Scripts\GameStates\Battle\InitBattleState.cs" />
     <Compile Include="Assets\Scripts\GameStates\Battle\MoveSequenceState.cs" />
     <Compile Include="Assets\Scripts\GameStates\Battle\PlayerState.cs" />
+    <Compile Include="Assets\Scripts\GameStates\Battle\ReturnLevelScreenState.cs" />
     <Compile Include="Assets\Scripts\GameStates\Battle\RewardsState.cs" />
     <Compile Include="Assets\Scripts\GameStates\Battle\SelectTargetState.cs" />
     <Compile Include="Assets\Scripts\GameStates\Battle\Turn.cs" />
@@ -334,7 +335,7 @@
     <Compile Include="Assets\Scripts\Levels\Level Details\DefaultLevelDetails.cs" />
     <Compile Include="Assets\Scripts\Levels\Level Details\Level1Test.cs" />
     <Compile Include="Assets\Scripts\Levels\Level Details\LevelDetails.cs" />
-    <Compile Include="Assets\Scripts\Levels\Level Overworld UI\LevelUI.cs" />
+    <Compile Include="Assets\Scripts\Levels\Level Overworld UI\Level.cs" />
     <Compile Include="Assets\Scripts\Levels\Level Overworld UI\LevelUIController.cs" />
     <Compile Include="Assets\Scripts\Levels\Level Rewards\ExperienceReward.cs" />
     <Compile Include="Assets\Scripts\Levels\Level Rewards\GoldReward.cs" />

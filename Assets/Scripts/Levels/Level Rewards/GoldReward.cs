@@ -14,7 +14,7 @@ public class GoldReward : LevelReward
     }
     public override void GetReward()
     {
-        GameData.instance.AddGold(rewardValue);
+        GameData.instance.playerGold += rewardValue;
     }
 
 }

@@ -10,6 +10,7 @@ public class BattleState : State
 
     protected BattleController owner;
     public Transform nodeSelectSprite { get { return owner.nodeSelectSprite; } }
+    public LevelManager levelManager { get { return owner.levelManager; } }
     public Map map { get { return owner.map; } }
     public Node selectedNode { get { return owner.selectedNode; } set { owner.selectedNode = value; } }
     public Node movementNode { get { return owner.movementNode; } set { owner.movementNode = value; } }

@@ -15,8 +15,9 @@ public class EndBattleState : BattleState
     IEnumerator EndBattle()
     {
         yield return null;
+
         //Battle end scene
-        print("d");
+
         owner.ChangeState<RewardsState>();
 
     }

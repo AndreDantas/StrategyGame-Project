@@ -503,7 +503,7 @@ Prefab:
     - target: {fileID: 224511875634283912, guid: 69eab572da8e474479ff003c7e21d3a3,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0.00004577616
+      value: 0.000023120076
       objectReference: {fileID: 0}
     - target: {fileID: 224511875634283912, guid: 69eab572da8e474479ff003c7e21d3a3,
         type: 2}
@@ -513,7 +513,7 @@ Prefab:
     - target: {fileID: 224145375630282574, guid: 69eab572da8e474479ff003c7e21d3a3,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 0.00000017881393
       objectReference: {fileID: 0}
     - target: {fileID: 114005757734595310, guid: 69eab572da8e474479ff003c7e21d3a3,
         type: 2}
@@ -522,7 +522,7 @@ Prefab:
       objectReference: {fileID: 1563323725}
     - target: {fileID: 1105358573543450, guid: 69eab572da8e474479ff003c7e21d3a3, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 69eab572da8e474479ff003c7e21d3a3, type: 2}
@@ -14133,6 +14133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nodeSelectSprite: {fileID: 1815450568}
+  levelManager: {fileID: 0}
   map: {fileID: 1193259326}
   selectedNode:
     name: 
@@ -19074,7 +19075,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1357699703748360, guid: db458e9270b657a43a448ae64d73f93f, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: db458e9270b657a43a448ae64d73f93f, type: 2}

@@ -71,19 +71,21 @@ public class LevelUIController : MonoBehaviour
     private void OnMouseUpAsButton()
     {
         if (!locked)
-            LevelManager.LoadLevel(GetLevel());
+            LevelManager.LoadLevel(ToLevel());
     }
 
-    public LevelUI GetLevel()
+    public Level ToLevel()
     {
-        LevelUI l = new LevelUI();
-        l.levelIndex = levelIndex;
-        l.locked = locked;
-        l.completed = completed;
-        return l;
+        Level temp = new Level();
+        temp.locked = this.locked;
+        temp.completed = this.completed;
+        temp.levelIndex = this.levelIndex;
+        return temp;
     }
 
-    public void SetLevel(LevelUI l)
+
+
+    public void SetLevel(Level l)
     {
         levelIndex = l.levelIndex;
         locked = l.locked;

@@ -53,16 +53,16 @@ public class EnemyAI : AIController
             if (character.InRange(target.x, target.y))
             {
                 // No need to move
-                print("in range");
+
             }
             else if (attackArea.Contains(character.map.nodes[target.x, target.y]))
             {
                 movementNode = character.ClosestNode(Map.GetClosestNode(walkArea, character.map.nodes[target.x, target.y], character.attackRange));
-                print("in attack area");
+
             }
             else
             {
-                print("Move closer");
+
                 List<Node> path = character.PathFind(character.ClosestNode(character.map.GetNeighbors(target.x, target.y)));
 
                 if (path != null ? path.Count > 0 : false)
@@ -72,15 +72,16 @@ public class EnemyAI : AIController
                     {
                         totalCost += n.cost;
                         if (totalCost > character.currentStamina)
-                        {
-                            movementNode = n;
                             break;
-                        }
+
+                        movementNode = n;
+
                     }
+
                 }
+
             }
         }
-        print(movementNode);
         if (movementNode != null)
         {
             yield return new WaitForSeconds(0.5f);
